@@ -21,6 +21,14 @@ if __name__ == '__main__':
             # phone_number = fake.phone_number()
             # formatted_phone_number = ''.join(filter(str.isdigit, phone_number))
             phone_number = fake.random_number(digits=10)
+            while len(str(phone_number)) < 10:
+                phone_number = int("1" + str(phone_number))
+            second_phone_number = fake.random_number(digits=10)
+            while len(str(second_phone_number)) < 10:
+                second_phone_number = int("1" + str(second_phone_number))
+            zipcode = int(fake.zipcode())
+            while len(str(zipcode)) < 5:
+                zipcode = int("1" + str(zipcode))
             new_user = User(
                 first_name=fake.first_name(),
                 last_name=fake.last_name(),
@@ -30,10 +38,10 @@ if __name__ == '__main__':
                 address=fake.street_address(),
                 city=fake.city(),
                 state=fake.state(),
-                zipcode=fake.zipcode(),
+                zipcode=int(zipcode),
                 date_of_birth=fake.date_of_birth(),
                 emergency_contact_name=fake.name(),
-                emergency_contact_phone_number=phone_number
+                emergency_contact_phone_number=second_phone_number
             )
             db.session.add(new_user)
             db.session.commit()

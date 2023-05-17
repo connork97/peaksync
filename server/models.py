@@ -41,11 +41,41 @@ class User(db.Model, SerializerMixin):
     @password_hash.setter
     def password_hash(self, password):
         password_hash = bcrypt.generate_password_hash(password.encode('utf-8'))
-        print(password_hash)
+        # print(password_hash)
         self._password_hash = password_hash.decode('utf-8')
-        
+
     def authenticate(self, password):
         return bcrypt.check_password_hash(self._password_hash, password.encode('utf-8'))
+    
+    @validates('first_name', 'last_name', 'email', '_password_hash', 'phone_number', 'city', 'state', 'zipcode', 'emergency_contact_name', 'emergency_contact_phone_number')
+    def validate_user(self, key, value):
+        if key == 'first_name' or key == 'last_name' or key == 'city' or key == 'state' or key == 'emergency_contact_name' or key == '_password_hash':
+            if type(value) == str and len(value) > 0 and value != None:
+                return value
+            else:
+                print(value)
+                raise ValueError("Must be a string that is not empty.")
+        
+        if key == 'phone_number' or key == 'emergency_contact_phone_number':
+            if type(value) == int and len(str(value)) == 10 and value != None:
+                return value
+            else:
+                print(value)
+                raise ValueError("Must be a valid phone number, 10 digits long.")
+            
+        if key == 'zipcode':
+            if type(value) == int and len(str(value)) == 5 and value != None:
+                return value
+            else:
+                print(value)
+                raise ValueError("Zip code must be 5 digits.")
+        
+        if key == 'email':
+            if len(value) > 3 and "@" in value or "." in value and value != None:
+                return value
+            else:
+                print(value)
+                raise ValueError("Invalid email.")
 
 class Membership(db.Model, SerializerMixin):
     __tablename__ = "memberships"
