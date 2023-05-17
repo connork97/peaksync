@@ -57,12 +57,28 @@ def users():
 
     return response
 
-@app.route('/users/<int:id>', methods=['GET', 'DELETE'])
+@app.route('/users/<int:id>', methods=['GET', 'PATCH', 'DELETE'])
 def user_by_id(id):
     user = User.query.filter(User.id == id).one_or_none()
     if user:
+
         if request.method == 'GET':
             response = make_response(user.to_dict(), 200)
+
+        if request.method == 'PATCH':
+
+            try:
+                form_data = request.get_json()
+                for attr in form_data:
+                    setattr(user, attr, form_data[attr])
+
+                db.session.add(user)
+                db.session.commit()
+                response = make_response(user.to_dict(), 200)
+
+            except:
+                response = make_response({"error": f"404: Could not update user of id {id}."}, 404)
+
         if request.method == 'DELETE':
             try:
                 db.session.delete(user)
@@ -104,12 +120,27 @@ def memberships():
 
     return response
 
-@app.route('/memberships/<int:id>', methods=['GET', 'DELETE'])
+@app.route('/memberships/<int:id>', methods=['GET', 'PATCH', 'DELETE'])
 def membership_by_id(id):
     membership = Membership.query.filter(Membership.id == id).one_or_none()
     if membership:
         if request.method == 'GET':
             response = make_response(membership.to_dict(), 200)
+
+        if request.method == 'PATCH':
+            
+            try:
+                form_data = request.get_json()
+                for attr in form_data:
+                    setattr(membership, attr, form_data[attr])
+
+                db.session.add(membership)
+                db.session.commit()
+                response = make_response(membership.to_dict(), 200)
+
+            except:
+                response = make_response({"error": f"404: Could not update user of id {id}."}, 404)
+
         if request.method == 'DELETE':
             try:
                 db.session.delete(membership)
@@ -154,12 +185,29 @@ def classes():
 
     return response
 
-@app.route('/classes/<int:id>', methods=['GET', 'DELETE'])
+@app.route('/classes/<int:id>', methods=['GET', 'PATCH', 'DELETE'])
 def class_by_id(id):
     one_class = Class.query.filter(Class.id == id).one_or_none()
+
     if one_class:
+    
         if request.method == 'GET':
             response = make_response(one_class.to_dict(), 200)
+    
+        if request.method == 'PATCH':
+            
+            try:
+                form_data = request.get_json()
+                for attr in form_data:
+                    setattr(one_class, attr, form_data[attr])
+
+                db.session.add(one_class)
+                db.session.commit()
+                response = make_response(one_class.to_dict(), 200)
+
+            except:
+                response = make_response({"error": f"404: Could not update user of id {id}."}, 404)
+    
         if request.method == 'DELETE':
             try:
                 db.session.delete(one_class)
