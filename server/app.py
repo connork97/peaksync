@@ -18,14 +18,42 @@ CORS(app)
 def home():
     return ''
 
-@app.route('/users', methods=['GET'])
+@app.route('/users', methods=['GET', 'POST'])
 def users():
     if request.method == 'GET':
+
         all_users_dict = [user.to_dict() for user in User.query.all()]
+        
         if all_users_dict:
             response = make_response(all_users_dict, 200)
+        
         else:
             response = make_response({"error": "Users not found."}, 404)
+    
+    if request.method == 'POST':
+
+        try:
+            form_data = request.get_json()
+            new_user = User(
+                first_name=form_data['firstName'],
+                last_name=form_data['lastName'],
+                email=form_data['email'],
+                password_hash=form_data['password'],
+                phone_number=int(form_data['phoneNumber']),
+                address=form_data['address'],
+                city=form_data['city'],
+                state=form_data['state'],
+                zipcode=int(form_data['zipcode']),
+                date_of_birth=form_data['dateOfBirth'],
+                emergency_contact_name=form_data['emergencyContactName'],
+                emergency_contact_phone_number=int(form_data['emergencyContactPhoneNumber'])
+            )
+            db.session.add(new_user)
+            db.session.commit()
+            response = make_response(new_user.to_dict(), 200)
+        
+        except:
+            response = make_response({"error": "Unsuccessful creation of new class"}, 404)
 
     return response
 
@@ -48,7 +76,7 @@ def user_by_id(id):
     return response
 
         
-@app.route('/memberships', methods=['GET'])
+@app.route('/memberships', methods=['GET', 'POST'])
 def memberships():
     if request.method == 'GET':
         all_memberships_dict = [membership.to_dict() for membership in Membership.query.all()]
@@ -56,6 +84,23 @@ def memberships():
             response = make_response(all_memberships_dict, 200)
         else:
             response = make_response({"error": "Memberships not found."}, 404)
+
+    if request.method == 'POST':
+        try:
+            form_data = request.get_json()
+            new_membership = Membership(
+                name=form_data['name'],
+                price=form_data['price'],
+                type=form_data['type'],
+                subtype=form_data['subtype'],
+                description=form_data['description']
+            )
+            db.session.add(new_membership)
+            db.session.commit()
+            response = make_response(new_membership.to_dict(), 200)
+
+        except:
+            response = make_response({"error": "Unsuccessful creation of new membership."}, 404)
 
     return response
 
@@ -78,7 +123,7 @@ def membership_by_id(id):
 
     return response
 
-@app.route('/classes', methods=['GET'])
+@app.route('/classes', methods=['GET', 'POST'])
 def classes():
     if request.method == 'GET':
         all_classes_dict = [cls.to_dict() for cls in Membership.query.all()]
@@ -86,6 +131,26 @@ def classes():
             response = make_response(all_classes_dict, 200)
         else:
             response = make_response({"error": "Classes not found."}, 404)
+    
+    if request.method == 'POST':
+        try:
+            form_data = request.get_json()
+            new_class = Class(
+                name=form_data['name'],
+                price=form_data['price'],
+                category=form_data['category'],
+                capacity=int(form_data['capacity']),
+                hours=int(form_data['hours']),
+                minutes=int(form_data['minutes']),
+                recurring=form_data['recurring'],
+                description=form_data['description']
+            )
+            db.session.add(new_class)
+            db.session.commit()
+            response = make_response(new_class.to_dict(), 200)
+
+        except:
+            response = make_response({"error": "Unsuccessful creation of new class"}, 404)
 
     return response
 
