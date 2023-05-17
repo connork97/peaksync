@@ -12,6 +12,12 @@ from config import db, bcrypt
 class User(db.Model, SerializerMixin):
     __tablename__ = "users"
 
+    serialize_rules=(
+        '-signups.user',
+        '-signups.clas',
+        '-payments.user'
+    )
+
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String)
     last_name = db.Column(db.String)
@@ -33,6 +39,9 @@ class User(db.Model, SerializerMixin):
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
     membership_id = db.Column(db.Integer, db.ForeignKey("memberships.id"), default=1)
+
+    signups = db.relationship('Signup', back_populates="user")
+    payments = db.relationship('Payment', back_populates='user')
 
     @hybrid_property
     def password_hash(self):
@@ -94,6 +103,11 @@ class Membership(db.Model, SerializerMixin):
 class Class(db.Model, SerializerMixin):
     __tablename__ = "classes"
 
+    serialize_rules=(
+        '-signups.user',
+        '-signups.clas'
+    )
+
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
     price = db.Column(db.Float)
@@ -107,24 +121,39 @@ class Class(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
+    signups = db.relationship('Signup', back_populates="clas")
+
 class Signup(db.Model, SerializerMixin):
     __tablename__ = "signups"
 
+    serialize_rules=(
+        '-user.signups'
+    )
+
     id = db.Column(db.Integer, primary_key=True)
-    customer_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     class_id = db.Column(db.Integer, db.ForeignKey("classes.id"))
     paid = db.Column(db.Boolean)
 
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
+    user = db.relationship('User', back_populates="signups")
+    clas = db.relationship('Class', back_populates="signups")
+
 class Payment(db.Model, SerializerMixin):
     __tablename__ = "payments"
+    
+    serialize_rules=(
+        '-user.payments'
+    )
 
     id = db.Column(db.Integer, primary_key=True)
-    customer_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     signup_id = db.Column(db.Integer, db.ForeignKey("signups.id"))
     membership_id = db.Column(db.Integer, db.ForeignKey("memberships.id"))
 
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
+
+    user = db.relationship('User', back_populates="payments")

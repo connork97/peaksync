@@ -13,10 +13,12 @@ from models import db, User, Membership, Class, Signup, Payment
 if __name__ == '__main__':
     fake = Faker()
     with app.app_context():
+        print("Dropping tables...")
         db.session.query(User).delete()
         db.session.query(Membership).delete()
         db.session.query(Class).delete()
         db.session.commit()
+        print("Generating user profiles...")
         for i in range(100):
             # phone_number = fake.phone_number()
             # formatted_phone_number = ''.join(filter(str.isdigit, phone_number))
@@ -46,6 +48,8 @@ if __name__ == '__main__':
             db.session.add(new_user)
             db.session.commit()
         
+        print("Generating memberships...")
+
         guest = Membership(name="Guest", price=0, description="Guest account.  No membership included.", type="Guest", subtype="Guest")
 
         monthly_membership = Membership(name="Monthly Membership", price=66, description="Unlimited facility access, discounts on classes and merchandise, and more! Automatically renews on the first of each month.", type="Member", subtype="Monthly")
@@ -57,6 +61,8 @@ if __name__ == '__main__':
 
         db.session.add_all([guest, monthly_membership, annual_membership, one_month_prepaid, six_month_prepaid, ten_punch_card])
         db.session.commit()
+
+        print("Generating classes...")
 
         belay_lesson = Class(name="Top Rope Belay Lesson", price=15, category="Climbing", capacity=4, hours=1, minutes=0, recurring=True, description="One hour class that teaches basic top rope belay safety skills. Without prior experience this class is required to climb in the roped section of the gym.  Free for members.")
         lead_belay_lesson = Class(name="Lead Belay Lesson", price=100, category="Climbing", capacity=4, hours=4, minutes=0, recurring=True, description="Learn how to lead belay and lead climb in this 4 hour course!")
@@ -70,6 +76,7 @@ if __name__ == '__main__':
 
         db.session.add_all([belay_lesson, lead_belay_lesson, beginner_yoga, intermediate_yoga, advanced_yoga, core_class, flexibility_class])
         db.session.commit()
+
             # print("Starting seed...")
             # print(fake.first_name())
             # print(fake.last_name())
