@@ -157,7 +157,7 @@ def membership_by_id(id):
 @app.route('/classes', methods=['GET', 'POST'])
 def classes():
     if request.method == 'GET':
-        all_classes_dict = [cls.to_dict() for cls in Membership.query.all()]
+        all_classes_dict = [clas.to_dict() for clas in Membership.query.all()]
         if all_classes_dict:
             response = make_response(all_classes_dict, 200)
         else:
@@ -217,6 +217,46 @@ def class_by_id(id):
                 response = make_response({"error": f"Class of id {id} not deleted"}, 404)
     else:
         response = make_response({"error": f"404: Class of id {id} not found."})
+
+    return response
+
+@app.route('/signups', methods=['GET', 'POST'])
+def signups():
+
+    if request.method == 'GET':
+        signups_dict = [signup.to_dict() for signup in Signup.query.all()]
+        
+        if signups_dict:
+            response = make_response(signups_dict, 200)
+        
+        else:
+            response = make_response({"error": "404: Signups not found."})
+    
+    if request.method == 'POST':
+        form_data = request.get_json()
+        new_signup= Signup(
+            user_id=form_data['userId'],
+            class_id=form_data['classId']
+            # paid ?
+        )
+
+        db.session.add(new_signup)
+        db.session.commit()
+        response = make_response(new_signup.to_dict(), 204)
+
+    return response
+
+@app.route('/payments', methods=['GET'])
+def payments():
+
+    if request.method == 'GET':
+        payments_dict = [payment.to_dict() for payment in Payment.query.all()]
+        
+        if payments_dict:
+            response = make_response(payments_dict, 200)
+        
+        else:
+            response = make_response({"error": "404: Payments not found."})
 
     return response
 

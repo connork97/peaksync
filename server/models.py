@@ -127,7 +127,11 @@ class Signup(db.Model, SerializerMixin):
     __tablename__ = "signups"
 
     serialize_rules=(
-        '-user.signups'
+        '-user.signups',
+        '-user._password_hash',
+        '-user_id',
+        '-clas.signups',
+        '-class_id'
     )
 
     id = db.Column(db.Integer, primary_key=True)
@@ -143,9 +147,11 @@ class Signup(db.Model, SerializerMixin):
 
 class Payment(db.Model, SerializerMixin):
     __tablename__ = "payments"
-    
+
     serialize_rules=(
-        '-user.payments'
+        '-user.payments',
+        '-user._password_hash',
+        '-user_id'
     )
 
     id = db.Column(db.Integer, primary_key=True)

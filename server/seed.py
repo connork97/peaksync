@@ -77,6 +77,20 @@ if __name__ == '__main__':
         db.session.add_all([belay_lesson, lead_belay_lesson, beginner_yoga, intermediate_yoga, advanced_yoga, core_class, flexibility_class])
         db.session.commit()
 
+        print("Generating signups...")
+
+        signup1 = Signup(user_id=1, class_id=1, paid=True)
+        signup2 = Signup(user_id=2, class_id=2, paid=False)
+        signup23 = Signup(user_id=2, class_id=3, paid=True)
+        signup32 = Signup(user_id=3, class_id=1, paid=True)
+
+        db.session.add_all([signup1, signup2, signup23, signup32])
+        db.session.commit()
+
+        # print("Generating payments...")
+
+
+
             # print("Starting seed...")
             # print(fake.first_name())
             # print(fake.last_name())
