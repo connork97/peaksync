@@ -46,14 +46,15 @@ def users():
                 zipcode=int(form_data['zipcode']),
                 date_of_birth=form_data['dateOfBirth'],
                 emergency_contact_name=form_data['emergencyContactName'],
-                emergency_contact_phone_number=int(form_data['emergencyContactPhoneNumber'])
+                emergency_contact_phone_number=int(form_data['emergencyContactPhoneNumber']),
+                waiver=form_data['waiver']
             )
             db.session.add(new_user)
             db.session.commit()
             response = make_response(new_user.to_dict(), 200)
         
         except:
-            response = make_response({"error": "Unsuccessful creation of new class"}, 404)
+            response = make_response({"error": "Unsuccessful creation of new user"}, 404)
 
     return response
 
