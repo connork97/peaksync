@@ -18,6 +18,31 @@ CORS(app)
 def home():
     return ''
 
+@app.route('/login', methods=['POST'])
+def login():
+
+    if request.method == 'POST':
+        form_data = request.get_json()
+        email = form_data['email']
+        password = form_data['password']
+
+        user = User.query.filter(User.email == email).one_or_none()
+
+        if user and user.authenticate(password):
+            response = make_response(user.to_dict(), 200)
+            session['user_id'] = user.id
+            session['user_last_name'] = user.last_name
+            session['user_address'] = user.address
+
+            # response.set_cookie('user_id', user.id)
+            response.set_cookie('user_email', user.email)
+            response.set_cookie('user_first_name', user.first_name)
+
+        else:
+            response = make_response({"error": "Unable to authenticate user login."}, 404)
+
+    return response
+
 @app.route('/users', methods=['GET', 'POST'])
 def users():
     if request.method == 'GET':
@@ -51,7 +76,10 @@ def users():
             )
             db.session.add(new_user)
             db.session.commit()
-            response = make_response(new_user.to_dict(), 200)
+            # session['user_email'] = new_user.email
+            response = make_response(new_user.to_dict(), 201)
+            # newest_user = User.query.order_by(User.id.desc()).first()
+            response.set_cookie('user_email', new_user.email)
         
         except:
             response = make_response({"error": "Unsuccessful creation of new user"}, 404)
