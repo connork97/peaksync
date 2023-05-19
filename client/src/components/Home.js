@@ -1,4 +1,4 @@
-import { useRecoilState, useResetRecoilState } from "recoil"
+import { useRecoilState } from "recoil"
 import { userState } from "../atoms.js"
 
 const Home = () => {

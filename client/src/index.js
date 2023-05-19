@@ -6,6 +6,9 @@ import { BrowserRouter } from "react-router-dom";
 
 import { RecoilRoot } from "recoil"
 
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.css';
 ReactDOM.render(
   <BrowserRouter>
     <RecoilRoot>
