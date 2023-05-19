@@ -4,9 +4,13 @@ import "./index.css";
 import App from "./components/App";
 import { BrowserRouter } from "react-router-dom";
 
+import { RecoilRoot } from "recoil"
+
 ReactDOM.render(
   <BrowserRouter>
-    <App />
+    <RecoilRoot>
+      <App />
+    </RecoilRoot>  
   </BrowserRouter>,
   document.getElementById("root")
 );

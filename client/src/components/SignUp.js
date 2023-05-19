@@ -37,7 +37,7 @@ const SignUp = () => {
 
     const handleCreateAccount = (event) => {
         event.preventDefault()
-        if (newUser.password == confirmPassword) {
+        if (newUser.password === confirmPassword) {
             fetch("/users", {
                 method: "POST",
                 headers: {
