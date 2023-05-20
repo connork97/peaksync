@@ -9,7 +9,7 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Table from 'react-bootstrap/Table'
 import Dropdown from "react-bootstrap/Dropdown"
 
-import UserProfile from "./UserProfile.js";
+import UserProfile from "./UserProfile/UserProfile.js";
 
 const Dashboard = () => {
 
@@ -69,13 +69,6 @@ const Dashboard = () => {
     })
 
     let convertedSearchCategory = searchCategory.split(" ").join("_").toLowerCase()
-    console.log(convertedSearchCategory)
-
-    // const renderUserProfile = (user) => {
-    //     return (
-    //         <UserProfile user={user} />
-    //     )
-    // }
 
     const handleUserClick = (user) => {
         setActiveLi(user.id)
@@ -94,7 +87,6 @@ const Dashboard = () => {
         if (String(user[category]).toLowerCase().includes(String(searchParams).toLowerCase())) {
             return (
                 <>
-            {/* <ListGroup.Item key={user.id} onClick={() => handleClickedLi(user.id)} onDoubleClick={() => handleDoubleClick(user.id)} active={activeLi === user.id}> */}
             <tr key={user.id} onClick={() => handleUserClick(user)} onDoubleClick={() => handleUserDoubleClick(user)} style={{background: activeLi === user.id ? "lightblue" : null}}>
                 <td>{user.id}</td>
                 <td>{user.last_name}</td>
@@ -112,10 +104,7 @@ const Dashboard = () => {
         </>
         )
     }
-    // }
     })
-
-    const renderUserProfile = () => <UserProfile user={selectedUserProfile} />
 
     return (
         <>

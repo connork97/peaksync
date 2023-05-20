@@ -11,7 +11,7 @@ import AboutUs from "./AboutUs.js"
 import Login from "./Login.js"
 import SignUp from "./SignUp.js"
 import Dashboard from "./Dashboard.js"
-import UserProfile from "./UserProfile.js";
+import UserProfile from "./UserProfile/UserProfile.js";
 
 function App() {
   return (
