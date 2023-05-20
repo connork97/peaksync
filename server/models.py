@@ -14,7 +14,7 @@ class User(db.Model, SerializerMixin):
 
     serialize_rules=(
         '-signups.user',
-        '-signups.clas',
+        # '-signups.signup_class',
         '-payments.user'
     )
 
@@ -105,7 +105,7 @@ class Class(db.Model, SerializerMixin):
 
     serialize_rules=(
         '-signups.user',
-        '-signups.clas'
+        '-signups.signup_class'
     )
 
     id = db.Column(db.Integer, primary_key=True)
@@ -121,18 +121,19 @@ class Class(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
-    signups = db.relationship('Signup', back_populates="clas")
+    signups = db.relationship('Signup', back_populates="signup_class")
 
 class Signup(db.Model, SerializerMixin):
     __tablename__ = "signups"
 
-    serialize_rules=(
-        '-user.signups',
-        '-user._password_hash',
-        '-user_id',
-        '-clas.signups',
-        '-class_id'
-    )
+    # serialize_rules=(
+    #     '-user.signups',
+    #     '-user._password_hash',
+    #     '-user_id',
+    #     '-clas.signups'
+    #     # '-class_id'
+    # )
+    serialize_only = ('id', 'user_id', 'class_id', 'paid', 'created_at', 'updated_at', 'user', 'signup_class')
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
@@ -143,7 +144,7 @@ class Signup(db.Model, SerializerMixin):
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
     user = db.relationship('User', back_populates="signups")
-    clas = db.relationship('Class', back_populates="signups")
+    signup_class = db.relationship('Class', back_populates="signups")
 
 class Payment(db.Model, SerializerMixin):
     __tablename__ = "payments"

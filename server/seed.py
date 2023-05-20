@@ -43,7 +43,8 @@ if __name__ == '__main__':
                 zipcode=int(zipcode),
                 date_of_birth=fake.date_of_birth(),
                 emergency_contact_name=fake.name(),
-                emergency_contact_phone_number=second_phone_number
+                emergency_contact_phone_number=second_phone_number,
+                waiver=fake.boolean()
             )
             db.session.add(new_user)
             db.session.commit()
@@ -79,13 +80,22 @@ if __name__ == '__main__':
 
         print("Generating signups...")
 
-        signup1 = Signup(user_id=1, class_id=1, paid=True)
-        signup2 = Signup(user_id=2, class_id=2, paid=False)
-        signup23 = Signup(user_id=2, class_id=3, paid=True)
-        signup32 = Signup(user_id=3, class_id=1, paid=True)
+        for i in range(500):
+            new_signup = Signup(
+                user_id=randint(1, 100),
+                class_id=randint(1, 7),
+                paid=fake.boolean()
+            )
+            db.session.add(new_signup)
+            db.session.commit()
 
-        db.session.add_all([signup1, signup2, signup23, signup32])
-        db.session.commit()
+        # signup1 = Signup(user_id=1, class_id=1, paid=True)
+        # signup2 = Signup(user_id=2, class_id=2, paid=False)
+        # signup23 = Signup(user_id=2, class_id=3, paid=True)
+        # signup32 = Signup(user_id=3, class_id=1, paid=True)
+
+        # db.session.add_all([signup1, signup2, signup23, signup32])
+        # db.session.commit()
 
         # print("Generating payments...")
 

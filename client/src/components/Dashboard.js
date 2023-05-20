@@ -2,22 +2,26 @@ import { useRecoilState } from "recoil"
 import { userState } from "../atoms.js"
 
 import { useState, useEffect } from "react"
-import { render } from "react-dom"
+import { useHistory } from 'react-router-dom'
 
 // import ListGroup from "react-bootstrap/ListGroup"
 import ListGroup from 'react-bootstrap/ListGroup';
 import Table from 'react-bootstrap/Table'
 import Dropdown from "react-bootstrap/Dropdown"
 
+import UserProfile from "./UserProfile.js";
+
 const Dashboard = () => {
+
+    const history = useHistory()
 
     const [currentUser, setCurrentUser] = useRecoilState(userState)
     const [allUsers, setAllUsers] = useState([])
     const [searchParams, setSearchParams] = useState("")
     const [searchCategory, setSearchCategory] = useState("Filter By")
-
     const [activeLi, setActiveLi] = useState("")
 
+    const [selectedUserProfile, setSelectedUserProfile] = useState(null)
 
     useEffect(() => {
         fetch("/users")
@@ -37,18 +41,6 @@ const Dashboard = () => {
         )
     })
 
-    const handleDoubleClick = (itemId) => {
-        console.log(`Item ${itemId} was double-clicked.`);
-      };
-
-    const convertSearchCategory = () => {
-        let splitSearchCategory = searchCategory.split(" ")
-        let joinedSearchCategory = splitSearchCategory.join("_")
-        let convertedSearchCategory = joinedSearchCategory.toLowerCase()
-        console.log(convertedSearchCategory)
-        return convertedSearchCategory
-    }
-
     let i = 0
     const renderAllUsers = allUsers.map((user) => {
         i++
@@ -57,7 +49,7 @@ const Dashboard = () => {
             return (
                 <>
             {/* <ListGroup.Item key={user.id} onClick={() => handleClickedLi(user.id)} onDoubleClick={() => handleDoubleClick(user.id)} active={activeLi === user.id}> */}
-            <tr key={user.id} onClick={() => setActiveLi(user.id)} style={{background: activeLi === user.id ? "lightblue" : null}}>
+            <tr key={user.id} onClick={() => handleUserClick(user)} onDoubleClick={() => handleUserDoubleClick(user)} style={{background: activeLi === user.id ? "lightblue" : null}}>
                 <td>{user.id}</td>
                 <td>{user.last_name}</td>
                 <td>{user.first_name}</td>
@@ -79,19 +71,31 @@ const Dashboard = () => {
     let convertedSearchCategory = searchCategory.split(" ").join("_").toLowerCase()
     console.log(convertedSearchCategory)
 
-    // const filterUsers = (category) => allUsers.filter((user) => user[category].toLowerCase().includes(searchParams.toLowerCase()))
-    // filterUsers(searchCategory)
+    // const renderUserProfile = (user) => {
+    //     return (
+    //         <UserProfile user={user} />
+    //     )
+    // }
+
+    const handleUserClick = (user) => {
+        setActiveLi(user.id)
+        setSelectedUserProfile(user)
+        console.log(user.signups)
+    }
+
+    const handleUserDoubleClick = (user) => {
+        setSelectedUserProfile(user)
+        console.log(user)
+        history.push({pathname:"/profile", state:selectedUserProfile})
+    }
+
     const filterUsers = (category) => allUsers.map((user) => {
         i++
-        console.log(category)
-        console.log(searchParams)
-        // convertSearchCategory()
-        // if (searchCategory !== "Filter By" && user.convertedSearchCategory.includes(searchParams.toLowerCase())) {
         if (String(user[category]).toLowerCase().includes(String(searchParams).toLowerCase())) {
             return (
                 <>
             {/* <ListGroup.Item key={user.id} onClick={() => handleClickedLi(user.id)} onDoubleClick={() => handleDoubleClick(user.id)} active={activeLi === user.id}> */}
-            <tr key={user.id} onClick={() => setActiveLi(user.id)} style={{background: activeLi === user.id ? "lightblue" : null}}>
+            <tr key={user.id} onClick={() => handleUserClick(user)} onDoubleClick={() => handleUserDoubleClick(user)} style={{background: activeLi === user.id ? "lightblue" : null}}>
                 <td>{user.id}</td>
                 <td>{user.last_name}</td>
                 <td>{user.first_name}</td>
@@ -110,6 +114,9 @@ const Dashboard = () => {
     }
     // }
     })
+
+    const renderUserProfile = () => <UserProfile user={selectedUserProfile} />
+
     return (
         <>
             <h1>Dashboard Page</h1>
@@ -124,6 +131,7 @@ const Dashboard = () => {
                 </Dropdown.Menu>
             </Dropdown>
             </div>
+            {/* {selectedUserProfile === null ? null : renderUserProfile()} */}
             <Table id="adminDashboardTable">
                 <thead>
                     <tr>

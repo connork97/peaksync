@@ -11,6 +11,7 @@ import AboutUs from "./AboutUs.js"
 import Login from "./Login.js"
 import SignUp from "./SignUp.js"
 import Dashboard from "./Dashboard.js"
+import UserProfile from "./UserProfile.js";
 
 function App() {
   return (
@@ -37,6 +38,9 @@ function App() {
         </Route>
         <Route exact path='/dashboard'>
           <Dashboard />
+        </Route>
+        <Route exact path='/profile'>
+          <UserProfile />
         </Route>
       </Switch>
     </>
