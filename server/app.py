@@ -277,14 +277,23 @@ def signups():
 
     return response
 
-@app.route('/signups/<int:id>', methods=['GET'])
+@app.route('/signups/<int:id>', methods=['GET', 'DELETE'])
 def signup_by_id(id):
     signup = Signup.query.filter(Signup.id == id).one_or_none()
 
     if signup:
+
         if request.method == 'GET':
             response = make_response(signup.to_dict(), 200)
     
+        if request.method == 'DELETE':
+            try:
+                db.session.delete(signup)
+                db.session.commit()
+                response = make_response({"success": f"204: Signup of id {id} deleted."})
+            except:
+                response = make_response({"error": f"404: Signup of {id} not deleted."})
+
     else:
         response = make_response({"error": f"404: Signup of id {id} not found."})
 

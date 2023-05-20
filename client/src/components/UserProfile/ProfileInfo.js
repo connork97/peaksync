@@ -29,6 +29,22 @@ const ProfileInfo = ({ selectedUser }) => {
         }))
     }
 
+    const handleDiscardChanges = () => {
+        setUserProfileInfo({
+            "first_name": selectedUser.first_name,
+            "last_name": selectedUser.last_name,
+            "email": selectedUser.email,
+            "phone_number": selectedUser.phone_number,
+            "address": selectedUser.address,
+            "city": selectedUser.city,
+            "state": selectedUser.state,
+            "zipcode": selectedUser.zipcode,
+            "date_of_birth": selectedUser.date_of_birth,
+            "emergency_contact_name": selectedUser.emergency_contact_name,
+            "emergency_contact_phone_number": selectedUser.emergency_contact_phone_number
+        })
+    }
+
     const handleProfileEdit = () => {
         console.log(userProfileInfo)
         fetch(`/users/${selectedUser.id}`, {
@@ -57,7 +73,7 @@ const ProfileInfo = ({ selectedUser }) => {
                     <Card.Text>First Contact with Customer: {selectedUser.created_at}</Card.Text>
                     <Card.Text>Most Recent Change to Customer: {selectedUser.updated_at ? selectedUser.updated_at : "N/A"}</Card.Text>
                     <Card.Text>Membership ID: {userProfileInfo.membership_id}</Card.Text>
-                    <Button onClick={handleProfileEdit}>Save Changes</Button> <Button onClick={() => setUserProfileInfo(selectedUser)}>Discard Changes</Button>
+                    <Button onClick={handleProfileEdit}>Save Changes</Button> <Button onClick={handleDiscardChanges}>Discard Changes</Button>
                 </Card.Body>
             </Card>
         </div>

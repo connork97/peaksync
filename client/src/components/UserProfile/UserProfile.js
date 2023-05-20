@@ -16,6 +16,11 @@ const UserProfile = () => {
     console.log(selectedUser)
     const [shouldRenderBookings, setShouldRenderBookings] = useState(false)
 
+    const fetchSelectedUser = () => {
+        fetch(`/users/${selectedUser.id}`)
+        .then((response) => response.json())
+        .then((selectedUserData) => selectedUser = selectedUserData)
+    }
     
     return (
         // <h1>{user.first_name}</h1>
@@ -29,7 +34,7 @@ const UserProfile = () => {
             <ProfileInfo selectedUser={selectedUser} />
         </Tab>
         <Tab eventKey="bookings" title="Bookings">
-            <UserBookings selectedUser={selectedUser} />
+            <UserBookings selectedUser={selectedUser} fetchSelectedUser={fetchSelectedUser} />
         </Tab>
             {/* <UserPayments selectedUser={selectedUser} /> */}
         <Tab eventKey="payments" title="Payments">
