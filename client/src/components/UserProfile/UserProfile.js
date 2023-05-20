@@ -3,6 +3,7 @@ import { userState } from "../../atoms"
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
 import { useHistory, useLocation } from 'react-router-dom'
+import Button from 'react-bootstrap/Button'
 
 import ProfileInfo from "./ProfileInfo"
 import UserBookings from './UserBookings'

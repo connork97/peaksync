@@ -88,7 +88,9 @@ def users():
 
 @app.route('/users/<int:id>', methods=['GET', 'PATCH', 'DELETE'])
 def user_by_id(id):
+
     user = User.query.filter(User.id == id).one_or_none()
+    
     if user:
 
         if request.method == 'GET':
