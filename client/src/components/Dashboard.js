@@ -1,5 +1,5 @@
 import { useRecoilState } from "recoil"
-import { userState } from "../atoms.js"
+import { userState, allUsersAtomState } from "../atoms.js"
 
 import { useState, useEffect } from "react"
 import { useHistory } from 'react-router-dom'
@@ -11,23 +11,24 @@ import Dropdown from "react-bootstrap/Dropdown"
 
 import UserProfile from "./UserProfile/UserProfile.js";
 
-const Dashboard = () => {
+const Dashboard = ({ allUsers, setAllUsers, currentUser }) => {
 
     const history = useHistory()
 
-    const [currentUser, setCurrentUser] = useRecoilState(userState)
-    const [allUsers, setAllUsers] = useState([])
+    // console.log(allUsers)
+    // const [currentUser, setCurrentUser] = useRecoilState(userState)
+    // const [allUsers, setAllUsers] = useState([])
     const [searchParams, setSearchParams] = useState("")
     const [searchCategory, setSearchCategory] = useState("Filter By")
     const [activeLi, setActiveLi] = useState("")
 
     const [selectedUserProfile, setSelectedUserProfile] = useState(null)
 
-    useEffect(() => {
-        fetch("/users")
-        .then((response) => response.json())
-        .then((userData) => setAllUsers(userData))
-    }, [])
+    // useEffect(() => {
+    //     fetch("/users")
+    //     .then((response) => response.json())
+    //     .then((userData) => setAllUsers(userData))
+    // }, [])
 
     const columnLabels = ["ID", "Last Name", "First Name", "Email", "Phone Number", "Waiver", "Address", "City", "State", "Zipcode", "Date of Birth", "Created At", "Admin"]
 
@@ -40,6 +41,9 @@ const Dashboard = () => {
             <Dropdown.Item name={label} onClick={(event) => setSearchCategory(event.target.name)}>{label}</Dropdown.Item>
         )
     })
+    console.log(allUsers)
+
+    // const renderAllUsers = console.log(allUsers)
 
     const renderAllUsers = allUsers.map((user) => {
             return (

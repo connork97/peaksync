@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-const SignUp = () => {
+const SignUp = ({ currentUser, setCurrentUser}) => {
 
     const [newUser, setNewUser] = useState({
         "firstName": "",
@@ -46,7 +46,7 @@ const SignUp = () => {
                 body: JSON.stringify(newUser)
             })
             .then((response) => response.json())
-            .then((newUserData) => console.log(newUserData))
+            .then((newUserData) => setCurrentUser(newUserData))
         } else {
             window.alert("Please make sure your passwords match.")
         }

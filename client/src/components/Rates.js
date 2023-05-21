@@ -1,5 +1,5 @@
 
-const Rates = () => {
+const Rates = ({ currentUser }) => {
     return (
         <h1>Rates Page</h1>
     )

@@ -9,11 +9,11 @@ import ProfileInfo from "./ProfileInfo"
 import UserBookings from './UserBookings'
 import UserPayments from './UserPayments'
 
-const UserProfile = () => {
+const UserProfile = ({ currentUser }) => {
 
     const location = useLocation()
     
-    const [currentUser, setCurrentUser] = useRecoilState(userState)
+    // const [currentUser, setCurrentUser] = useRecoilState(userState)
 
     let selectedUser
     if (currentUser.admin === true) {
@@ -21,7 +21,6 @@ const UserProfile = () => {
     } else {
         selectedUser = currentUser
     }
-    // const selectedUser = location.state
     console.log(selectedUser)
 
     return (

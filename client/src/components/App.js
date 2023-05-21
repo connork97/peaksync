@@ -3,6 +3,9 @@ import { Switch, Route } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/css/bootstrap.css';
 
+// import { useRecoilState } from 'recoil'
+// import { userState, allUsersAtomState } from "../atoms.js";
+
 import NavBar from "./NavBar.js";
 import Home from "./Home.js";
 import Classes from "./Classes.js"
@@ -14,33 +17,72 @@ import Dashboard from "./Dashboard.js"
 import UserProfile from "./UserProfile/UserProfile.js";
 
 function App() {
+
+  const [allUsers, setAllUsers] = useState([])
+  const [currentUser, setCurrentUser] = useState({})
+
+  useEffect(() => {
+    console.log(allUsers)
+  }, allUsers)
+
+  // useEffect(() => {
+  //   if (currentUser.admin === true) {
+  //     fetch("/users")
+  //     .then((response) => response.json())
+  //     .then((userData) => setAllUsers(userData))
+  //   } else {
+  //     console.log("No admin priveledges")
+  //   }
+  // }, [])
+
+  // useEffect(() => {
+  //   console.log(allUsers)
+  // }, [allUsers])
+
   return (
     <>
-      <NavBar />
+      <NavBar currentUser={currentUser} />
       <Switch>
         <Route exact path='/'>
-          <Home />
+          <Home currentUser={currentUser} />
         </Route>
         <Route exact path='/rates'>
-          <Rates />
+          <Rates currentUser={currentUser} />
         </Route>
         <Route exact path='/classes'>
-          <Classes />
+          <Classes currentUser={currentUser} />
         </Route>
         <Route exact path='/about-us'>
-          <AboutUs />
+          <AboutUs currentUser={currentUser} />
         </Route>
         <Route exact path='/login'>
-          <Login />
+          <Login
+            currentUser={currentUser}
+            setCurrentUser={setCurrentUser}
+            allUsers={allUsers}
+            setAllUsers={setAllUsers}
+          />
         </Route>
         <Route exact path='/signup'>
-          <SignUp />
+          <SignUp
+            currentUser={currentUser}
+            setCurrentUser={setCurrentUser}
+          />
         </Route>
         <Route exact path='/dashboard'>
-          <Dashboard />
+          <Dashboard
+            allUsers={allUsers}
+            setAllUsers={setAllUsers} 
+            currentUser={currentUser}
+          />
         </Route>
         <Route exact path='/profile'>
-          <UserProfile />
+          <UserProfile 
+            currentUser={currentUser}
+            setCurrentUser={setCurrentUser}
+            allUsers={allUsers}
+            setAllUsers={setAllUsers}
+          />
         </Route>
       </Switch>
     </>

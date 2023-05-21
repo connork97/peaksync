@@ -5,14 +5,14 @@ import { useRecoilState } from "recoil"
 
 import Button from 'react-bootstrap/Button'
 
-const Login = () => {
+const Login = ({ currentUser, setCurrentUser, allUsers, setAllUsers }) => {
 
     const history = useHistory()
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
-    const [currentUser, setCurrentUser] = useRecoilState(userState)
+    // const [currentUser, setCurrentUser] = useRecoilState(userState)
     const handleUserLogin = (event) => {
         event.preventDefault()
         fetch("/login", {
@@ -28,10 +28,22 @@ const Login = () => {
         .then((response) => response.json())
         .then((userData) => {
             setCurrentUser(userData)
+            fetchAllUsers(userData)
         })
     }
 
+    const fetchAllUsers = (user) => {
+        if (user.admin === true) {
+            fetch("/users")
+            .then((response) => response.json())
+            .then((userData) => setAllUsers(userData))
+        } else {
+            console.log("No admin priveledges")
+        }
+    }
+
     useEffect(() => {
+        console.log(allUsers)
         console.log(currentUser)
         console.log(userState)
     }, [currentUser, userState])

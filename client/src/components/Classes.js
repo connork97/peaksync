@@ -1,5 +1,5 @@
 
-const Classes = () => {
+const Classes = ({ currentUser }) => {
     return (
         <h1>Classes Page</h1>
     )

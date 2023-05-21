@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import ListGroup from 'react-bootstrap/ListGroup'
 import Tab from 'react-bootstrap/Tab'
@@ -6,6 +6,9 @@ import Button from 'react-bootstrap/Button'
 
 const UserBookings = ({ selectedUser, fetchSelectedUser }) => {
 
+    useEffect(() => {
+        console.log(selectedUser)
+    }, [])
     const [selectedUserBookings, setSelectedUserBookings] = useState(selectedUser.signups)
 
     const handleCancelBooking = (signup) => {

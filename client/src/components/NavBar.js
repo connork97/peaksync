@@ -3,9 +3,9 @@ import { userState } from "../atoms"
 import { useRecoilState } from 'recoil'
 import { useState, useEffect } from 'react'
 
-const NavBar = () => {
+const NavBar = ({ currentUser }) => {
 
-    const [currentUser, setCurrentUser] = useRecoilState(userState)
+    // const [currentUser, setCurrentUser] = useRecoilState(userState)
 
     const userAccess = currentUser.admin
 
