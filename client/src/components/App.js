@@ -3,9 +3,6 @@ import { Switch, Route } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/css/bootstrap.css';
 
-// import { useRecoilState } from 'recoil'
-// import { userState, allUsersAtomState } from "../atoms.js";
-
 import NavBar from "./NavBar.js";
 import Home from "./Home.js";
 import Classes from "./Classes.js"
@@ -13,31 +10,20 @@ import Rates from "./Rates.js"
 import AboutUs from "./AboutUs.js"
 import Login from "./Login.js"
 import SignUp from "./SignUp.js"
-import Dashboard from "./Dashboard.js"
+import UserDatabase from "./AdminDashboard.js/UserDatabase.js"
 import UserProfile from "./UserProfile/UserProfile.js";
+import AdminDashboard from "./AdminDashboard.js/AdminDashboard.js";
 
 function App() {
 
   const [allUsers, setAllUsers] = useState([])
+  const [allClasses, setAllClasses] = useState([])
+  const [allMemberships, setAllMemberships] = useState([])
   const [currentUser, setCurrentUser] = useState({})
 
   useEffect(() => {
     console.log(allUsers)
   }, allUsers)
-
-  // useEffect(() => {
-  //   if (currentUser.admin === true) {
-  //     fetch("/users")
-  //     .then((response) => response.json())
-  //     .then((userData) => setAllUsers(userData))
-  //   } else {
-  //     console.log("No admin priveledges")
-  //   }
-  // }, [])
-
-  // useEffect(() => {
-  //   console.log(allUsers)
-  // }, [allUsers])
 
   return (
     <>
@@ -64,6 +50,8 @@ function App() {
             setCurrentUser={setCurrentUser}
             allUsers={allUsers}
             setAllUsers={setAllUsers}
+            setAllMemberships={setAllMemberships}
+            setAllClasses={setAllClasses}
           />
         </Route>
         <Route exact path='/signup'>
@@ -72,8 +60,17 @@ function App() {
             setCurrentUser={setCurrentUser}
           />
         </Route>
-        <Route exact path='/dashboard'>
-          <Dashboard
+        <Route exact path='/admin-dashboard'>
+          <AdminDashboard 
+            currentUser={currentUser}
+            allClasses={allClasses}
+            setAllClasses={setAllClasses}
+            allMemberships={allMemberships}
+            setAllMemberships={setAllMemberships}
+          />
+        </Route>
+        <Route exact path='/database'>
+          <UserDatabase
             allUsers={allUsers}
             setAllUsers={setAllUsers} 
             currentUser={currentUser}

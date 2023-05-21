@@ -1,6 +1,3 @@
-import { useState, useEffect } from "react"
-import { userState } from "../../atoms"
-import { useRecoilState } from 'recoil'
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
 import { useHistory, useLocation } from 'react-router-dom'
@@ -30,16 +27,16 @@ const UserProfile = ({ currentUser }) => {
             className="mb-3"
             justify
         >
-        <Tab eventKey="profile" title="Profile">
-            <ProfileInfo selectedUser={selectedUser} />
-        </Tab>
-        <Tab eventKey="bookings" title="Bookings">
-            <UserBookings selectedUser={selectedUser} />
-        </Tab>
-            {/* <UserPayments selectedUser={selectedUser} /> */}
-        <Tab eventKey="payments" title="Payments">
-            <UserPayments selectedUser={selectedUser} />
-        </Tab>
+            <Tab eventKey="profile" title="Profile">
+                <ProfileInfo selectedUser={selectedUser} />
+            </Tab>
+            <Tab eventKey="bookings" title="Bookings">
+                <UserBookings selectedUser={selectedUser} />
+            </Tab>
+                {/* <UserPayments selectedUser={selectedUser} /> */}
+            <Tab eventKey="payments" title="Payments">
+                <UserPayments selectedUser={selectedUser} />
+            </Tab>
         </Tabs>
     )
 }

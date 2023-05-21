@@ -1,11 +1,7 @@
 import { Link } from "react-router-dom"
-import { userState } from "../atoms"
-import { useRecoilState } from 'recoil'
 import { useState, useEffect } from 'react'
 
 const NavBar = ({ currentUser, allUsers }) => {
-
-    // const [currentUser, setCurrentUser] = useRecoilState(userState)
 
     useEffect(() => {
         console.log(currentUser)
@@ -14,7 +10,7 @@ const NavBar = ({ currentUser, allUsers }) => {
     const renderDashboardNavLink = () => {
         if (currentUser.admin && allUsers.length !== 0) {
             return (
-                <Link to="/dashboard" exact="true" className="navBarLink">Dashboard</Link>
+                <Link to="/admin-dashboard" exact="true" className="navBarLink">Dashboard</Link>
                 )
         } else if (!currentUser.admin) {
             return (

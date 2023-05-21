@@ -52,7 +52,7 @@ if __name__ == '__main__':
         )
         db.session.add_all([guest, admin])
         db.session.commit()
-        for i in range(100):
+        for i in range(25):
             # phone_number = fake.phone_number()
             # formatted_phone_number = ''.join(filter(str.isdigit, phone_number))
             phone_number = fake.random_number(digits=10)

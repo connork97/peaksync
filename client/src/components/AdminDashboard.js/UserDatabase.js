@@ -1,5 +1,5 @@
 import { useRecoilState } from "recoil"
-import { userState, allUsersAtomState } from "../atoms.js"
+import { userState, allUsersAtomState } from "../../atoms.js"
 
 import { useState, useEffect } from "react"
 import { useHistory } from 'react-router-dom'
@@ -9,9 +9,9 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Table from 'react-bootstrap/Table'
 import Dropdown from "react-bootstrap/Dropdown"
 
-import UserProfile from "./UserProfile/UserProfile.js";
+import UserProfile from "../UserProfile/UserProfile.js";
 
-const Dashboard = ({ allUsers, setAllUsers, currentUser }) => {
+const UserDatabase = ({ allUsers, setAllUsers, currentUser }) => {
 
     const history = useHistory()
 
@@ -129,4 +129,4 @@ const Dashboard = ({ allUsers, setAllUsers, currentUser }) => {
     )
 }
 
-export default Dashboard
+export default UserDatabase

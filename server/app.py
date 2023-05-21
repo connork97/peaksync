@@ -23,6 +23,8 @@ def home():
 def users():
     if request.method == 'GET':
 
+        print("Fetching all user profiles...")
+
         all_users_dict = [user.to_dict() for user in User.query.all()]
         
         if all_users_dict:
@@ -32,6 +34,8 @@ def users():
             response = make_response({"error": "Users not found."}, 404)
     
     if request.method == 'POST':
+
+        print("Creating new user...")
 
         try:
             form_data = request.get_json()
@@ -102,6 +106,7 @@ def user_by_id(id):
 @app.route('/memberships', methods=['GET', 'POST'])
 def memberships():
     if request.method == 'GET':
+        print("Fetching all memberships...")
         all_memberships_dict = [membership.to_dict() for membership in Membership.query.all()]
         if all_memberships_dict:
             response = make_response(all_memberships_dict, 200)
@@ -109,6 +114,9 @@ def memberships():
             response = make_response({"error": "Memberships not found."}, 404)
 
     if request.method == 'POST':
+
+        print("Creating new memberhip...")
+
         try:
             form_data = request.get_json()
             new_membership = Membership(
@@ -149,6 +157,9 @@ def membership_by_id(id):
                 response = make_response({"error": f"404: Could not update user of id {id}."}, 404)
 
         if request.method == 'DELETE':
+
+            print(f"Deleting membership of id {id}...")
+
             try:
                 db.session.delete(membership)
                 db.session.commit()
@@ -164,13 +175,15 @@ def membership_by_id(id):
 @app.route('/classes', methods=['GET', 'POST'])
 def classes():
     if request.method == 'GET':
-        all_classes_dict = [clas.to_dict() for clas in Membership.query.all()]
+        print("Fetching all classes...")
+        all_classes_dict = [clas.to_dict() for clas in Class.query.all()]
         if all_classes_dict:
             response = make_response(all_classes_dict, 200)
         else:
             response = make_response({"error": "Classes not found."}, 404)
     
     if request.method == 'POST':
+        print("Creating new class...")
         try:
             form_data = request.get_json()
             new_class = Class(
@@ -231,6 +244,7 @@ def class_by_id(id):
 def signups():
 
     if request.method == 'GET':
+        print("Fetching all signups...")
         signups_dict = [signup.to_dict() for signup in Signup.query.all()]
         
         if signups_dict:
@@ -240,6 +254,7 @@ def signups():
             response = make_response({"error": "404: Signups not found."})
     
     if request.method == 'POST':
+        print("Creating new signup...")
         form_data = request.get_json()
         new_signup= Signup(
             user_id=form_data['userId'],
@@ -279,6 +294,7 @@ def signup_by_id(id):
 def payments():
 
     if request.method == 'GET':
+        print("Fetching all payments...")
         payments_dict = [payment.to_dict() for payment in Payment.query.all()]
         
         if payments_dict:
@@ -293,6 +309,7 @@ def payments():
 def login():
 
     if request.method == 'POST':
+        print("Logging in user...")
         form_data = request.get_json()
         email = form_data['email']
         password = form_data['password']
@@ -317,7 +334,7 @@ def login():
 @app.route('/logout', methods=['DELETE'])
 def logout():
     if request.method == 'DELETE':
-
+        print("Logging out user...")
         response = make_response({"success": "Logged out and cookies cleared."})
 
         # for cookie in request.cookies:

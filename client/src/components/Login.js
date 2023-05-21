@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react"
 import { useHistory } from "react-router-dom"
-import { userState } from "../atoms"
-import { useRecoilState } from "recoil"
 
 import Button from 'react-bootstrap/Button'
 
-const Login = ({ currentUser, setCurrentUser, allUsers, setAllUsers }) => {
+const Login = ({ currentUser, setCurrentUser, allUsers, setAllUsers, setAllMemberships, setAllClasses }) => {
 
     const history = useHistory()
 
@@ -31,22 +29,34 @@ const Login = ({ currentUser, setCurrentUser, allUsers, setAllUsers }) => {
             fetchAllUsers(userData)
         })
     }
+    
+    const fetchAllClasses = () => {
+        fetch("/classes")
+        .then((response) => response.json())
+        .then((classData) => setAllClasses(classData))
+    }
 
+    const fetchAllMemberships = () => {
+        fetch("/memberships")
+        .then((response) => response.json())
+        .then((membershipData) => {
+            setAllMemberships(membershipData)
+            fetchAllClasses()
+        })
+    }
+    
     const fetchAllUsers = (user) => {
         if (user.admin === true) {
             fetch("/users")
             .then((response) => response.json())
-            .then((userData) => setAllUsers(userData))
+            .then((userData) => {
+                setAllUsers(userData)
+                fetchAllMemberships()
+            })
         } else {
             console.log("No admin priveledges")
         }
     }
-
-    useEffect(() => {
-        console.log(allUsers)
-        console.log(currentUser)
-        console.log(userState)
-    }, [currentUser, userState])
 
     const handleLogout = () => {
         fetch('/logout', {
