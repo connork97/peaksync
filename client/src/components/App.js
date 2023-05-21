@@ -41,7 +41,10 @@ function App() {
 
   return (
     <>
-      <NavBar currentUser={currentUser} />
+      <NavBar
+        currentUser={currentUser}
+        allUsers={allUsers}  
+      />
       <Switch>
         <Route exact path='/'>
           <Home currentUser={currentUser} />
