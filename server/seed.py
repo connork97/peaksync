@@ -19,6 +19,38 @@ if __name__ == '__main__':
         db.session.query(Class).delete()
         db.session.commit()
         print("Generating user profiles...")
+        guest = User(
+            first_name="Guest",
+            last_name="Account",
+            email="guest@guest.com",
+            password_hash="password",
+            phone_number=1231231234,
+            address="123 Guest Street",
+            city="Reno",
+            state="Nevada",
+            zipcode=12345,
+            date_of_birth="2000-01-01",
+            emergency_contact_name="Guest Parent",
+            emergency_contact_phone_number=1231231234,
+            waiver=False
+        )
+        admin = User(
+            first_name="Admin",
+            last_name="Account",
+            email="admin@admin.com",
+            password_hash="password",
+            phone_number=1231231234,
+            address="123 Admin Street",
+            city="Reno",
+            state="Nevada",
+            zipcode=12345,
+            date_of_birth="2000-01-01",
+            emergency_contact_name="Admin Parent",
+            emergency_contact_phone_number=1231231234,
+            waiver=True
+        )
+        db.session.add_all([guest, admin])
+        db.session.commit()
         for i in range(100):
             # phone_number = fake.phone_number()
             # formatted_phone_number = ''.join(filter(str.isdigit, phone_number))

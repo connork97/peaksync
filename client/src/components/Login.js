@@ -1,7 +1,7 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useHistory } from "react-router-dom"
 import { userState } from "../atoms"
-import { useRecoilState, setRecoilState } from "recoil"
+import { useRecoilState } from "recoil"
 
 import Button from 'react-bootstrap/Button'
 
@@ -12,8 +12,14 @@ const Login = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
+    // console.log(userState)
+    // console.log(currentUser)
+    // setCurrentUser("Test")
+    // // const currentUser = 
+    // console.log(currentUser)
+    // console.log(userState)
+    // const setUserRecoilState = useSetRecoilState()
     const [currentUser, setCurrentUser] = useRecoilState(userState)
-
     const handleUserLogin = (event) => {
         event.preventDefault()
         fetch("/login", {
@@ -30,9 +36,13 @@ const Login = () => {
         .then((userData) => {
             setCurrentUser(userData)
         })
+    }
+
+    useEffect(() => {
+        // const currentUser = useRecoilValue(userState)
         console.log(currentUser)
         console.log(userState)
-    }
+    }, [currentUser, userState])
 
     const handleLogout = () => {
         fetch('/logout', {
