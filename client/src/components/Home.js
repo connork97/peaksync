@@ -11,7 +11,7 @@ const Home = () => {
     }, [user])
 
     return (
-        <div>
+        <div className="mainDiv">
             <h1>Welcome to Crux Climbing Centers!</h1>
             <form>
                 <input type="text" value={user.address} onChange={(event) => setUser(event.target.value)}></input>

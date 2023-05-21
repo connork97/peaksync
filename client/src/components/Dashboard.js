@@ -29,7 +29,7 @@ const Dashboard = () => {
         .then((userData) => setAllUsers(userData))
     }, [])
 
-    const columnLabels = ["ID", "Last Name", "First Name", "Email", "Phone Number", "Waiver", "Address", "City", "State", "Zipcode", "Date of Birth", "Created At"]
+    const columnLabels = ["ID", "Last Name", "First Name", "Email", "Phone Number", "Waiver", "Address", "City", "State", "Zipcode", "Date of Birth", "Created At", "Admin"]
 
     const renderColumnLabels = columnLabels.map((label) => {
         return <th>{label}</th>
@@ -56,6 +56,7 @@ const Dashboard = () => {
                     <td>{user.zipcode}</td>
                     <td>{user.date_of_birth}</td>
                     <td>{user.created_at}</td>
+                    <td>{user.admin ? "True": "False"}</td>
                 </tr>
         )
     })
@@ -90,6 +91,7 @@ const Dashboard = () => {
                     <td>{user.zipcode}</td>
                     <td>{user.date_of_birth}</td>
                     <td>{user.created_at}</td>
+                    <td>{user.admin ? "True" : "False"}</td>
                 </tr>
             )
         }

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import { userState } from "../../atoms"
+import { useRecoilState } from 'recoil'
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
 import { useHistory, useLocation } from 'react-router-dom'
@@ -11,7 +12,16 @@ import UserPayments from './UserPayments'
 const UserProfile = () => {
 
     const location = useLocation()
-    const selectedUser = location.state
+    
+    const [currentUser, setCurrentUser] = useRecoilState(userState)
+
+    let selectedUser
+    if (currentUser.admin === true) {
+        selectedUser = location.state
+    } else {
+        selectedUser = currentUser
+    }
+    // const selectedUser = location.state
     console.log(selectedUser)
 
     return (

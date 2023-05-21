@@ -12,13 +12,6 @@ const Login = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
-    // console.log(userState)
-    // console.log(currentUser)
-    // setCurrentUser("Test")
-    // // const currentUser = 
-    // console.log(currentUser)
-    // console.log(userState)
-    // const setUserRecoilState = useSetRecoilState()
     const [currentUser, setCurrentUser] = useRecoilState(userState)
     const handleUserLogin = (event) => {
         event.preventDefault()
@@ -39,7 +32,6 @@ const Login = () => {
     }
 
     useEffect(() => {
-        // const currentUser = useRecoilValue(userState)
         console.log(currentUser)
         console.log(userState)
     }, [currentUser, userState])
@@ -51,7 +43,7 @@ const Login = () => {
     }
 
     return (
-        <>
+        <div className="mainDiv">
             <div id="loginDiv">
             <h1>Login Page</h1>
                 <form id="loginForm" onSubmit={handleUserLogin}>
@@ -70,7 +62,7 @@ const Login = () => {
                 <h3>Logout Here</h3>
                 <Button onClick={() => handleLogout()}>Logout</Button>
             </div>
-        </>
+        </div>
     )
 }
 

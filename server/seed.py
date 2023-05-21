@@ -47,7 +47,8 @@ if __name__ == '__main__':
             date_of_birth="2000-01-01",
             emergency_contact_name="Admin Parent",
             emergency_contact_phone_number=1231231234,
-            waiver=True
+            waiver=True,
+            admin=True
         )
         db.session.add_all([guest, admin])
         db.session.commit()

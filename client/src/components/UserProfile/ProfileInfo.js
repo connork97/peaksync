@@ -59,8 +59,8 @@ const ProfileInfo = ({ selectedUser }) => {
     }
 
     return (
-        <div id="userProfileInfoDiv">
-            <Card style={{position:"absolute", display:"flex", justifyContent:"center", margin:"auto"}}>
+        <div id="userProfileInfoDiv" style={{display:"flex", marginLeft:"0",textAlign:"left"}}>
+            <Card style={{position:"absolute", display:"flex", justifyContent:"start", marginLeft:"0", textAlign:"left"}}>
                 <Card.Img src={myImage} style={{width:"250px", display:"flex", justifyContent:"center"}}></Card.Img>
                 <Card.Body>
                     <Card.Title><input name="first_name" value={userProfileInfo.first_name} onChange={handleProfileInfoChange}></input> <input name="last_name" value={userProfileInfo.last_name} onChange={handleProfileInfoChange}></input> - User ID: {selectedUser.id}</Card.Title>
