@@ -10,9 +10,15 @@ const UserPayments = ({ selectedUser }) => {
         )
     })
     return (
+        <>
+        <div>
+            <h1 id="userBalanceH1">Balance: <span id="userBalanceSpan"></span></h1>
+            <h1 id="userCreditH1">Credit: <span id="userCreditSpan"></span></h1>
+        </div>
             <ListGroup>
                 {renderUserPayments}
             </ListGroup>
+        </>
     )
 }
 

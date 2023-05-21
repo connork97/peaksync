@@ -1,0 +1,13 @@
+* {
+    /* margin: auto; */
+    text-align: center;
+}
+
+body {
+    margin: auto;
+}
+
+.navBarLink {
+    color: black;
+    font-size: 2rem;
+}

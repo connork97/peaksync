@@ -41,31 +41,23 @@ const Dashboard = () => {
         )
     })
 
-    let i = 0
     const renderAllUsers = allUsers.map((user) => {
-        i++
-        // convertSearchCategory()
-        // if (searchCategory !== "Filter By" && user.convertedSearchCategory.includes(searchParams.toLowerCase())) {
             return (
-                <>
-            {/* <ListGroup.Item key={user.id} onClick={() => handleClickedLi(user.id)} onDoubleClick={() => handleDoubleClick(user.id)} active={activeLi === user.id}> */}
-            <tr key={user.id} onClick={() => handleUserClick(user)} onDoubleClick={() => handleUserDoubleClick(user)} style={{background: activeLi === user.id ? "lightblue" : null}}>
-                <td>{user.id}</td>
-                <td>{user.last_name}</td>
-                <td>{user.first_name}</td>
-                <td>{user.email}</td>
-                <td>{user.phone_number}</td>
-                <td>{user.waiver ? "True" : "False"}</td>
-                <td>{user.address}</td>
-                <td>{user.city}</td>
-                <td>{user.state}</td>
-                <td>{user.zipcode}</td>
-                <td>{user.date_of_birth}</td>
-                <td>{user.created_at}</td>
-            </tr>
-        </>
+                <tr key={user.id} onClick={() => handleUserClick(user)} onDoubleClick={() => handleUserDoubleClick(user)} style={{background: activeLi === user.id ? "lightblue" : null}}>
+                    <td>{user.id}</td>
+                    <td>{user.last_name}</td>
+                    <td>{user.first_name}</td>
+                    <td>{user.email}</td>
+                    <td>{user.phone_number}</td>
+                    <td>{user.waiver ? "True" : "False"}</td>
+                    <td>{user.address}</td>
+                    <td>{user.city}</td>
+                    <td>{user.state}</td>
+                    <td>{user.zipcode}</td>
+                    <td>{user.date_of_birth}</td>
+                    <td>{user.created_at}</td>
+                </tr>
         )
-    // }
     })
 
     let convertedSearchCategory = searchCategory.split(" ").join("_").toLowerCase()
@@ -83,35 +75,32 @@ const Dashboard = () => {
     }
 
     const filterUsers = (category) => allUsers.map((user) => {
-        i++
         if (String(user[category]).toLowerCase().includes(String(searchParams).toLowerCase())) {
             return (
-                <>
-            <tr key={user.id} onClick={() => handleUserClick(user)} onDoubleClick={() => handleUserDoubleClick(user)} style={{background: activeLi === user.id ? "lightblue" : null}}>
-                <td>{user.id}</td>
-                <td>{user.last_name}</td>
-                <td>{user.first_name}</td>
-                <td>{user.email}</td>
-                <td>{user.phone_number}</td>
-                <td>{user.waiver ? "True" : "False"}</td>
-                <td>{user.address}</td>
-                <td>{user.city}</td>
-                <td>{user.state}</td>
-                <td>{user.zipcode}</td>
-                <td>{user.date_of_birth}</td>
-                <td>{user.created_at}</td>
-            </tr>
-        </>
-        )
-    }
+                <tr key={user.id} onClick={() => handleUserClick(user)} onDoubleClick={() => handleUserDoubleClick(user)} style={{background: activeLi === user.id ? "lightblue" : null}}>
+                    <td>{user.id}</td>
+                    <td>{user.last_name}</td>
+                    <td>{user.first_name}</td>
+                    <td>{user.email}</td>
+                    <td>{user.phone_number}</td>
+                    <td>{user.waiver ? "True" : "False"}</td>
+                    <td>{user.address}</td>
+                    <td>{user.city}</td>
+                    <td>{user.state}</td>
+                    <td>{user.zipcode}</td>
+                    <td>{user.date_of_birth}</td>
+                    <td>{user.created_at}</td>
+                </tr>
+            )
+        }
     })
 
     return (
         <>
             <h1>Dashboard Page</h1>
-            <div id="adminSearchDiv" style={{display: "flex"}}>
-            <input type="text" value={searchParams} onChange={(event) => setSearchParams(event.target.value)}></input>
-            <Dropdown>
+            <div id="adminSearchDiv" style={{display: "flex", justifyContent:"center", alignItems:"center"}}>
+            <input type="text" value={searchParams} onChange={(event) => setSearchParams(event.target.value)} style={{marginRight:"10px"}}></input>
+            <Dropdown style={{marginLeft:"10px"}}>
                 <Dropdown.Toggle>
                     {searchCategory}
                 </Dropdown.Toggle>
@@ -120,7 +109,6 @@ const Dashboard = () => {
                 </Dropdown.Menu>
             </Dropdown>
             </div>
-            {/* {selectedUserProfile === null ? null : renderUserProfile()} */}
             <Table id="adminDashboardTable">
                 <thead>
                     <tr>

@@ -18,30 +18,6 @@ CORS(app)
 def home():
     return ''
 
-@app.route('/login', methods=['POST'])
-def login():
-
-    if request.method == 'POST':
-        form_data = request.get_json()
-        email = form_data['email']
-        password = form_data['password']
-
-        user = User.query.filter(User.email == email).one_or_none()
-
-        if user and user.authenticate(password):
-            response = make_response(user.to_dict(), 200)
-            session['user_id'] = user.id
-            session['user_last_name'] = user.last_name
-            session['user_address'] = user.address
-
-            # response.set_cookie('user_id', user.id)
-            response.set_cookie('user_email', user.email)
-            response.set_cookie('user_first_name', user.first_name)
-
-        else:
-            response = make_response({"error": "Unable to authenticate user login."}, 404)
-
-    return response
 
 @app.route('/users', methods=['GET', 'POST'])
 def users():
@@ -312,6 +288,42 @@ def payments():
             response = make_response({"error": "404: Payments not found."})
 
     return response
+
+@app.route('/login', methods=['POST'])
+def login():
+
+    if request.method == 'POST':
+        form_data = request.get_json()
+        email = form_data['email']
+        password = form_data['password']
+
+        user = User.query.filter(User.email == email).one_or_none()
+
+        if user and user.authenticate(password):
+            response = make_response(user.to_dict(), 200)
+            # session['user_id'] = user.id
+            # session['user_last_name'] = user.last_name
+            # session['user_address'] = user.address
+
+            # response.set_cookie('user_id', user.id)
+            response.set_cookie('user_email', user.email)
+            # response.set_cookie('user_first_name', user.first_name)
+
+        else:
+            response = make_response({"error": "Unable to authenticate user login."}, 404)
+
+    return response
+
+@app.route('/logout', methods=['DELETE'])
+def logout():
+    if request.method == 'DELETE':
+
+        response = make_response({"success": "Logged out and cookies cleared."})
+
+        # for cookie in request.cookies:
+        response.set_cookie('user_email', '', expires=0)
+
+        return response
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

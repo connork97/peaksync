@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 
 const NavBar = () => {
     return (
-        <div id="navBarDiv">
+        <div id="navBarDiv" style={{display:"flex", justifyContent:"space-evenly", textDecoration:"none"}}>
             <Link to="/" exact="true" className="navBarLink">Home</Link>
             <Link to="/rates" exact="true" className="navBarLink">Rates</Link>
             <Link to="/classes" exact="true" className="navBarLink">Classes</Link>
