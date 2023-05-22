@@ -15,13 +15,7 @@ const ClassData = ({ clas, allClasses, setAllClasses }) => {
         "minutes": clas.minutes,
         "description": clas.description
     })
-    // const renderAllClasses = allClasses.map((clas) => {
-    //     return (
-    //         <ListGroup.Item>
-    //             {clas.id} - {clas.name} - ${clas.price} - {clas.category} - {clas.capacity} - {clas.hours} - {clas.minutes} - {clas.description}
-    //         </ListGroup.Item>
-    //     )
-    // })
+
     const handleDiscardClassChanges = () => {
         setEditedClass({
             "name": clas.name,
