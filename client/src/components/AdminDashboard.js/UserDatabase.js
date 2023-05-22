@@ -111,6 +111,7 @@ const UserDatabase = ({ allUsers, setAllUsers, currentUser }) => {
                     {searchCategory}
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
+                    <Dropdown.Item name="All" onClick={(event) => setSearchCategory(event.target.name)}>All</Dropdown.Item>
                     {renderDropdownItems}
                 </Dropdown.Menu>
             </Dropdown>
@@ -122,7 +123,7 @@ const UserDatabase = ({ allUsers, setAllUsers, currentUser }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {searchCategory === "Filter By" ? renderAllUsers : filterUsers(convertedSearchCategory)}
+                    {searchCategory === "Filter By" || searchCategory === "All" ? renderAllUsers : filterUsers(convertedSearchCategory)}
                 </tbody>
             </Table>
         </>

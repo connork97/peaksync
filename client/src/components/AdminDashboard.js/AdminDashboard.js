@@ -18,12 +18,14 @@ const AdminDashboard = ({ currentUser, allClasses, setAllClasses, allMemberships
         return (
             <MembershipData
                 membership={membership}
+                allMemberships={allMemberships}
+                setAllMemberships={setAllMemberships}
             />
         )
     })
     const renderAllClasses = allClasses.map((clas) => {
         return (
-            <ClassData clas={clas} />
+            <ClassData clas={clas} allClasses={allClasses} setAllClasses={setAllClasses} />
         )
     })
     return (

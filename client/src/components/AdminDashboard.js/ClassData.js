@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/esm/Button'
 
 const ClassData = ({ clas, allClasses, setAllClasses }) => {
     
+    console.log(allClasses)
     const [editClassToggle, setEditClassToggle] = useState(false)
     const [editedClass, setEditedClass] = useState({
         "name": clas.name,
@@ -50,22 +51,33 @@ const ClassData = ({ clas, allClasses, setAllClasses }) => {
             console.log(editedClassData)
         })
     }
+
+    const handleClassDelete = (class_id) => {
+        fetch(`/classes/${class_id}`, {
+            method: 'DELETE'
+        })
+        console.log(allClasses)
+        const updatedClasses = allClasses.filter((cls) => cls.id != class_id)
+        setAllClasses(updatedClasses)
+    }
+
     return (
      <ListGroup.Item>
         ID: {clas.id}
         <br></br>
-        Name: {editClassToggle ? <input name="name" value={editedClass.name} onChange={handleClassDetailChange}></input> : clas.name}
+        Name: {editClassToggle ? <input name="name" value={editedClass.name} onChange={handleClassDetailChange}></input> : editedClass.name}
         <br></br>
-        Price: ${editClassToggle ? <input name="price" value={editedClass.price} onChange={handleClassDetailChange}></input> : clas.price}
+        Price: ${editClassToggle ? <input name="price" value={editedClass.price} onChange={handleClassDetailChange}></input> : editedClass.price}
         <br></br>
-        Category: {editClassToggle ? <input name="category" value={editedClass.category} onChange={handleClassDetailChange}></input> : clas.category}
+        Category: {editClassToggle ? <input name="category" value={editedClass.category} onChange={handleClassDetailChange}></input> : editedClass.category}
         <br></br>
-        Capacity: {editClassToggle ? <input name="capacity" value={editedClass.capacity} onChange={handleClassDetailChange}></input> : clas.capacity}
+        Capacity: {editClassToggle ? <input name="capacity" value={editedClass.capacity} onChange={handleClassDetailChange}></input> : editedClass.capacity}
         <br></br>
-        Hours: {editClassToggle ? <input name="hours" value={editedClass.hours} onChange={handleClassDetailChange}></input> : clas.hours} 
-        Minutes: {editClassToggle ? <input name="minutes" value={editedClass.minutes} onChange={handleClassDetailChange}></input> : clas.minutes}
+        Hours: {editClassToggle ? <input name="hours" value={editedClass.hours} onChange={handleClassDetailChange}></input> : editedClass.hours} 
         <br></br>
-        Description: {editClassToggle ? <input name="description" value={editedClass.description} onChange={handleClassDetailChange}></input> : <span>clas.description</span>}
+        Minutes: {editClassToggle ? <input name="minutes" value={editedClass.minutes} onChange={handleClassDetailChange}></input> : editedClass.minutes}
+        <br></br>
+        Description: {editClassToggle ? <input name="description" value={editedClass.description} onChange={handleClassDetailChange}></input> : <span>{editedClass.description}</span>}
         <br></br>
         {editClassToggle ? null : <Button onClick={() => setEditClassToggle(!editClassToggle)}>Edit Class</Button>}
         {editClassToggle ?
@@ -74,6 +86,7 @@ const ClassData = ({ clas, allClasses, setAllClasses }) => {
         {editClassToggle ?
         <Button onClick={handleDiscardClassChanges}>Discard Changes</Button>
         : null}
+        <Button onClick={() => handleClassDelete(clas.id)}>Delete Class</Button>
      </ListGroup.Item>
     )
 }

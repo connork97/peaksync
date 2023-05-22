@@ -3,7 +3,7 @@ import { useState } from 'react'
 import ListGroup from 'react-bootstrap/ListGroup'
 import Button from 'react-bootstrap/esm/Button'
 
-const MembershipData = ({ membership }) => {
+const MembershipData = ({ membership, allMemberships, setAllMemberships }) => {
     
     const [editMembershipToggle, setEditMembershipToggle] = useState(false)
 
@@ -55,7 +55,14 @@ const MembershipData = ({ membership }) => {
             console.log(editedMembershipData)
         })
     }
-
+    const handleMembershipDelete = (membership_id) => {
+        fetch(`/memberships/${membership}`, {
+            method: 'DELETE'
+        })
+        console.log(allMemberships)
+        const updatedMemberships = allMemberships.filter((memb) => memb.id != membership_id)
+        setAllMemberships(updatedMemberships)
+    }
     return (
         <ListGroup.Item>
             ID: {membership.id} 
@@ -77,6 +84,8 @@ const MembershipData = ({ membership }) => {
             {editMembershipToggle ?
             <Button onClick={handleDiscardMembershipChanges}>Discard Changes</Button>
             : null}
+        <Button onClick={() => handleMembershipDelete(membership.id)}>Delete Membership</Button>
+
         </ListGroup.Item>
     )
 }
