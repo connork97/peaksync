@@ -6,7 +6,7 @@ import ProfileInfo from "./ProfileInfo"
 import UserBookings from './UserBookings'
 import UserPayments from './UserPayments'
 
-const UserProfile = ({ currentUser }) => {
+const UserProfile = ({ currentUser, setAllUsers, allUsers }) => {
 
     const location = useLocation()
     
@@ -28,7 +28,11 @@ const UserProfile = ({ currentUser }) => {
             justify
         >
             <Tab eventKey="profile" title="Profile">
-                <ProfileInfo selectedUser={selectedUser} />
+                <ProfileInfo
+                    selectedUser={selectedUser}
+                    setAllUsers={setAllUsers}
+                    allUsers={allUsers}
+                />
             </Tab>
             <Tab eventKey="bookings" title="Bookings">
                 <UserBookings selectedUser={selectedUser} />

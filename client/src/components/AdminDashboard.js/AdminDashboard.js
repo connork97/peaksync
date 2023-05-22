@@ -25,7 +25,11 @@ const AdminDashboard = ({ currentUser, allUsers, setAllUsers, allClasses, setAll
     })
     const renderAllClasses = allClasses.map((clas) => {
         return (
-            <ClassData clas={clas} allClasses={allClasses} setAllClasses={setAllClasses} />
+            <ClassData
+                clas={clas}
+                allClasses={allClasses}
+                setAllClasses={setAllClasses}
+            />
         )
     })
     return (
@@ -53,7 +57,6 @@ const AdminDashboard = ({ currentUser, allUsers, setAllUsers, allClasses, setAll
                     </ListGroup>
                 </Tab>
                 <Tab eventKey="userDatabase" title="User Database" style={{textAlign:"center"}}>
-                    {/* <UserDatabase /> */}
                     <p>To view and manage the user database, a redirect is required.</p>
                     <p>Click the button below to search and edit user profiles.</p>
                     <Button onClick={() => history.push({pathname:"/database"})}>Go to User Database</Button>

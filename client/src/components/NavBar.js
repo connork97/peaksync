@@ -3,9 +3,9 @@ import { useState, useEffect } from 'react'
 
 const NavBar = ({ currentUser, allUsers }) => {
 
-    useEffect(() => {
-        console.log(currentUser)
-    }, [currentUser, allUsers])
+    // useEffect(() => {
+    //     console.log(currentUser)
+    // }, [currentUser, allUsers])
 
     const renderDashboardNavLink = () => {
         if (currentUser.admin && allUsers.length !== 0) {

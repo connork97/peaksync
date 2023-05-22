@@ -23,7 +23,7 @@ function App() {
 
   useEffect(() => {
     console.log(allUsers)
-  }, allUsers)
+  }, [allUsers])
 
   return (
     <>
@@ -61,8 +61,10 @@ function App() {
           />
         </Route>
         <Route exact path='/admin-dashboard'>
-          <AdminDashboard 
+          <AdminDashboard
             currentUser={currentUser}
+            allUsers={allUsers}
+            setAllUsers={setAllUsers}
             allClasses={allClasses}
             setAllClasses={setAllClasses}
             allMemberships={allMemberships}

@@ -5,7 +5,7 @@ import myImage from '../../images/profile-placeholder-300x237.png'
 import Tab from 'react-bootstrap/Tab'
 import Button from 'react-bootstrap/Button'
 
-const ProfileInfo = ({ selectedUser }) => {
+const ProfileInfo = ({ selectedUser, setAllUsers, allUsers }) => {
 
     const [userProfileInfo, setUserProfileInfo] = useState({
         "first_name": selectedUser.first_name,
@@ -57,7 +57,17 @@ const ProfileInfo = ({ selectedUser }) => {
             body: JSON.stringify(userProfileInfo),
         })
         .then((response) => response.json())
-        .then((editedUserData) => console.log(editedUserData))
+        .then((editedUserData) => {
+            console.log(editedUserData.id)
+            const updatedAllUsersState = allUsers.map((user) => {
+                if (user.id == editedUserData.id) {
+                    return editedUserData
+                } else {
+                    return user
+                }
+            })
+            setAllUsers(updatedAllUsersState)
+        })
     }
 
     return (

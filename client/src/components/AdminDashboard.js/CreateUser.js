@@ -48,7 +48,7 @@ const CreateUser = ({ allUsers, setAllUsers }) => {
             "date_of_birth": "",
             "emergency_contact_name": "",
             "emergency_contact_phone_number": "",
-            "membership_id": "",
+            "membership_id": 1,
             "waiver": false,
             "admin": false
         })
@@ -71,8 +71,7 @@ const CreateUser = ({ allUsers, setAllUsers }) => {
         })
         .then((response) => response.json())
         .then((newUserData) => {
-            console.log(newUserData)
-            // setAllUsers(...allUsers, newUserData)
+            setAllUsers((prevState) => [...prevState, newUserData])
         })
     }
 
