@@ -1,6 +1,7 @@
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
 import ListGroup from 'react-bootstrap/esm/ListGroup'
+import Button from 'react-bootstrap/Button'
 
 import ProfileInfo from '../UserProfile/ProfileInfo'
 import MembershipData from './MembershipData'
@@ -15,7 +16,11 @@ const AdminDashboard = ({ currentUser, allClasses, setAllClasses, allMemberships
             />
         )
     })
-    
+    const renderAllClasses = allClasses.map((clas) => {
+        return (
+            <ClassData clas={clas} />
+        )
+    })
     return (
         <>
             <h1>Admin Dashboard</h1>
@@ -29,19 +34,16 @@ const AdminDashboard = ({ currentUser, allClasses, setAllClasses, allMemberships
                     <ProfileInfo selectedUser={currentUser} />
                 </Tab>
                 <Tab eventKey="memberships" title="Memberships">
+                <Button>Create New Membership (not functional)</Button>
                     <ListGroup id="adminMembershipsListGroup">
                         {renderAllMemberships}
-                        {/* <MembershipData
-                            allMemberships={allMemberships}
-                            setAllMemberships={setAllMemberships}
-                        /> */}
                     </ListGroup>
                 </Tab>
                 <Tab eventKey="classes" title="Classes">
-                    <ClassData
-                        allClasses={allClasses}
-                        setAllClasses={setAllClasses}
-                    />
+                    <Button>Create New Class (not functional)</Button>
+                    <ListGroup id="adminClassesListGroup">
+                        {renderAllClasses}
+                    </ListGroup>
                 </Tab>
             </Tabs>
         </>

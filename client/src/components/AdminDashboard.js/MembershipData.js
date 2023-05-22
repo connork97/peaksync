@@ -29,7 +29,7 @@ const MembershipData = ({ membership }) => {
             "price": membership.price,
             "type": membership.type,
             "subtype": membership.subtype,
-            "description": membership.description,
+            "description": membership.description
           });
         setEditMembershipToggle(false)
     }
@@ -58,9 +58,9 @@ const MembershipData = ({ membership }) => {
 
     return (
         <ListGroup.Item>
-            Membership ID: {membership.id} 
+            ID: {membership.id} 
             <br></br>
-            Membership Name: {editMembershipToggle ? <input name="name" value={editedMembership.name} onChange={handleMembershipDetailChange}></input> : <span>{editedMembership.name}</span>} 
+            Name: {editMembershipToggle ? <input name="name" value={editedMembership.name} onChange={handleMembershipDetailChange}></input> : <span>{editedMembership.name}</span>} 
             <br></br>
             Price: ${editMembershipToggle ? <input name="price" value={editedMembership.price} onChange={handleMembershipDetailChange}></input> : <span>{editedMembership.price}</span>} 
             <br></br>
