@@ -6,9 +6,14 @@ import Button from 'react-bootstrap/Button'
 import ProfileInfo from '../UserProfile/ProfileInfo'
 import MembershipData from './MembershipData'
 import ClassData from './ClassData'
+import UserDatabase from './UserDatabase'
+
+import { useHistory } from 'react-router-dom'
 
 const AdminDashboard = ({ currentUser, allClasses, setAllClasses, allMemberships, setAllMemberships }) => {
     
+    const history = useHistory()
+
     const renderAllMemberships = allMemberships.map((membership) => {
         return (
             <MembershipData
@@ -44,6 +49,12 @@ const AdminDashboard = ({ currentUser, allClasses, setAllClasses, allMemberships
                     <ListGroup id="adminClassesListGroup">
                         {renderAllClasses}
                     </ListGroup>
+                </Tab>
+                <Tab eventKey="userDatabase" title="User Database" style={{textAlign:"center"}}>
+                    {/* <UserDatabase /> */}
+                    <p>To view and manage the user database, a redirect is required.</p>
+                    <p>Click the button below to search and edit user profiles.</p>
+                    <Button onClick={() => history.push({pathname:"/database"})}>Go to User Database</Button>
                 </Tab>
             </Tabs>
         </>
