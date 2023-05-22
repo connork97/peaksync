@@ -6,11 +6,11 @@ import Button from 'react-bootstrap/Button'
 import ProfileInfo from '../UserProfile/ProfileInfo'
 import MembershipData from './MembershipData'
 import ClassData from './ClassData'
-import UserDatabase from './UserDatabase'
+import Create from './Create'
 
 import { useHistory } from 'react-router-dom'
 
-const AdminDashboard = ({ currentUser, allClasses, setAllClasses, allMemberships, setAllMemberships }) => {
+const AdminDashboard = ({ currentUser, allUsers, setAllUsers, allClasses, setAllClasses, allMemberships, setAllMemberships }) => {
     
     const history = useHistory()
 
@@ -57,6 +57,16 @@ const AdminDashboard = ({ currentUser, allClasses, setAllClasses, allMemberships
                     <p>To view and manage the user database, a redirect is required.</p>
                     <p>Click the button below to search and edit user profiles.</p>
                     <Button onClick={() => history.push({pathname:"/database"})}>Go to User Database</Button>
+                </Tab>
+                <Tab eventKey="create" title="Create" style={{textAlign:"center"}}>
+                    <Create
+                        allUsers={allUsers}
+                        setAllUsers={setAllUsers}
+                        allClasses={allClasses}
+                        setAllClasses={setAllClasses}
+                        allMemberships={setAllMemberships}
+                        setAllMemberships={setAllMemberships}
+                    />
                 </Tab>
             </Tabs>
         </>

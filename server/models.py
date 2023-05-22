@@ -66,14 +66,14 @@ class User(db.Model, SerializerMixin):
                 raise ValueError("Must be a string that is not empty.")
         
         if key == 'phone_number' or key == 'emergency_contact_phone_number':
-            if type(value) == int and len(str(value)) == 10 and value != None:
+            if 15 >= len(str(value)) >= 10 and value != None:
                 return value
             else:
                 print(value)
-                raise ValueError("Must be a valid phone number, 10 digits long.")
+                raise ValueError("Must be a valid phone number.")
             
         if key == 'zipcode':
-            if type(value) == int and len(str(value)) == 5 and value != None:
+            if len(str(value)) == 5 and value != None:
                 return value
             else:
                 print(value)

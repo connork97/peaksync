@@ -40,6 +40,41 @@ def users():
         try:
             form_data = request.get_json()
             new_user = User(
+                first_name=form_data['first_name'],
+                last_name=form_data['last_name'],
+                email=form_data['email'],
+                password_hash=form_data['password'],
+                phone_number=int(form_data['phone_number']),
+                address=form_data['address'],
+                city=form_data['city'],
+                state=form_data['state'],
+                zipcode=int(form_data['zipcode']),
+                date_of_birth=form_data['date_of_birth'],
+                emergency_contact_name=form_data['emergency_contact_name'],
+                emergency_contact_phone_number=int(form_data['emergency_contact_phone_number']),
+                waiver=form_data['waiver'],
+                admin=form_data['admin']
+            )
+            db.session.add(new_user)
+            db.session.commit()
+            # session['user_email'] = new_user.email
+            response = make_response(new_user.to_dict(), 201)
+            # newest_user = User.query.order_by(User.id.desc()).first()
+        
+        except:
+            response = make_response({"error": "Unsuccessful creation of new user"}, 404)
+
+    return response
+
+@app.route('/signup', methods=['POST'])
+def signup():
+    if request.method == 'POST':
+
+        print("Creating new user...")
+
+        try:
+            form_data = request.get_json()
+            new_user = User(
                 first_name=form_data['firstName'],
                 last_name=form_data['lastName'],
                 email=form_data['email'],
@@ -52,7 +87,8 @@ def users():
                 date_of_birth=form_data['dateOfBirth'],
                 emergency_contact_name=form_data['emergencyContactName'],
                 emergency_contact_phone_number=int(form_data['emergencyContactPhoneNumber']),
-                waiver=form_data['waiver']
+                waiver=form_data['waiver'],
+                admin=form_data['admin']
             )
             db.session.add(new_user)
             db.session.commit()
@@ -60,10 +96,10 @@ def users():
             response = make_response(new_user.to_dict(), 201)
             # newest_user = User.query.order_by(User.id.desc()).first()
             response.set_cookie('user_email', new_user.email)
-        
+    
         except:
             response = make_response({"error": "Unsuccessful creation of new user"}, 404)
-
+    
     return response
 
 @app.route('/users/<int:id>', methods=['GET', 'PATCH', 'DELETE'])

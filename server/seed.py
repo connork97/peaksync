@@ -17,6 +17,7 @@ if __name__ == '__main__':
         db.session.query(User).delete()
         db.session.query(Membership).delete()
         db.session.query(Class).delete()
+        db.session.query(Signup).delete()
         db.session.commit()
         print("Generating user profiles...")
         guest = User(
@@ -32,6 +33,7 @@ if __name__ == '__main__':
             date_of_birth="2000-01-01",
             emergency_contact_name="Guest Parent",
             emergency_contact_phone_number=1231231234,
+            membership_id=1,
             waiver=False
         )
         admin = User(

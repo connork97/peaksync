@@ -18,7 +18,8 @@ const ProfileInfo = ({ selectedUser }) => {
         "zipcode": selectedUser.zipcode,
         "date_of_birth": selectedUser.date_of_birth,
         "emergency_contact_name": selectedUser.emergency_contact_name,
-        "emergency_contact_phone_number": selectedUser.emergency_contact_phone_number
+        "emergency_contact_phone_number": selectedUser.emergency_contact_phone_number,
+        "membership_id": selectedUser.membership_id
     })
 
     const handleProfileInfoChange = (event) => {
@@ -41,7 +42,8 @@ const ProfileInfo = ({ selectedUser }) => {
             "zipcode": selectedUser.zipcode,
             "date_of_birth": selectedUser.date_of_birth,
             "emergency_contact_name": selectedUser.emergency_contact_name,
-            "emergency_contact_phone_number": selectedUser.emergency_contact_phone_number
+            "emergency_contact_phone_number": selectedUser.emergency_contact_phone_number,
+            "membership_id": selectedUser.membership_id
         })
     }
 
