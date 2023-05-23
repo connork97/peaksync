@@ -59,6 +59,13 @@ const CreateUser = ({ allUsers, setAllUsers }) => {
             {...prevState, waiver: !prevState.waiver}
         ))
     }
+
+    const handleAdminChange = () => {
+        setNewUser((prevState) => ({
+            ...prevState,
+            admin: !prevState.admin
+        }))
+    }
     
     const handleCreateUser = () => {
         console.log(newUser)
@@ -92,7 +99,7 @@ const CreateUser = ({ allUsers, setAllUsers }) => {
                     <Card.Text>Emergency Contact Phone Number: <input name="emergency_contact_phone_number" type="number" value={newUser.emergency_contact_phone_number} onChange={handleProfileInfoChange}></input></Card.Text>
                     <Card.Text>Waiver Status: <Form.Check name="waiver" value={newUser.waiver} onChange={handleWaiverChange}></Form.Check>{newUser.waiver ? "Active" : "Inactive"}</Card.Text>
                     <Card.Text>Membership ID: {newUser.membership_id}</Card.Text>
-                    <Card.Text>Grant Admin Priveledges?<Form.Check name="admin" value={newUser.admin}></Form.Check></Card.Text>
+                    <Card.Text>Grant Admin Priveledges?<Form.Check name="admin" value={newUser.admin} onChange={handleAdminChange}></Form.Check></Card.Text>
                     <Button onClick={handleCreateUser}>Create User</Button>
                     <Button onClick={handleDiscardChanges}>Discard User</Button>
                 </Card.Body>

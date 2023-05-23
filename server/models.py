@@ -126,7 +126,7 @@ class Class(db.Model, SerializerMixin):
 
     signups = db.relationship('Signup', back_populates="signup_class")
 
-    @validates('day')
+    @validates('day', 'time')
     def validate_class(self, key, value):
         if key == 'day':
             days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
@@ -134,6 +134,13 @@ class Class(db.Model, SerializerMixin):
                 return value
             else:
                 raise ValueError('Day must be a day of the week.')
+        if key == 'time':
+            if type(value) == str:
+                split_time=(value.split(":"))
+                formatted_time = time(int(split_time[0]), int(split_time[1]))
+                return formatted_time
+            else:
+                return value
 
 class Signup(db.Model, SerializerMixin):
     __tablename__ = "signups"

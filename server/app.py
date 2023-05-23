@@ -225,6 +225,8 @@ def classes():
             new_class = Class(
                 name=form_data['name'],
                 price=form_data['price'],
+                day=form_data['day'],
+                time=form_data['time'],
                 category=form_data['category'],
                 capacity=int(form_data['capacity']),
                 hours=int(form_data['hours']),
