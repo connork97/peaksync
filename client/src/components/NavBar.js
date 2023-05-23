@@ -23,7 +23,7 @@ const NavBar = ({ currentUser, allUsers }) => {
         <div id="navBarDiv" style={{display:"flex", justifyContent:"space-evenly", textDecoration:"none"}}>
             <Link to="/" exact="true" className="navBarLink">Home</Link>
             <Link to="/rates" exact="true" className="navBarLink">Rates</Link>
-            <Link to="/classes" exact="true" className="navBarLink">Classes</Link>
+            <Link to="/calendar" exact="true" className="navBarLink">Calendar</Link>
             <Link to="/about-us" exact="true" className="navBarLink">About Us</Link>
             <Link to="/login" exact="true" className="navBarLink">Login</Link>
             {Object.keys(currentUser).length !== 0 ? renderDashboardNavLink() : null}

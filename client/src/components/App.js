@@ -38,8 +38,11 @@ function App() {
         <Route exact path='/rates'>
           <Rates currentUser={currentUser} />
         </Route>
-        <Route exact path='/classes'>
-          <EventsCalendar currentUser={currentUser} />
+        <Route exact path='/calendar'>
+          <EventsCalendar
+            currentUser={currentUser}
+            allClasses={allClasses}
+          />
         </Route>
         <Route exact path='/about-us'>
           <AboutUs currentUser={currentUser} />
