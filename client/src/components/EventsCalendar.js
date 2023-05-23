@@ -8,7 +8,7 @@ import { RRule, RRuleSet, rrulestr } from 'rrule'
 
 const localizer = momentLocalizer(moment);
 
-const EventsCalendar = ({ currentUser, allClasses }) => {
+const EventsCalendar = ({ currentUser, allEvents }) => {
 
   // const rule = new RRule({
   //   freq: RRule.WEEKLY,
@@ -63,8 +63,8 @@ const EventsCalendar = ({ currentUser, allClasses }) => {
 
   console.log(getNextOccurrence(5))
   useEffect(() => {
-    const newEvents = allClasses.map((clas) => {
-      const { name, day, time, hours, minutes, frequency, category } = clas;
+    const newEvents = allEvents.map((event) => {
+      const { name, day, time, hours, minutes, frequency, category } = event;
       const split_time = time.split(":");
       const start_hour = Number(split_time[0]);
       const start_minute = Number(split_time[1]);
@@ -83,7 +83,7 @@ const EventsCalendar = ({ currentUser, allClasses }) => {
     });
 
     setEvents(newEvents)
-  }, [allClasses]);
+  }, [allEvents]);
 
     return (
       <div>

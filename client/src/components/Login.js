@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom"
 
 import Button from 'react-bootstrap/Button'
 
-const Login = ({ currentUser, setCurrentUser, allUsers, setAllUsers, setAllMemberships, setAllClasses }) => {
+const Login = ({ currentUser, setCurrentUser, allUsers, setAllUsers, setAllMemberships, setAllEvents }) => {
 
     const history = useHistory()
 
@@ -30,10 +30,10 @@ const Login = ({ currentUser, setCurrentUser, allUsers, setAllUsers, setAllMembe
         })
     }
     
-    const fetchAllClasses = () => {
-        fetch("/classes")
+    const fetchAllEvents = () => {
+        fetch("/events")
         .then((response) => response.json())
-        .then((classData) => setAllClasses(classData))
+        .then((eventData) => setAllEvents(eventData))
     }
 
     const fetchAllMemberships = () => {
@@ -41,7 +41,7 @@ const Login = ({ currentUser, setCurrentUser, allUsers, setAllUsers, setAllMembe
         .then((response) => response.json())
         .then((membershipData) => {
             setAllMemberships(membershipData)
-            fetchAllClasses()
+            fetchAllEvents()
         })
     }
     

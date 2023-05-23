@@ -17,7 +17,7 @@ import AdminDashboard from "./AdminDashboard.js/AdminDashboard.js";
 function App() {
 
   const [allUsers, setAllUsers] = useState([])
-  const [allClasses, setAllClasses] = useState([])
+  const [allEvents, setAllEvents] = useState([])
   const [allMemberships, setAllMemberships] = useState([])
   const [currentUser, setCurrentUser] = useState({})
 
@@ -41,7 +41,7 @@ function App() {
         <Route exact path='/calendar'>
           <EventsCalendar
             currentUser={currentUser}
-            allClasses={allClasses}
+            allEvents={allEvents}
           />
         </Route>
         <Route exact path='/about-us'>
@@ -54,7 +54,7 @@ function App() {
             allUsers={allUsers}
             setAllUsers={setAllUsers}
             setAllMemberships={setAllMemberships}
-            setAllClasses={setAllClasses}
+            setAllEvents={setAllEvents}
           />
         </Route>
         <Route exact path='/signup'>
@@ -68,8 +68,8 @@ function App() {
             currentUser={currentUser}
             allUsers={allUsers}
             setAllUsers={setAllUsers}
-            allClasses={allClasses}
-            setAllClasses={setAllClasses}
+            allEvents={allEvents}
+            setAllEvents={setAllEvents}
             allMemberships={allMemberships}
             setAllMemberships={setAllMemberships}
           />

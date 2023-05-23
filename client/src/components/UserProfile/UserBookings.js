@@ -30,7 +30,7 @@ const UserBookings = ({ selectedUser, fetchSelectedUser }) => {
     const renderBookings = selectedUserBookings.map((signup) => {
         return (
             <ListGroup.Item style={{display:"flex"}}>
-                {signup.id} - {signup.signup_class.name} - {signup.created_at} - {signup.paid === true ? "Paid" : <Button style={{color:"white", backgroundColor:"red", borderRadius:"15px"}}>Payment Owed</Button>}<Button onClick={() => handleCancelBooking(signup)} style={{marginLeft:"auto"}}>Cancel Booking</Button>
+                {signup.id} - {signup.event.name} - {signup.created_at} - {signup.paid === true ? "Paid" : <Button style={{color:"white", backgroundColor:"red", borderRadius:"15px"}}>Payment Owed</Button>}<Button onClick={() => handleCancelBooking(signup)} style={{marginLeft:"auto"}}>Cancel Booking</Button>
             </ListGroup.Item>
         )
     })

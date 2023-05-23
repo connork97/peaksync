@@ -6,13 +6,13 @@ import Button from 'react-bootstrap/Button'
 
 import ProfileInfo from '../UserProfile/ProfileInfo'
 import MembershipData from './MembershipData'
-import ClassData from './ClassData'
+import EventData from './EventData'
 import Create from './Create'
 
 import { useHistory } from 'react-router-dom'
 import AccordionItem from 'react-bootstrap/esm/AccordionItem'
 
-const AdminDashboard = ({ currentUser, allUsers, setAllUsers, allClasses, setAllClasses, allMemberships, setAllMemberships }) => {
+const AdminDashboard = ({ currentUser, allUsers, setAllUsers, allEvents, setAllEvents, allMemberships, setAllMemberships }) => {
     
     const history = useHistory()
 
@@ -20,20 +20,20 @@ const AdminDashboard = ({ currentUser, allUsers, setAllUsers, allClasses, setAll
         if (membership.type === type) {
             return (
                 <MembershipData
-                membership={membership}
-                allMemberships={allMemberships}
-                setAllMemberships={setAllMemberships}
+                    membership={membership}
+                    allMemberships={allMemberships}
+                    setAllMemberships={setAllMemberships}
                 />
             )
         }
     })
-    const renderClasses = (category) => allClasses.map((clas) => {
-        if (clas.category === (category)) {
+    const renderEvents = (category) => allEvents.map((event) => {
+        if (event.category === (category)) {
             return (
-                <ClassData
-                clas={clas}
-                allClasses={allClasses}
-                setAllClasses={setAllClasses}
+                <EventData
+                event={event}
+                allEvents={allEvents}
+                setAllEvents={setAllEvents}
                 />
             )
         }
@@ -78,30 +78,30 @@ const AdminDashboard = ({ currentUser, allUsers, setAllUsers, allClasses, setAll
                         </Accordion.Item>
                     </Accordion>
                 </Tab>
-                <Tab eventKey="classes" title="Classes">
+                <Tab eventKey="events" title="Events">
                     <Accordion>
                         <Accordion.Item eventKey='0'style={{marginBottom:"20px"}}>
                             <Accordion.Header>Climbing Classes</Accordion.Header>
-                            <Accordion.Body id="adminClassesListGroup">
-                                {renderClasses('Climbing')}
+                            <Accordion.Body id="adminEventsListGroup">
+                                {renderEvents('Climbing')}
                             </Accordion.Body>
                         </Accordion.Item>
                         <Accordion.Item eventKey='1' style={{marginBottom:"20px"}}>
                             <Accordion.Header>Yoga Classes</Accordion.Header>
-                            <Accordion.Body id="adminClassesListGroup">
-                                {renderClasses('Yoga')}
+                            <Accordion.Body id="adminEventsListGroup">
+                                {renderEvents('Yoga')}
                             </Accordion.Body>
                         </Accordion.Item>
                         <Accordion.Item eventKey='2' style={{marginBottom:"20px"}}>
                             <Accordion.Header>Fitness Classes</Accordion.Header>
-                            <Accordion.Body id="adminClassesListGroup">
-                                {renderClasses('Fitness')}
+                            <Accordion.Body id="adminEventsListGroup">
+                                {renderEvents('Fitness')}
                             </Accordion.Body>
                         </Accordion.Item>
                         <Accordion.Item eventKey='3' style={{marginBottom:"20px"}}>
-                            <Accordion.Header>Other Classes</Accordion.Header>
-                            <Accordion.Body id="adminClassesListGroup">
-                                {renderClasses('Misc')}
+                            <Accordion.Header>Other Classes and Events</Accordion.Header>
+                            <Accordion.Body id="adminEventsListGroup">
+                                {renderEvents('Misc')}
                             </Accordion.Body>
                         </Accordion.Item>
                     </Accordion>
@@ -110,8 +110,8 @@ const AdminDashboard = ({ currentUser, allUsers, setAllUsers, allClasses, setAll
                     <Create
                         allUsers={allUsers}
                         setAllUsers={setAllUsers}
-                        allClasses={allClasses}
-                        setAllClasses={setAllClasses}
+                        allEvents={allEvents}
+                        setAllEvents={setAllEvents}
                         allMemberships={allMemberships}
                         setAllMemberships={setAllMemberships}
                     />
