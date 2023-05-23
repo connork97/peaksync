@@ -1,5 +1,6 @@
 from sqlalchemy_serializer import SerializerMixin
 from datetime import datetime, time
+from sqlalchemy import Time
 
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.ext.associationproxy import association_proxy
@@ -114,6 +115,8 @@ class Class(db.Model, SerializerMixin):
     description = db.Column(db.Text)
     category = db.Column(db.String)
     capacity = db.Column(db.Integer)
+    day = db.Column(db.String)
+    time = db.Column(Time)
     hours = db.Column(db.Integer)
     minutes = db.Column(db.Integer)
     recurring = db.Column(db.Boolean)
@@ -122,6 +125,15 @@ class Class(db.Model, SerializerMixin):
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
     signups = db.relationship('Signup', back_populates="signup_class")
+
+    @validates('day')
+    def validate_class(self, key, value):
+        if key == 'day':
+            days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+            if value in days:
+                return value
+            else:
+                raise ValueError('Day must be a day of the week.')
 
 class Signup(db.Model, SerializerMixin):
     __tablename__ = "signups"

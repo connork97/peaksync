@@ -77,7 +77,7 @@ const CreateUser = ({ allUsers, setAllUsers }) => {
 
     return (
         <div id="userProfileInfoDiv" style={{display:"flex", marginLeft:"0",textAlign:"left"}}>
-            <Card style={{position:"absolute", display:"flex", justifyContent:"start", marginLeft:"0", textAlign:"left"}}>
+            <Card style={{position:"relative", display:"flex", justifyContent:"start", marginLeft:"0", textAlign:"left"}}>
                 <Card.Img src={myImage} style={{width:"250px", display:"flex", justifyContent:"center"}}></Card.Img>
                 <Card.Body>
                     <Card.Text>First Name: <input name="first_name" value={newUser.first_name} onChange={handleProfileInfoChange}></input></Card.Text>

@@ -5,6 +5,7 @@ from random import randint, choice as rc
 
 # Remote library imports
 from faker import Faker
+from datetime import time
 
 # Local imports
 from app import app
@@ -100,15 +101,15 @@ if __name__ == '__main__':
 
         print("Generating classes...")
 
-        belay_lesson = Class(name="Top Rope Belay Lesson", price=15, category="Climbing", capacity=4, hours=1, minutes=0, recurring=True, description="One hour class that teaches basic top rope belay safety skills. Without prior experience this class is required to climb in the roped section of the gym.  Free for members.")
-        lead_belay_lesson = Class(name="Lead Belay Lesson", price=100, category="Climbing", capacity=4, hours=4, minutes=0, recurring=True, description="Learn how to lead belay and lead climb in this 4 hour course!")
+        belay_lesson = Class(name="Top Rope Belay Lesson", day="Monday", time=time(12, 0), price=15, category="Climbing", capacity=4, hours=1, minutes=0, recurring=True, description="One hour class that teaches basic top rope belay safety skills. Without prior experience this class is required to climb in the roped section of the gym.  Free for members.")
+        lead_belay_lesson = Class(name="Lead Belay Lesson", day="Tuesday", time=time(16, 0), price=100, category="Climbing", capacity=4, hours=4, minutes=0, recurring=True, description="Learn how to lead belay and lead climb in this 4 hour course!")
         
-        beginner_yoga = Class(name="Beginner Yoga Class", price=15, category="Yoga", capacity=20, hours=1, minutes=0, recurring=True, description="Entry level yoga class for beginners or more experienced yogis who want a more mellow session.  Free for members.")
-        intermediate_yoga = Class(name="Intemediate Yoga Class", price=15, category="Yoga", capacity=20, hours=1, minutes=0, recurring=True, description="Intemediate level yoga class for slightly to well experienced yogis.  Free for members.")
-        advanced_yoga = Class(name="Advanced Yoga Class", category="Yoga", capacity=20, hours=1, minutes=0, recurring=True, price=15, description="Advanced level yoga class for experienced yogis.  Beginners not advised.  Free for members.")
+        beginner_yoga = Class(name="Beginner Yoga Class", day="Monday", time=time(18, 30), price=15, category="Yoga", capacity=20, hours=1, minutes=0, recurring=True, description="Entry level yoga class for beginners or more experienced yogis who want a more mellow session.  Free for members.")
+        intermediate_yoga = Class(name="Intemediate Yoga Class", day="Wednesday", time=time(18, 30), price=15, category="Yoga", capacity=20, hours=1, minutes=0, recurring=True, description="Intemediate level yoga class for slightly to well experienced yogis.  Free for members.")
+        advanced_yoga = Class(name="Advanced Yoga Class", day="Friday", time=time(18, 30), category="Yoga", capacity=20, hours=1, minutes=0, recurring=True, price=15, description="Advanced level yoga class for experienced yogis.  Beginners not advised.  Free for members.")
 
-        core_class = Class(name="Core Class", price=10, category="Fitness", capacity=20, hours=0, minutes=30, recurring=True, description="30 minute long intense core workout lead by experienced instructor.  Get ready to feel the burn!")
-        flexibility_class = Class(name="Flexibility Friday", price=10, category="Fitness", capacity=20, hours=0, minutes=30, recurring=True, description="Work on your flexibility regardless of your current level!")
+        core_class = Class(name="Core Class", day="Tuesday", time=time(17, 0), price=10, category="Fitness", capacity=20, hours=0, minutes=30, recurring=True, description="30 minute long intense core workout lead by experienced instructor.  Get ready to feel the burn!")
+        flexibility_class = Class(name="Flexibility Friday", day="Friday", time=time(17, 0), price=10, category="Fitness", capacity=20, hours=0, minutes=30, recurring=True, description="Work on your flexibility regardless of your current level!")
 
         db.session.add_all([belay_lesson, lead_belay_lesson, beginner_yoga, intermediate_yoga, advanced_yoga, core_class, flexibility_class])
         db.session.commit()

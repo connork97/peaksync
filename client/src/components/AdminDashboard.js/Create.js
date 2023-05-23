@@ -1,20 +1,27 @@
-import { useState } from 'react'
+import CreateUser from "./CreateUser"
+import CreateClass from './CreateClass'
 
 import Accordion from 'react-bootstrap/Accordion'
-import Form from 'react-bootstrap/Form'
-import UserProfile from '../UserProfile/UserProfile'
-import ProfileInfo from '../UserProfile/ProfileInfo'
-import CreateUser from "./CreateUser"
+
 const Create = ({ allUsers, setAllUsers, allClasses, setAllClasses, allMemberships, setAllMemberships }) => {
 
     return (
         <Accordion>
-            <Accordion.Item>
+            <Accordion.Item eventKey='0' style={{marginBottom:"20px"}}>
                 <Accordion.Header>Create a New User</Accordion.Header>
                 <Accordion.Body>
                     <CreateUser 
                         allUsers={allUsers}
                         setAllUsers={setAllUsers}
+                        />
+                </Accordion.Body>
+            </Accordion.Item>
+            <Accordion.Item eventKey="1" style={{marginTop:"0px"}}>
+                <Accordion.Header>Create a New Class</Accordion.Header>
+                <Accordion.Body>
+                    <CreateClass
+                        allClasses={allClasses}
+                        setAllClasses={setAllClasses}
                     />
                 </Accordion.Body>
             </Accordion.Item>
