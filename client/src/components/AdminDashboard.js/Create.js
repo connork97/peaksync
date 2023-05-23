@@ -1,5 +1,6 @@
 import CreateUser from "./CreateUser"
 import CreateClass from './CreateClass'
+import CreateMembership from "./CreateMembership"
 
 import Accordion from 'react-bootstrap/Accordion'
 
@@ -16,12 +17,21 @@ const Create = ({ allUsers, setAllUsers, allClasses, setAllClasses, allMembershi
                         />
                 </Accordion.Body>
             </Accordion.Item>
-            <Accordion.Item eventKey="1" style={{marginTop:"0px"}}>
+            <Accordion.Item eventKey="1" style={{marginBottom:"20px"}}>
                 <Accordion.Header>Create a New Class</Accordion.Header>
                 <Accordion.Body>
                     <CreateClass
                         allClasses={allClasses}
                         setAllClasses={setAllClasses}
+                    />
+                </Accordion.Body>
+            </Accordion.Item>
+            <Accordion.Item eventKey="2" style={{marginBottom:"20px"}}>
+                <Accordion.Header>Create a New Membership</Accordion.Header>
+                <Accordion.Body>
+                    <CreateMembership
+                        allMemberships={allMemberships}
+                        setAllMemberships={setAllMemberships}
                     />
                 </Accordion.Body>
             </Accordion.Item>

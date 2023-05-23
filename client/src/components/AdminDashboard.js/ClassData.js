@@ -5,7 +5,6 @@ import Button from 'react-bootstrap/esm/Button'
 
 const ClassData = ({ clas, allClasses, setAllClasses }) => {
     
-    console.log(allClasses)
     const [editClassToggle, setEditClassToggle] = useState(false)
     const [editedClass, setEditedClass] = useState({
         "name": clas.name,

@@ -45,13 +45,11 @@ const AdminDashboard = ({ currentUser, allUsers, setAllUsers, allClasses, setAll
                     <ProfileInfo selectedUser={currentUser} />
                 </Tab>
                 <Tab eventKey="memberships" title="Memberships">
-                <Button>Create New Membership (not functional)</Button>
                     <ListGroup id="adminMembershipsListGroup">
                         {renderAllMemberships}
                     </ListGroup>
                 </Tab>
                 <Tab eventKey="classes" title="Classes">
-                    <Button>Create New Class (not functional)</Button>
                     <ListGroup id="adminClassesListGroup">
                         {renderAllClasses}
                     </ListGroup>
@@ -67,7 +65,7 @@ const AdminDashboard = ({ currentUser, allUsers, setAllUsers, allClasses, setAll
                         setAllUsers={setAllUsers}
                         allClasses={allClasses}
                         setAllClasses={setAllClasses}
-                        allMemberships={setAllMemberships}
+                        allMemberships={allMemberships}
                         setAllMemberships={setAllMemberships}
                     />
                 </Tab>

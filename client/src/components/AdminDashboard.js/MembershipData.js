@@ -8,6 +8,7 @@ const MembershipData = ({ membership, allMemberships, setAllMemberships }) => {
     const [editMembershipToggle, setEditMembershipToggle] = useState(false)
 
     const [editedMembership, setEditedMembership] = useState({
+        "id": membership.id,
         "name": membership.name,
         "price": membership.price,
         "type": membership.type,
@@ -25,6 +26,7 @@ const MembershipData = ({ membership, allMemberships, setAllMemberships }) => {
     // })
     const handleDiscardMembershipChanges = (event) => {
         setEditedMembership({
+            "id": membership.id,
             "name": membership.name,
             "price": membership.price,
             "type": membership.type,
@@ -56,7 +58,7 @@ const MembershipData = ({ membership, allMemberships, setAllMemberships }) => {
         })
     }
     const handleMembershipDelete = (membership_id) => {
-        fetch(`/memberships/${membership}`, {
+        fetch(`/memberships/${membership_id}`, {
             method: 'DELETE'
         })
         console.log(allMemberships)
