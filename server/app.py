@@ -9,7 +9,7 @@ from flask import request, make_response, session
 from flask_cors import CORS
 # Local imports
 from config import app, db, api
-from models import User, Membership, Class, Signup, Payment
+from models import User, Membership, Event, Signup, Payment
 
 CORS(app)
 # Views go here!
@@ -208,21 +208,21 @@ def membership_by_id(id):
 
     return response
 
-@app.route('/classes', methods=['GET', 'POST'])
-def classes():
+@app.route('/events', methods=['GET', 'POST'])
+def events():
     if request.method == 'GET':
-        print("Fetching all classes...")
-        all_classes_dict = [clas.to_dict() for clas in Class.query.all()]
-        if all_classes_dict:
-            response = make_response(all_classes_dict, 200)
+        print("Fetching all events...")
+        all_events_dict = [event.to_dict() for event in Event.query.all()]
+        if all_events_dict:
+            response = make_response(all_events_dict, 200)
         else:
-            response = make_response({"error": "Classes not found."}, 404)
+            response = make_response({"error": "eventses not found."}, 404)
     
     if request.method == 'POST':
-        print("Creating new class...")
+        print("Creating new events...")
         try:
             form_data = request.get_json()
-            new_class = Class(
+            new_event = Event(
                 name=form_data['name'],
                 price=form_data['price'],
                 day=form_data['day'],
@@ -234,47 +234,47 @@ def classes():
                 recurring=form_data['recurring'],
                 description=form_data['description']
             )
-            db.session.add(new_class)
+            db.session.add(new_events)
             db.session.commit()
-            response = make_response(new_class.to_dict(), 200)
+            response = make_response(new_events.to_dict(), 200)
 
         except:
-            response = make_response({"error": "Unsuccessful creation of new class"}, 404)
+            response = make_response({"error": "Unsuccessful creation of new events"}, 404)
 
     return response
 
-@app.route('/classes/<int:id>', methods=['GET', 'PATCH', 'DELETE'])
-def class_by_id(id):
-    one_class = Class.query.filter(Class.id == id).one_or_none()
+@app.route('/eventses/<int:id>', methods=['GET', 'PATCH', 'DELETE'])
+def events_by_id(id):
+    one_events = events.query.filter(events.id == id).one_or_none()
 
-    if one_class:
+    if one_events:
     
         if request.method == 'GET':
-            response = make_response(one_class.to_dict(), 200)
+            response = make_response(one_events.to_dict(), 200)
     
         if request.method == 'PATCH':
             
             try:
                 form_data = request.get_json()
                 for attr in form_data:
-                    setattr(one_class, attr, form_data[attr])
+                    setattr(one_events, attr, form_data[attr])
 
-                db.session.add(one_class)
+                db.session.add(one_events)
                 db.session.commit()
-                response = make_response(one_class.to_dict(), 200)
+                response = make_response(one_events.to_dict(), 200)
 
             except:
                 response = make_response({"error": f"404: Could not update user of id {id}."}, 404)
     
         if request.method == 'DELETE':
             try:
-                db.session.delete(one_class)
+                db.session.delete(one_events)
                 db.session.commit()
-                response = make_response({"success": f"Class of id {id} deleted."}, 204)
+                response = make_response({"success": f"events of id {id} deleted."}, 204)
             except:
-                response = make_response({"error": f"Class of id {id} not deleted"}, 404)
+                response = make_response({"error": f"events of id {id} not deleted"}, 404)
     else:
-        response = make_response({"error": f"404: Class of id {id} not found."})
+        response = make_response({"error": f"404: events of id {id} not found."})
 
     return response
 
@@ -296,7 +296,7 @@ def signups():
         form_data = request.get_json()
         new_signup= Signup(
             user_id=form_data['userId'],
-            class_id=form_data['classId']
+            events_id=form_data['eventsId']
             # paid ?
         )
 

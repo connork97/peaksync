@@ -15,7 +15,7 @@ class User(db.Model, SerializerMixin):
 
     serialize_rules=(
         '-signups.user',
-        # '-signups.signup_class',
+        # '-signups.event',
         '-payments.user'
     )
 
@@ -101,12 +101,12 @@ class Membership(db.Model, SerializerMixin):
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
 
-class Class(db.Model, SerializerMixin):
-    __tablename__ = "classes"
+class Event(db.Model, SerializerMixin):
+    __tablename__ = "events"
 
     serialize_rules=(
         '-signups.user',
-        '-signups.signup_class'
+        '-signups.event'
     )
 
     id = db.Column(db.Integer, primary_key=True)
@@ -124,10 +124,10 @@ class Class(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
-    signups = db.relationship('Signup', back_populates="signup_class")
+    signups = db.relationship('Signup', back_populates="event")
 
     @validates('day', 'time', 'frequency')
-    def validate_class(self, key, value):
+    def validate_event(self, key, value):
         if key == 'day':
             days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
             if value in days:
@@ -142,7 +142,7 @@ class Class(db.Model, SerializerMixin):
             else:
                 return value
         if key == 'frequency':
-            options = ['Once', 'Daily', 'Weekly', 'Biweekly' 'Monthly', 'Biannual', 'Yearly']
+            options = ['Once', 'Weekly', 'Biweekly' 'Monthly', 'Biannual', 'Yearly']
             if value in options:
                 return value
             else:
@@ -155,21 +155,21 @@ class Signup(db.Model, SerializerMixin):
     #     '-user.signups',
     #     '-user._password_hash',
     #     '-user_id',
-    #     '-clas.signups'
-    #     # '-class_id'
+    #     '-event.signups'
+    #     # '-event_id'
     # )
-    serialize_only = ('id', 'user_id', 'class_id', 'paid', 'created_at', 'updated_at', 'user', 'signup_class')
+    serialize_only = ('id', 'user_id', 'event_id', 'paid', 'created_at', 'updated_at', 'user', 'event')
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
-    class_id = db.Column(db.Integer, db.ForeignKey("classes.id"))
+    event_id = db.Column(db.Integer, db.ForeignKey("events.id"))
     paid = db.Column(db.Boolean)
 
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
     user = db.relationship('User', back_populates="signups")
-    signup_class = db.relationship('Class', back_populates="signups")
+    event = db.relationship('Event', back_populates="signups")
 
 class Payment(db.Model, SerializerMixin):
     __tablename__ = "payments"

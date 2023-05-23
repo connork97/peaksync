@@ -59,7 +59,7 @@ const CreateClass = ({ allClasses, setAllClasses }) => {
         })
     }
 
-    const frequency_options = ['Once', 'Daily', 'Weekly', 'Biweekly', 'Monthly', 'Biannual', 'Yearly']
+    const frequency_options = ['Once', 'Weekly', 'Biweekly', 'Monthly', 'Biannual', 'Yearly']
     const radio_options = frequency_options.map((option) => {
         return (
             <>

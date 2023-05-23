@@ -10,13 +10,18 @@ const localizer = momentLocalizer(moment);
 
 const EventsCalendar = ({ currentUser, allClasses }) => {
 
-  const rule = new RRule({
+  // const rule = new RRule({
+  //   freq: RRule.WEEKLY,
+  //   byweekday: [RRule.MO, RRule.FR],
+  //   dtstart: new Date(2023, 5, 21, 0, 0),
+  //   until: new Date(Date(2024, 5, 21, 0, 0))
+  // })
+  const recurrenceRule = new RRule({
     freq: RRule.WEEKLY,
-    byweekday: [RRule.MO, RRule.FR],
-    dtstart: new Date(2023, 5, 21, 0, 0),
-    until: new Date(Date(2024, 5, 21, 0, 0))
-  })
-
+    byweekday: [moment("2023-05-24 11:30").toDate().getDay()],
+    dtstart: moment("2023-05-24 11:30").toDate(),
+    until: moment("2023-12-31 11:30").toDate() // Adjust the end date as needed
+  });
   const [events, setEvents] = useState([])
 
   const eventStyleGetter = (event) => {
@@ -44,6 +49,19 @@ const EventsCalendar = ({ currentUser, allClasses }) => {
     }
   }
 
+  console.log(moment().isoWeekday())
+  console.log(moment().isoWeekday("Monday"))
+  const getNextOccurrence = (dayOfWeek) => {
+    const today = moment().isoWeekday();
+    const nextOccurrence = moment().isoWeekday(dayOfWeek);
+    if (today <= dayOfWeek) {
+      return nextOccurrence.toDate();
+    } else {
+      return nextOccurrence.add(1, "week").toDate();
+    }
+  };
+
+  console.log(getNextOccurrence(5))
   useEffect(() => {
     const newEvents = allClasses.map((clas) => {
       const { name, day, time, hours, minutes, frequency, category } = clas;
@@ -55,6 +73,7 @@ const EventsCalendar = ({ currentUser, allClasses }) => {
       
       let color = selectEventColor(category)
 
+      console.log(frequency)
       return {
         title: name,
         start: moment().day(day).hour(start_hour).minute(start_minute).second(0).toDate(),
