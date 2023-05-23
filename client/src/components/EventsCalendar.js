@@ -4,11 +4,18 @@ import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 
-import { RRule } from 'rrule'
+import { RRule, RRuleSet, rrulestr } from 'rrule'
 
 const localizer = momentLocalizer(moment);
 
 const EventsCalendar = ({ currentUser, allClasses }) => {
+
+  const rule = new RRule({
+    freq: RRule.WEEKLY,
+    byweekday: [RRule.MO, RRule.FR],
+    dtstart: new Date(2023, 5, 21, 0, 0),
+    until: new Date(Date(2024, 5, 21, 0, 0))
+  })
 
   const [events, setEvents] = useState([])
 
