@@ -119,14 +119,14 @@ class Class(db.Model, SerializerMixin):
     time = db.Column(Time)
     hours = db.Column(db.Integer)
     minutes = db.Column(db.Integer)
-    recurring = db.Column(db.Boolean)
+    frequency = db.Column(db.String)
 
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
     signups = db.relationship('Signup', back_populates="signup_class")
 
-    @validates('day', 'time')
+    @validates('day', 'time', 'frequency')
     def validate_class(self, key, value):
         if key == 'day':
             days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
@@ -141,6 +141,12 @@ class Class(db.Model, SerializerMixin):
                 return formatted_time
             else:
                 return value
+        if key == 'frequency':
+            options = ['Once', 'Daily', 'Weekly', 'Biweekly' 'Monthly', 'Biannual', 'Yearly']
+            if value in options:
+                return value
+            else:
+                raise ValueError("Options for frequency of event must be Once, Daily, Weekly, Biweekly, Monthly, or Yearly.")
 
 class Signup(db.Model, SerializerMixin):
     __tablename__ = "signups"

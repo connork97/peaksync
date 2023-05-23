@@ -16,7 +16,7 @@ const CreateClass = ({ allClasses, setAllClasses }) => {
         "capacity": 0,
         "hours": 0,
         "minutes": 0,
-        "recurring": false
+        "frequency": ""
     })
 
     const handleDiscardClass = () => {
@@ -30,7 +30,7 @@ const CreateClass = ({ allClasses, setAllClasses }) => {
             "capacity": 0,
             "hours": 0,
             "minutes": 0,
-            "recurring": false
+            "frequency": ""
         })
     }
 
@@ -39,13 +39,6 @@ const CreateClass = ({ allClasses, setAllClasses }) => {
         setNewClass((prevState) => ({
             ...prevState,
             [name]: value
-        }))
-    }
-
-    const handleRecurringChange = () => {
-        setNewClass((prevState) => ({
-            ...prevState,
-            recurring: !prevState.recurring
         }))
     }
 
@@ -65,6 +58,16 @@ const CreateClass = ({ allClasses, setAllClasses }) => {
             setAllClasses(updatedAllClasses)
         })
     }
+
+    const frequency_options = ['Once', 'Daily', 'Weekly', 'Biweekly', 'Monthly', 'Biannual', 'Yearly']
+    const radio_options = frequency_options.map((option) => {
+        return (
+            <>
+                <Form.Label>{option}</Form.Label>
+                <Form.Check name={option} value={newClass.frequency} type="radio"></Form.Check>
+            </>
+        )
+    })
 
     return (
         <Form id="createClassForm" onSubmit={handleClassSubmit}>
@@ -98,8 +101,9 @@ const CreateClass = ({ allClasses, setAllClasses }) => {
             <Form.Label>Description:</Form.Label>
             <Form.Control name="description" type="text" value={newClass.description} onChange={handleNewClassChange}></Form.Control>
             <br></br>
-            <Form.Label>Recurring?</Form.Label>
-            <Form.Check name="recurring" type="checkbox" value={newClass.recurring} onChange={handleRecurringChange}></Form.Check>
+            <Form.Label>Frequency of Event:</Form.Label>
+            <br></br>
+            {radio_options}
             <br></br>
             <Button type="submit">Create Class</Button>
             <Button onClick={handleDiscardClass}>Discard Class</Button>

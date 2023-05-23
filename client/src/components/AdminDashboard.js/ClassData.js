@@ -15,7 +15,8 @@ const ClassData = ({ clas, allClasses, setAllClasses }) => {
         "capacity": clas.capacity,
         "hours": clas.hours,
         "minutes": clas.minutes,
-        "description": clas.description
+        "description": clas.description,
+        "frequency": clas.frequency
     })
 
     const handleDiscardClassChanges = () => {
@@ -28,7 +29,8 @@ const ClassData = ({ clas, allClasses, setAllClasses }) => {
             "capacity": clas.capacity,
             "hours": clas.hours,
             "minutes": clas.minutes,
-            "description": clas.description
+            "description": clas.description,
+            "frequency": clas.frequency
           });
         setEditClassToggle(false)
     }
@@ -76,6 +78,8 @@ const ClassData = ({ clas, allClasses, setAllClasses }) => {
             Day: {editClassToggle ? <input name="day" value={editedClass.day} onChange={handleClassDetailChange}></input> : editedClass.day}
             <br></br>
             Time: {editClassToggle ? <input name="time" value={editedClass.time} onChange={handleClassDetailChange}></input> : editedClass.time}
+            <br></br>
+            Frequency: {editClassToggle ? <input name="frequency" value={editedClass.frequency} onChange={handleClassDetailChange}></input> : <span>{editedClass.frequency}</span>}
             <br></br>
             Category: {editClassToggle ? <input name="category" value={editedClass.category} onChange={handleClassDetailChange}></input> : editedClass.category}
             <br></br>

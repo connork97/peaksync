@@ -102,34 +102,34 @@ if __name__ == '__main__':
         print("Generating classes...")
         all_days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
         for day in all_days:
-            belay_lesson = Class(name="Top Rope Belay Lesson", day=day, time=time(12, 0), price=15, category="Climbing", capacity=4, hours=1, minutes=0, recurring=True, description="One hour class that teaches basic top rope belay safety skills. Without prior experience this class is required to climb in the roped section of the gym.  Free for members.")
+            belay_lesson = Class(name="Top Rope Belay Lesson", day=day, time=time(12, 0), price=15, category="Climbing", capacity=4, hours=1, minutes=0, frequency="Weekly", description="One hour class that teaches basic top rope belay safety skills. Without prior experience this class is required to climb in the roped section of the gym.  Free for members.")
             db.session.add(belay_lesson)
             db.session.commit()
         for day in all_days:
-            belay_lesson = Class(name="Top Rope Belay Lesson", day=day, time=time(15, 0), price=15, category="Climbing", capacity=4, hours=1, minutes=0, recurring=True, description="One hour class that teaches basic top rope belay safety skills. Without prior experience this class is required to climb in the roped section of the gym.  Free for members.")
+            belay_lesson = Class(name="Top Rope Belay Lesson", day=day, time=time(15, 0), price=15, category="Climbing", capacity=4, hours=1, minutes=0, frequency="Weekly", description="One hour class that teaches basic top rope belay safety skills. Without prior experience this class is required to climb in the roped section of the gym.  Free for members.")
             db.session.add(belay_lesson)
             db.session.commit()
         for day in all_days:
-            belay_lesson = Class(name="Top Rope Belay Lesson", day=day, time=time(18, 0), price=15, category="Climbing", capacity=4, hours=1, minutes=0, recurring=True, description="One hour class that teaches basic top rope belay safety skills. Without prior experience this class is required to climb in the roped section of the gym.  Free for members.")
+            belay_lesson = Class(name="Top Rope Belay Lesson", day=day, time=time(18, 0), price=15, category="Climbing", capacity=4, hours=1, minutes=0, frequency="Weekly", description="One hour class that teaches basic top rope belay safety skills. Without prior experience this class is required to climb in the roped section of the gym.  Free for members.")
             db.session.add(belay_lesson)
             db.session.commit()
 
 
-        wednesday_lead_belay_lesson = Class(name="Lead Belay Lesson", day="Tuesday", time=time(17, 0), price=100, category="Climbing", capacity=4, hours=4, minutes=0, recurring=True, description="Learn how to lead belay and lead climb in this 4 hour course!")
-        saturday_lead_belay_lesson = Class(name="Lead Belay Lesson", day="Tuesday", time=time(12, 0), price=100, category="Climbing", capacity=4, hours=4, minutes=0, recurring=True, description="Learn how to lead belay and lead climb in this 4 hour course!")
+        wednesday_lead_belay_lesson = Class(name="Lead Belay Lesson", day="Tuesday", time=time(17, 0), price=100, category="Climbing", capacity=4, hours=4, minutes=0, frequency="Weekly", description="Learn how to lead belay and lead climb in this 4 hour course!")
+        saturday_lead_belay_lesson = Class(name="Lead Belay Lesson", day="Tuesday", time=time(12, 0), price=100, category="Climbing", capacity=4, hours=4, minutes=0, frequency="Weekly", description="Learn how to lead belay and lead climb in this 4 hour course!")
         
-        beginner_yoga = Class(name="Beginner Yoga Class", day="Monday", time=time(18, 30), price=15, category="Yoga", capacity=20, hours=1, minutes=0, recurring=True, description="Entry level yoga class for beginners or more experienced yogis who want a more mellow session.  Free for members.")
-        monday_intermediate_yoga = Class(name="Intemediate Yoga Class", day="Wednesday", time=time(18, 30), price=15, category="Yoga", capacity=20, hours=1, minutes=0, recurring=True, description="Intemediate level yoga class for slightly to well experienced yogis.  Free for members.")
-        wednesday_intermediate_yoga = Class(name="Intemediate Yoga Class", day="Wednesday", time=time(18, 30), price=15, category="Yoga", capacity=20, hours=1, minutes=0, recurring=True, description="Intemediate level yoga class for slightly to well experienced yogis.  Free for members.")
-        monday_advanced_yoga = Class(name="Advanced Yoga Class", day="Friday", time=time(18, 30), category="Yoga", capacity=20, hours=1, minutes=0, recurring=True, price=15, description="Advanced level yoga class for experienced yogis.  Beginners not advised.  Free for members.")
-        wednesday_advanced_yoga = Class(name="Advanced Yoga Class", day="Friday", time=time(18, 30), category="Yoga", capacity=20, hours=1, minutes=0, recurring=True, price=15, description="Advanced level yoga class for experienced yogis.  Beginners not advised.  Free for members.")
+        beginner_yoga = Class(name="Beginner Yoga Class", day="Monday", time=time(18, 30), price=15, category="Yoga", capacity=20, hours=1, minutes=0, frequency="Weekly", description="Entry level yoga class for beginners or more experienced yogis who want a more mellow session.  Free for members.")
+        monday_intermediate_yoga = Class(name="Intemediate Yoga Class", day="Wednesday", time=time(18, 30), price=15, category="Yoga", capacity=20, hours=1, minutes=0, frequency="Weekly", description="Intemediate level yoga class for slightly to well experienced yogis.  Free for members.")
+        wednesday_intermediate_yoga = Class(name="Intemediate Yoga Class", day="Wednesday", time=time(18, 30), price=15, category="Yoga", capacity=20, hours=1, minutes=0, frequency="Weekly", description="Intemediate level yoga class for slightly to well experienced yogis.  Free for members.")
+        monday_advanced_yoga = Class(name="Advanced Yoga Class", day="Friday", time=time(18, 30), category="Yoga", capacity=20, hours=1, minutes=0, frequency="Weekly", price=15, description="Advanced level yoga class for experienced yogis.  Beginners not advised.  Free for members.")
+        wednesday_advanced_yoga = Class(name="Advanced Yoga Class", day="Friday", time=time(18, 30), category="Yoga", capacity=20, hours=1, minutes=0, frequency="Weekly", price=15, description="Advanced level yoga class for experienced yogis.  Beginners not advised.  Free for members.")
 
-        tuesday_core_class = Class(name="Core Class", day="Tuesday", time=time(17, 0), price=10, category="Fitness", capacity=20, hours=0, minutes=30, recurring=True, description="30 minute long intense core workout lead by experienced instructor.  Get ready to feel the burn!")
-        thursday_core_class = Class(name="Core Class", day="Thursday", time=time(17, 0), price=10, category="Fitness", capacity=20, hours=0, minutes=30, recurring=True, description="30 minute long intense core workout lead by experienced instructor.  Get ready to feel the burn!")
+        tuesday_core_class = Class(name="Core Class", day="Tuesday", time=time(17, 0), price=10, category="Fitness", capacity=20, hours=0, minutes=30, frequency="Weekly", description="30 minute long intense core workout lead by experienced instructor.  Get ready to feel the burn!")
+        thursday_core_class = Class(name="Core Class", day="Thursday", time=time(17, 0), price=10, category="Fitness", capacity=20, hours=0, minutes=30, frequency="Weekly", description="30 minute long intense core workout lead by experienced instructor.  Get ready to feel the burn!")
         
-        flexibility_class = Class(name="Flexibility Friday", day="Friday", time=time(17, 0), price=10, category="Fitness", capacity=20, hours=0, minutes=30, recurring=True, description="Work on your flexibility regardless of your current level!")
+        flexibility_class = Class(name="Flexibility Friday", day="Friday", time=time(17, 0), price=10, category="Fitness", capacity=20, hours=0, minutes=30, frequency="Weekly", description="Work on your flexibility regardless of your current level!")
 
-        db.session.add_all([wednesday_lead_belay_lesson, saturday_lead_belay_lesson, beginner_yoga, intermediate_yoga, advanced_yoga, tuesday_core_class, thursday_core_class, flexibility_class])
+        db.session.add_all([wednesday_lead_belay_lesson, saturday_lead_belay_lesson, beginner_yoga, monday_intermediate_yoga, wednesday_intermediate_yoga, monday_advanced_yoga, wednesday_advanced_yoga, tuesday_core_class, thursday_core_class, flexibility_class])
         db.session.commit()
 
         print("Generating signups...")

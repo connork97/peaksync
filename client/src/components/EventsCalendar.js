@@ -46,7 +46,7 @@ const EventsCalendar = ({ currentUser, allClasses }) => {
 
   useEffect(() => {
     const newEvents = allClasses.map((clas) => {
-      const { name, day, time, hours, minutes, recurring, category } = clas;
+      const { name, day, time, hours, minutes, frequency, category } = clas;
       const split_time = time.split(":");
       const start_hour = Number(split_time[0]);
       const start_minute = Number(split_time[1]);
