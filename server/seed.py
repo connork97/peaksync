@@ -5,11 +5,11 @@ from random import randint, choice as rc
 
 # Remote library imports
 from faker import Faker
-from datetime import time
+from datetime import time, date
 
 # Local imports
 from app import app
-from models import db, User, Membership, Event, Signup, Payment
+from models import db, User, Membership, Event, Signup, Payment, Session
 
 if __name__ == '__main__':
     fake = Faker()
@@ -100,49 +100,71 @@ if __name__ == '__main__':
         db.session.commit()
 
         print("Generating events...")
-        all_days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
-        for day in all_days:
-            belay_lesson = Event(name="Top Rope Belay Lesson", day=day, time=time(12, 0), price=15, category="Climbing", capacity=4, hours=1, minutes=0, frequency="Weekly", description="One hour class that teaches basic top rope belay safety skills. Without prior experience this class is required to climb in the roped section of the gym.  Free for members.")
-            db.session.add(belay_lesson)
-            db.session.commit()
-        for day in all_days:
-            belay_lesson = Event(name="Top Rope Belay Lesson", day=day, time=time(15, 0), price=15, category="Climbing", capacity=4, hours=1, minutes=0, frequency="Weekly", description="One hour class that teaches basic top rope belay safety skills. Without prior experience this class is required to climb in the roped section of the gym.  Free for members.")
-            db.session.add(belay_lesson)
-            db.session.commit()
-        for day in all_days:
-            belay_lesson = Event(name="Top Rope Belay Lesson", day=day, time=time(18, 0), price=15, category="Climbing", capacity=4, hours=1, minutes=0, frequency="Weekly", description="One hour class that teaches basic top rope belay safety skills. Without prior experience this class is required to climb in the roped section of the gym.  Free for members.")
-            db.session.add(belay_lesson)
-            db.session.commit()
+        belay_lesson = Event(name="Top Rope Belay Lesson", price=15, category="Climbing", hours=1, minutes=0, description="One hour class that teaches basic top rope belay safety skills. Without prior experience this class is required to climb in the roped section of the gym.  Free for members.")
+        # db.session.add(belay_lesson)
+        # db.session.commit()
 
+        # all_days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+        # for day in all_days:
+        #     belay_lesson = Event(name="Top Rope Belay Lesson", day=day, time=time(12, 0), price=15, category="Climbing", capacity=4, hours=1, minutes=0, frequency="Weekly", description="One hour class that teaches basic top rope belay safety skills. Without prior experience this class is required to climb in the roped section of the gym.  Free for members.")
+        #     db.session.add(belay_lesson)
+        #     db.session.commit()
+        # for day in all_days:
+        #     belay_lesson = Event(name="Top Rope Belay Lesson", day=day, time=time(15, 0), price=15, category="Climbing", capacity=4, hours=1, minutes=0, frequency="Weekly", description="One hour class that teaches basic top rope belay safety skills. Without prior experience this class is required to climb in the roped section of the gym.  Free for members.")
+        #     db.session.add(belay_lesson)
+        #     db.session.commit()
+        # for day in all_days:
+        #     belay_lesson = Event(name="Top Rope Belay Lesson", day=day, time=time(18, 0), price=15, category="Climbing", capacity=4, hours=1, minutes=0, frequency="Weekly", description="One hour class that teaches basic top rope belay safety skills. Without prior experience this class is required to climb in the roped section of the gym.  Free for members.")
+        #     db.session.add(belay_lesson)
+        #     db.session.commit()
 
-        wednesday_lead_belay_lesson = Event(name="Lead Belay Lesson", day="Tuesday", time=time(17, 0), price=100, category="Climbing", capacity=4, hours=4, minutes=0, frequency="Weekly", description="Learn how to lead belay and lead climb in this 4 hour course!")
-        saturday_lead_belay_lesson = Event(name="Lead Belay Lesson", day="Tuesday", time=time(12, 0), price=100, category="Climbing", capacity=4, hours=4, minutes=0, frequency="Weekly", description="Learn how to lead belay and lead climb in this 4 hour course!")
+        lead_belay_lesson = Event(name="Lead Belay Lesson", price=100, category="Climbing", capacity=4, hours=4, minutes=0, description="Learn how to lead belay and lead climb in this 4 hour course!")
+        beginner_yoga = Event(name="Beginner Yoga Event", price=15, category="Yoga", capacity=20, hours=1, minutes=0, description="Entry level yoga class for beginners or more experienced yogis who want a more mellow session.  Free for members.")
+        intermediate_yoga = Event(name="Intemediate Yoga Event", price=15, category="Yoga", capacity=20, hours=1, minutes=0, description="Intemediate level yoga class for slightly to well experienced yogis.  Free for members.")
+        advanced_yoga = Event(name="Advanced Yoga Event", category="Yoga", capacity=20, hours=1, minutes=0, price=15, description="Advanced level yoga class for experienced yogis.  Beginners not advised.  Free for members.")
+
+        core_class = Event(name="Core Event", price=10, category="Fitness", capacity=20, hours=0, minutes=30, description="30 minute long intense core workout lead by experienced instructor.  Get ready to feel the burn!")
         
-        beginner_yoga = Event(name="Beginner Yoga Event", day="Monday", time=time(18, 30), price=15, category="Yoga", capacity=20, hours=1, minutes=0, frequency="Weekly", description="Entry level yoga class for beginners or more experienced yogis who want a more mellow session.  Free for members.")
-        monday_intermediate_yoga = Event(name="Intemediate Yoga Event", day="Wednesday", time=time(18, 30), price=15, category="Yoga", capacity=20, hours=1, minutes=0, frequency="Weekly", description="Intemediate level yoga class for slightly to well experienced yogis.  Free for members.")
-        wednesday_intermediate_yoga = Event(name="Intemediate Yoga Event", day="Wednesday", time=time(18, 30), price=15, category="Yoga", capacity=20, hours=1, minutes=0, frequency="Weekly", description="Intemediate level yoga class for slightly to well experienced yogis.  Free for members.")
-        monday_advanced_yoga = Event(name="Advanced Yoga Event", day="Friday", time=time(18, 30), category="Yoga", capacity=20, hours=1, minutes=0, frequency="Weekly", price=15, description="Advanced level yoga class for experienced yogis.  Beginners not advised.  Free for members.")
-        wednesday_advanced_yoga = Event(name="Advanced Yoga Event", day="Friday", time=time(18, 30), category="Yoga", capacity=20, hours=1, minutes=0, frequency="Weekly", price=15, description="Advanced level yoga class for experienced yogis.  Beginners not advised.  Free for members.")
-
-        tuesday_core_class = Event(name="Core Event", day="Tuesday", time=time(17, 0), price=10, category="Fitness", capacity=20, hours=0, minutes=30, frequency="Weekly", description="30 minute long intense core workout lead by experienced instructor.  Get ready to feel the burn!")
-        thursday_core_class = Event(name="Core Event", day="Thursday", time=time(17, 0), price=10, category="Fitness", capacity=20, hours=0, minutes=30, frequency="Weekly", description="30 minute long intense core workout lead by experienced instructor.  Get ready to feel the burn!")
+        flexibility_class = Event(name="Flexibility Friday", price=10, category="Fitness", capacity=20, hours=0, minutes=30, description="Work on your flexibility regardless of your current level!")
+        db.session.add_all([belay_lesson, lead_belay_lesson, beginner_yoga, intermediate_yoga, advanced_yoga, core_class, flexibility_class])
+        # wednesday_lead_belay_lesson = Event(name="Lead Belay Lesson", day="Tuesday", time=time(17, 0), price=100, category="Climbing", capacity=4, hours=4, minutes=0, frequency="Weekly", description="Learn how to lead belay and lead climb in this 4 hour course!")
+        # saturday_lead_belay_lesson = Event(name="Lead Belay Lesson", day="Tuesday", time=time(12, 0), price=100, category="Climbing", capacity=4, hours=4, minutes=0, frequency="Weekly", description="Learn how to lead belay and lead climb in this 4 hour course!")
         
-        flexibility_class = Event(name="Flexibility Friday", day="Friday", time=time(17, 0), price=10, category="Fitness", capacity=20, hours=0, minutes=30, frequency="Weekly", description="Work on your flexibility regardless of your current level!")
+        # beginner_yoga = Event(name="Beginner Yoga Event", day="Monday", time=time(18, 30), price=15, category="Yoga", capacity=20, hours=1, minutes=0, frequency="Weekly", description="Entry level yoga class for beginners or more experienced yogis who want a more mellow session.  Free for members.")
+        # monday_intermediate_yoga = Event(name="Intemediate Yoga Event", day="Wednesday", time=time(18, 30), price=15, category="Yoga", capacity=20, hours=1, minutes=0, frequency="Weekly", description="Intemediate level yoga class for slightly to well experienced yogis.  Free for members.")
+        # wednesday_intermediate_yoga = Event(name="Intemediate Yoga Event", day="Wednesday", time=time(18, 30), price=15, category="Yoga", capacity=20, hours=1, minutes=0, frequency="Weekly", description="Intemediate level yoga class for slightly to well experienced yogis.  Free for members.")
+        # monday_advanced_yoga = Event(name="Advanced Yoga Event", day="Friday", time=time(18, 30), category="Yoga", capacity=20, hours=1, minutes=0, frequency="Weekly", price=15, description="Advanced level yoga class for experienced yogis.  Beginners not advised.  Free for members.")
+        # wednesday_advanced_yoga = Event(name="Advanced Yoga Event", day="Friday", time=time(18, 30), category="Yoga", capacity=20, hours=1, minutes=0, frequency="Weekly", price=15, description="Advanced level yoga class for experienced yogis.  Beginners not advised.  Free for members.")
 
-        db.session.add_all([wednesday_lead_belay_lesson, saturday_lead_belay_lesson, beginner_yoga, monday_intermediate_yoga, wednesday_intermediate_yoga, monday_advanced_yoga, wednesday_advanced_yoga, tuesday_core_class, thursday_core_class, flexibility_class])
-        db.session.commit()
+        # tuesday_core_class = Event(name="Core Event", day="Tuesday", time=time(17, 0), price=10, category="Fitness", capacity=20, hours=0, minutes=30, frequency="Weekly", description="30 minute long intense core workout lead by experienced instructor.  Get ready to feel the burn!")
+        # thursday_core_class = Event(name="Core Event", day="Thursday", time=time(17, 0), price=10, category="Fitness", capacity=20, hours=0, minutes=30, frequency="Weekly", description="30 minute long intense core workout lead by experienced instructor.  Get ready to feel the burn!")
+        
+        # flexibility_class = Event(name="Flexibility Friday", day="Friday", time=time(17, 0), price=10, category="Fitness", capacity=20, hours=0, minutes=30, frequency="Weekly", description="Work on your flexibility regardless of your current level!")
+
+        # db.session.add_all([wednesday_lead_belay_lesson, saturday_lead_belay_lesson, beginner_yoga, monday_intermediate_yoga, wednesday_intermediate_yoga, monday_advanced_yoga, wednesday_advanced_yoga, tuesday_core_class, thursday_core_class, flexibility_class])
+        # db.session.commit()
 
         print("Generating signups...")
 
         for i in range(500):
             new_signup = Signup(
                 user_id=randint(1, 100),
-                event_id=randint(1, 7),
+                session_id=randint(1, 7),
                 paid=fake.boolean()
             )
             db.session.add(new_signup)
             db.session.commit()
 
+        print("Generating sessions...")
+        session1 = Session(date=date, time="12:00", event_id=1)
+        session2 = Session(date=date, time="12:00", event_id=2)
+        session3 = Session(date=date, time="12:00", event_id=3)
+        session4 = Session(date=date, time="12:00", event_id=4)
+        session5 = Session(date=date, time="12:00", event_id=5)
+        session6 = Session(date=date, time="12:00", event_id=6)
+        session7 = Session(date=date, time="12:00", event_id=7)
+        db.session.add_all([session1, session2, session3, session4, session5, session6, session7])
+        db.session.commit()
         # signup1 = Signup(user_id=1, event_id=1, paid=True)
         # signup2 = Signup(user_id=2, event_id=2, paid=False)
         # signup23 = Signup(user_id=2, event_id=3, paid=True)

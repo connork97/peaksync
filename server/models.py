@@ -87,47 +87,88 @@ class User(db.Model, SerializerMixin):
                 print(value)
                 raise ValueError("Invalid email.")
 
-class Membership(db.Model, SerializerMixin):
-    __tablename__ = "memberships"
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
-    description = db.Column(db.Text)
-    type = db.Column(db.String)
-    subtype = db.Column(db.String)
-    price = db.Column(db.Float)
-
-    created_at = db.Column(db.DateTime, server_default=db.func.now())
-    updated_at = db.Column(db.DateTime, onupdate=db.func.now())
-
 
 class Event(db.Model, SerializerMixin):
     __tablename__ = "events"
 
     serialize_rules=(
         '-signups.user',
-        '-signups.event'
+        '-sessions'
     )
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
     price = db.Column(db.Float)
-    description = db.Column(db.Text)
     category = db.Column(db.String)
     capacity = db.Column(db.Integer)
-    day = db.Column(db.String)
-    time = db.Column(Time)
     hours = db.Column(db.Integer)
     minutes = db.Column(db.Integer)
-    frequency = db.Column(db.String)
+    description = db.Column(db.Text)
 
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
-    signups = db.relationship('Signup', back_populates="event")
+    sessions = db.relationship('Session', back_populates="event")
 
-    @validates('day', 'time', 'frequency')
-    def validate_event(self, key, value):
+    # frequency = db.Column(db.String)
+    # day = db.Column(db.String)
+    # time = db.Column(Time)
+    # signups = db.relationship('Signup', back_populates="event")
+
+    # @validates('frequency')
+    # def validate_event(self, key, value):
+        # if key == 'day':
+        #     days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+        #     if value in days:
+        #         return value
+        #     else:
+        #         raise ValueError('Day must be a day of the week.')
+        # if key == 'time':
+        #     if type(value) == str:
+        #         split_time=(value.split(":"))
+        #         formatted_time = time(int(split_time[0]), int(split_time[1]))
+        #         return formatted_time
+        #     else:
+        #         return value
+        # if key == 'frequency':
+            # options = ['Once', 'Weekly', 'Biweekly' 'Monthly', 'Biannual', 'Yearly']
+            # if value in options:
+                # return value
+            # else:
+                # raise ValueError("Options for frequency of event must be Once, Daily, Weekly, Biweekly, Monthly, or Yearly.")
+
+class Session(db.Model, SerializerMixin):
+    __tablename__ = "sessions"
+
+    # serialize_rules=(
+    #     '-signups.session',
+    #     '-event.sessions'
+    # )
+
+    # serialize_only=('id', 'date', 'time', 'event')
+    serialize_rules=(
+        '-signups.session',
+        '-signups.user',
+        '-event.sessions'
+    )
+
+    id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.DateTime)
+    # day = db.Column(db.String)
+    time = db.Column(Time)
+    # capacity = db.Column(db.Integer)
+
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    updated_at = db.Column(db.DateTime, onupdate=db.func.now())
+    
+    event_id = db.Column(db.Integer, db.ForeignKey("events.id"))
+    event = db.relationship('Event', back_populates="sessions")
+
+    signups = db.relationship('Signup', back_populates="session")
+
+
+    @validates('date', 'day', 'time')
+    def validate_session(self, key, value):
         if key == 'day':
             days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
             if value in days:
@@ -147,29 +188,34 @@ class Event(db.Model, SerializerMixin):
                 return value
             else:
                 raise ValueError("Options for frequency of event must be Once, Daily, Weekly, Biweekly, Monthly, or Yearly.")
-
+            
 class Signup(db.Model, SerializerMixin):
     __tablename__ = "signups"
 
-    # serialize_rules=(
-    #     '-user.signups',
-    #     '-user._password_hash',
-    #     '-user_id',
-    #     '-event.signups'
-    #     # '-event_id'
-    # )
-    serialize_only = ('id', 'user_id', 'event_id', 'paid', 'created_at', 'updated_at', 'user', 'event')
+    serialize_rules=(
+        '-user.signups',
+        '-user._password_hash',
+        '-user_id',
+        '-event.signups',
+        '-session.signups'
+        # '-event_id'
+    )
+    # serialize_only = ('id', 'user_id', 'session_id', 'paid', 'created_at', 'updated_at', 'user')
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
-    event_id = db.Column(db.Integer, db.ForeignKey("events.id"))
     paid = db.Column(db.Boolean)
 
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
     user = db.relationship('User', back_populates="signups")
-    event = db.relationship('Event', back_populates="signups")
+
+    session_id = db.Column(db.Integer, db.ForeignKey("sessions.id"))
+    session = db.relationship('Session', back_populates="signups")
+
+    # event_id = db.Column(db.Integer, db.ForeignKey("events.id"))
+    # event = db.relationship('Event', back_populates="signups")
 
 class Payment(db.Model, SerializerMixin):
     __tablename__ = "payments"
@@ -189,3 +235,16 @@ class Payment(db.Model, SerializerMixin):
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
     user = db.relationship('User', back_populates="payments")
+
+class Membership(db.Model, SerializerMixin):
+    __tablename__ = "memberships"
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+    description = db.Column(db.Text)
+    type = db.Column(db.String)
+    subtype = db.Column(db.String)
+    price = db.Column(db.Float)
+
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    updated_at = db.Column(db.DateTime, onupdate=db.func.now())
