@@ -93,7 +93,7 @@ const ClassData = ({ clas, allClasses, setAllClasses }) => {
         {editClassToggle ?
         <Button onClick={handleDiscardClassChanges}>Discard Changes</Button>
         : null}
-        <Button onClick={() => handleClassDelete(clas.id)}>Delete Class</Button>
+        <Button onClick={() => handleClassDelete(clas.id)} style={{background:"red"}}>Delete Class</Button>
         <br></br>
      </ListGroup.Item>
     )

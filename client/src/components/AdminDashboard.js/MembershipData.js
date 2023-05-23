@@ -86,7 +86,7 @@ const MembershipData = ({ membership, allMemberships, setAllMemberships }) => {
             {editMembershipToggle ?
             <Button onClick={handleDiscardMembershipChanges}>Discard Changes</Button>
             : null}
-        <Button onClick={() => handleMembershipDelete(membership.id)}>Delete Membership</Button>
+        <Button onClick={() => handleMembershipDelete(membership.id)} style={{background:"red"}}>Delete Membership</Button>
 
         </ListGroup.Item>
     )
