@@ -1,7 +1,8 @@
-import React, { useState, Component } from "react";
+import React, { useEffect, useState, Component } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
+import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 
 import { RRule } from 'rrule'
 
@@ -9,64 +10,54 @@ const localizer = momentLocalizer(moment);
 
 const EventsCalendar = ({ currentUser, allClasses }) => {
 
-  const events = []
+  const [events, setEvents] = useState([])
 
-  const allClassEvents = allClasses.map((clas) => {
-    const {name, day, time, hours, minutes, recurring} = clas
-    const split_time = time.split(":")
-    const start_hour = Number(split_time[0])
-    const start_minute = Number(split_time[1])
-    const end_hour = start_hour + hours
-    const end_minute = start_minute + minutes
-    console.log(end_minute)
-    console.log(typeof Number(split_time[1]))
-    const newEvent = {
-      title: name,
-      start: moment().day(day).hour(start_hour).minute(start_minute).second(0).toDate(),
-      end: moment().day(day).hour(end_hour).minute(end_minute).second(0).toDate()
+  const eventStyleGetter = (event) => {
+    const style = {
+      backgroundColor: event.color,
+      background: event.color,
+      borderRadius: '5px',
+      opacity: 0.8,
+      color: 'white',
+      border: '0',
+      display: 'block'
+    };
+    return {
+      style
+    };
+  };
+
+  const selectEventColor = (category) => {
+    if (category === 'Climbing') {
+      return 'red'
+    } else if (category === 'Yoga') {
+      return 'magenta'
+    } else if (category === 'Fitness') {
+      return 'green'
     }
-    events.push(newEvent)
-  })
-  console.log(events)
+  }
 
-    // const businessHours = [
-    //   {
-    //     title: "Business Hours",
-    //     start: moment().day("Monday").hour(6).minute(0).toDate(),
-    //     end: moment().day("Monday").hour(23).minute(0).toDate(),
-    //   },
-    //   {
-    //     title: "Business Hours",
-    //     start: moment().day("Tuesday").hour(6).minute(0).toDate(),
-    //     end: moment().day("Tuesday").hour(23).minute(0).toDate(),
-    //   },
-    //   {
-    //     title: "Business Hours",
-    //     start: moment().day("Wednesday").hour(6).minute(0).toDate(),
-    //     end: moment().day("Wednesday").hour(23).minute(0).toDate(),
-    //   },
-    //   {
-    //     title: "Business Hours",
-    //     start: moment().day("Thursday").hour(6).minute(0).toDate(),
-    //     end: moment().day("Thursday").hour(23).minute(0).toDate(),
-    //   },
-    //   {
-    //     title: "Business Hours",
-    //     start: moment().day("Friday").hour(6).minute(0).toDate(),
-    //     end: moment().day("Friday").hour(23).minute(0).toDate(),
-    //   },
-    //   {
-    //     title: "Business Hours",
-    //     start: moment().day("Saturday").hour(8).minute(0).toDate(),
-    //     end: moment().day("Saturday").hour(20).minute(0).toDate(),
-    //   },
-    //   // Sunday
-    //   {
-    //     title: "Business Hours",
-    //     start: moment().day("Sunday").hour(8).minute(0).toDate(),
-    //     end: moment().day("Sunday").hour(20).minute(0).toDate(),
-    //   },
-    // ];
+  useEffect(() => {
+    const newEvents = allClasses.map((clas) => {
+      const { name, day, time, hours, minutes, recurring, category } = clas;
+      const split_time = time.split(":");
+      const start_hour = Number(split_time[0]);
+      const start_minute = Number(split_time[1]);
+      const end_hour = start_hour + hours;
+      const end_minute = start_minute + minutes;
+      
+      let color = selectEventColor(category)
+
+      return {
+        title: name,
+        start: moment().day(day).hour(start_hour).minute(start_minute).second(0).toDate(),
+        end: moment().day(day).hour(end_hour).minute(end_minute).second(0).toDate(),
+        color: color,
+      };
+    });
+
+    setEvents(newEvents)
+  }, [allClasses]);
 
     return (
       <div>
@@ -74,10 +65,11 @@ const EventsCalendar = ({ currentUser, allClasses }) => {
           <Calendar
             localizer={localizer}
             defaultDate={new Date()}
-            defaultView="week"
+            defaultView="month"
             events={events}
             timeslots={1}
-            style={{ height: "100vh" }}
+            style={{ height: "85vh", width:"85vw", margin:"auto" }}
+            eventPropGetter={eventStyleGetter}
           />
       </div>
     )
