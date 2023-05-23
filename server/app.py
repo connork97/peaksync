@@ -9,7 +9,7 @@ from flask import request, make_response, session
 from flask_cors import CORS
 # Local imports
 from config import app, db, api
-from models import User, Membership, Event, Signup, Payment
+from models import User, Membership, Event, Signup, Payment, Session
 
 CORS(app)
 # Views go here!
@@ -326,6 +326,17 @@ def signup_by_id(id):
     else:
         response = make_response({"error": f"404: Signup of id {id} not found."})
 
+    return response
+
+@app.route('/sessions', methods=['GET', 'POST'])
+def sessions():
+    if request.method == 'GET':
+        all_sessions_dict = [session.to_dict() for session in Session.query.all()]
+        if all_sessions_dict:
+            response = make_response(all_sessions_dict, 200)
+        else:
+            response = make_response({"error": "404: Sessions not found."})
+    
     return response
 
 @app.route('/payments', methods=['GET'])

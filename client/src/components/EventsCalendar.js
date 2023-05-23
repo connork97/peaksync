@@ -8,7 +8,7 @@ import { RRule, RRuleSet, rrulestr } from 'rrule'
 
 const localizer = momentLocalizer(moment);
 
-const EventsCalendar = ({ currentUser, allEvents }) => {
+const EventsCalendar = ({ currentUser, allEvents, allSessions }) => {
 
   // const rule = new RRule({
   //   freq: RRule.WEEKLY,
@@ -62,9 +62,10 @@ const EventsCalendar = ({ currentUser, allEvents }) => {
   };
 
   console.log(getNextOccurrence(5))
+
   useEffect(() => {
-    const newEvents = allEvents.map((event) => {
-      const { name, day, time, hours, minutes, frequency, category } = event;
+    const newEvents = allSessions.map((session) => {
+      const { name, day, time, hours, minutes, frequency, category } = session;
       const split_time = time.split(":");
       const start_hour = Number(split_time[0]);
       const start_minute = Number(split_time[1]);
@@ -83,7 +84,30 @@ const EventsCalendar = ({ currentUser, allEvents }) => {
     });
 
     setEvents(newEvents)
-  }, [allEvents]);
+  }, [allSessions]);
+
+  // useEffect(() => {
+  //   const newEvents = allEvents.map((event) => {
+  //     const { name, day, time, hours, minutes, frequency, category } = event;
+  //     const split_time = time.split(":");
+  //     const start_hour = Number(split_time[0]);
+  //     const start_minute = Number(split_time[1]);
+  //     const end_hour = start_hour + hours;
+  //     const end_minute = start_minute + minutes;
+      
+  //     let color = selectEventColor(category)
+
+  //     console.log(frequency)
+  //     return {
+  //       title: name,
+  //       start: moment().day(day).hour(start_hour).minute(start_minute).second(0).toDate(),
+  //       end: moment().day(day).hour(end_hour).minute(end_minute).second(0).toDate(),
+  //       color: color,
+  //     };
+  //   });
+
+  //   setEvents(newEvents)
+  // }, [allEvents]);
 
     return (
       <div>

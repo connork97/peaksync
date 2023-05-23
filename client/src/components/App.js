@@ -16,10 +16,11 @@ import AdminDashboard from "./AdminDashboard.js/AdminDashboard.js";
 
 function App() {
 
+  const [currentUser, setCurrentUser] = useState({})
   const [allUsers, setAllUsers] = useState([])
   const [allEvents, setAllEvents] = useState([])
+  const [allSessions, setAllSessions] = useState([])
   const [allMemberships, setAllMemberships] = useState([])
-  const [currentUser, setCurrentUser] = useState({})
 
   useEffect(() => {
     console.log(allUsers)
@@ -42,6 +43,7 @@ function App() {
           <EventsCalendar
             currentUser={currentUser}
             allEvents={allEvents}
+            allSessions={allSessions}
           />
         </Route>
         <Route exact path='/about-us'>
@@ -55,6 +57,7 @@ function App() {
             setAllUsers={setAllUsers}
             setAllMemberships={setAllMemberships}
             setAllEvents={setAllEvents}
+            setAllSessions={setAllSessions}
           />
         </Route>
         <Route exact path='/signup'>

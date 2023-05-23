@@ -1,6 +1,6 @@
 from sqlalchemy_serializer import SerializerMixin
-from datetime import datetime, time
-from sqlalchemy import Time
+from datetime import datetime, time, date
+from sqlalchemy import Time, Date
 
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.ext.associationproxy import association_proxy
@@ -153,7 +153,7 @@ class Session(db.Model, SerializerMixin):
     )
 
     id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.DateTime)
+    date = db.Column(Date)
     # day = db.Column(db.String)
     time = db.Column(Time)
     # capacity = db.Column(db.Integer)
@@ -167,7 +167,7 @@ class Session(db.Model, SerializerMixin):
     signups = db.relationship('Signup', back_populates="session")
 
 
-    @validates('date', 'day', 'time')
+    @validates('day', 'time')
     def validate_session(self, key, value):
         if key == 'day':
             days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']

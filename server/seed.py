@@ -5,7 +5,8 @@ from random import randint, choice as rc
 
 # Remote library imports
 from faker import Faker
-from datetime import time, date
+from datetime import time, date, datetime
+from sqlalchemy import Date, Time
 
 # Local imports
 from app import app
@@ -19,6 +20,7 @@ if __name__ == '__main__':
         db.session.query(Membership).delete()
         db.session.query(Event).delete()
         db.session.query(Signup).delete()
+        db.session.query(Session).delete()
         db.session.commit()
         print("Generating user profiles...")
         guest = User(
@@ -156,13 +158,16 @@ if __name__ == '__main__':
             db.session.commit()
 
         print("Generating sessions...")
-        session1 = Session(date=date, time="12:00", event_id=1)
-        session2 = Session(date=date, time="12:00", event_id=2)
-        session3 = Session(date=date, time="12:00", event_id=3)
-        session4 = Session(date=date, time="12:00", event_id=4)
-        session5 = Session(date=date, time="12:00", event_id=5)
-        session6 = Session(date=date, time="12:00", event_id=6)
-        session7 = Session(date=date, time="12:00", event_id=7)
+        date_value = datetime(2023, 5, 23)
+        time_value = time(10, 30)
+        print(time_value)
+        session1 = Session(date=date_value, time=time_value, event_id=1)
+        session2 = Session(date=date_value, time=time_value, event_id=2)
+        session3 = Session(date=date_value, time=time_value, event_id=3)
+        session4 = Session(date=date_value, time=time_value, event_id=4)
+        session5 = Session(date=date_value, time=time_value, event_id=5)
+        session6 = Session(date=date_value, time=time_value, event_id=6)
+        session7 = Session(date=date_value, time=time_value, event_id=7)
         db.session.add_all([session1, session2, session3, session4, session5, session6, session7])
         db.session.commit()
         # signup1 = Signup(user_id=1, event_id=1, paid=True)
