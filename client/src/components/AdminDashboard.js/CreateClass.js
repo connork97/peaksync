@@ -64,7 +64,7 @@ const CreateClass = ({ allClasses, setAllClasses }) => {
         return (
             <>
                 <Form.Label>{option}</Form.Label>
-                <Form.Check name={option} value={newClass.frequency} type="radio"></Form.Check>
+                <Form.Check name="frequency" value={option} type="radio" onChange={handleNewClassChange} style={{marginLeft:"1rem", marginRight:"1rem"}}></Form.Check>
             </>
         )
     })
@@ -103,7 +103,9 @@ const CreateClass = ({ allClasses, setAllClasses }) => {
             <br></br>
             <Form.Label>Frequency of Event:</Form.Label>
             <br></br>
-            {radio_options}
+            <div style={{display:"inline-flex"}}>
+                {radio_options}
+            </div>
             <br></br>
             <Button type="submit">Create Class</Button>
             <Button onClick={handleDiscardClass}>Discard Class</Button>
