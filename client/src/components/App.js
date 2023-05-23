@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 import NavBar from "./NavBar.js";
 import Home from "./Home.js";
-import Classes from "./Classes.js"
+import EventsCalendar from "./EventsCalendar.js"
 import Rates from "./Rates.js"
 import AboutUs from "./AboutUs.js"
 import Login from "./Login.js"
@@ -39,7 +39,7 @@ function App() {
           <Rates currentUser={currentUser} />
         </Route>
         <Route exact path='/classes'>
-          <Classes currentUser={currentUser} />
+          <EventsCalendar currentUser={currentUser} />
         </Route>
         <Route exact path='/about-us'>
           <AboutUs currentUser={currentUser} />
