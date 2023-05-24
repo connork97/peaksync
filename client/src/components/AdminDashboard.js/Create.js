@@ -1,10 +1,11 @@
 import CreateUser from "./CreateUser"
 import CreateEvent from './CreateEvent'
+import CreateSession from './CreateSession'
 import CreateMembership from "./CreateMembership"
 
 import Accordion from 'react-bootstrap/Accordion'
 
-const Create = ({ allUsers, setAllUsers, allEvents, setAllEvents, allMemberships, setAllMemberships }) => {
+const Create = ({ allUsers, setAllUsers, allEvents, setAllEvents, allMemberships, setAllMemberships, allSessions, setAllSessions }) => {
 
     return (
         <Accordion>
@@ -27,6 +28,16 @@ const Create = ({ allUsers, setAllUsers, allEvents, setAllEvents, allMemberships
                 </Accordion.Body>
             </Accordion.Item>
             <Accordion.Item eventKey="2" style={{marginBottom:"20px"}}>
+                <Accordion.Header>Create New Calendar Item for Events and Classes</Accordion.Header>
+                <Accordion.Body>
+                    <CreateSession
+                        allSessions={allSessions}
+                        setAllSessions={setAllSessions}
+                        allEvents={allEvents}
+                    />
+                </Accordion.Body>
+            </Accordion.Item>
+            <Accordion.Item eventKey="3" style={{marginBottom:"20px"}}>
                 <Accordion.Header>Create a New Membership or Offering</Accordion.Header>
                 <Accordion.Body>
                     <CreateMembership

@@ -75,6 +75,8 @@ function App() {
             setAllEvents={setAllEvents}
             allMemberships={allMemberships}
             setAllMemberships={setAllMemberships}
+            allSessions={allSessions}
+            setAllSessions={setAllSessions}
           />
         </Route>
         <Route exact path='/database'>

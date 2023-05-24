@@ -4,33 +4,27 @@ import ListGroup from 'react-bootstrap/ListGroup'
 import Button from 'react-bootstrap/esm/Button'
 
 const EventData = ({ event, allEvents, setAllEvents }) => {
-    
+    // console.log(event)
     const [editEventToggle, setEditEventToggle] = useState(false)
     const [editedEvent, setEditedEvent] = useState({
         "name": event.name,
         "price": event.price,
-        "day": event.day,
-        "time": event.time,
         "category": event.category,
         "capacity": event.capacity,
         "hours": event.hours,
         "minutes": event.minutes,
-        "description": event.description,
-        "frequency": event.frequency
+        "description": event.description
     })
 
     const handleDiscardEventChanges = () => {
         setEditedEvent({
             "name": event.name,
             "price": event.price,
-            "day": event.day,
-            "time": event.time,
             "category": event.category,
             "capacity": event.capacity,
             "hours": event.hours,
             "minutes": event.minutes,
-            "description": event.description,
-            "frequency": event.frequency
+            "description": event.description
           });
         setEditEventToggle(false)
     }
@@ -61,7 +55,7 @@ const EventData = ({ event, allEvents, setAllEvents }) => {
         fetch(`/events/${event_id}`, {
             method: 'DELETE'
         })
-        console.log(allEvents)
+        // console.log(allEvents)
         const updatedEvents = allEvents.filter((event) => event.id != event_id)
         setAllEvents(updatedEvents)
     }
@@ -74,12 +68,6 @@ const EventData = ({ event, allEvents, setAllEvents }) => {
             Name: {editEventToggle ? <input name="name" value={editedEvent.name} onChange={handleEventDetailChange}></input> : editedEvent.name}
             <br></br>
             Price: ${editEventToggle ? <input name="price" value={editedEvent.price} onChange={handleEventDetailChange}></input> : editedEvent.price}
-            <br></br>
-            Day: {editEventToggle ? <input name="day" value={editedEvent.day} onChange={handleEventDetailChange}></input> : editedEvent.day}
-            <br></br>
-            Time: {editEventToggle ? <input name="time" value={editedEvent.time} onChange={handleEventDetailChange}></input> : editedEvent.time}
-            <br></br>
-            Frequency: {editEventToggle ? <input name="frequency" value={editedEvent.frequency} onChange={handleEventDetailChange}></input> : <span>{editedEvent.frequency}</span>}
             <br></br>
             Category: {editEventToggle ? <input name="category" value={editedEvent.category} onChange={handleEventDetailChange}></input> : editedEvent.category}
             <br></br>

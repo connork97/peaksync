@@ -167,27 +167,36 @@ class Session(db.Model, SerializerMixin):
     signups = db.relationship('Signup', back_populates="session")
 
 
-    @validates('day', 'time')
+    @validates('date', 'time')
     def validate_session(self, key, value):
-        if key == 'day':
-            days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
-            if value in days:
-                return value
-            else:
-                raise ValueError('Day must be a day of the week.')
+        # if key == 'day':
+        #     days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+        #     if value in days:
+        #         return value
+        #     else:
+        #         raise ValueError('Day must be a day of the week.')
         if key == 'time':
             if type(value) == str:
                 split_time=(value.split(":"))
                 formatted_time = time(int(split_time[0]), int(split_time[1]))
                 return formatted_time
             else:
-                return value
-        if key == 'frequency':
-            options = ['Once', 'Weekly', 'Biweekly' 'Monthly', 'Biannual', 'Yearly']
-            if value in options:
-                return value
-            else:
-                raise ValueError("Options for frequency of event must be Once, Daily, Weekly, Biweekly, Monthly, or Yearly.")
+                raise ValueError
+        
+        if key == 'date':
+            if type(value) == str:
+                split_date=value.split("-")
+                # print(value)
+                print(split_date)
+                formatted_date = int(split_date[0]), int(split_date[1]), int(split_date[2])
+                print(formatted_date)
+                return datetime(int(split_date[0]), int(split_date[1]), int(split_date[2]))
+        # if key == 'frequency':
+        #     options = ['Once', 'Weekly', 'Biweekly' 'Monthly', 'Biannual', 'Yearly']
+        #     if value in options:
+        #         return value
+        #     else:
+        #         raise ValueError("Options for frequency of event must be Once, Daily, Weekly, Biweekly, Monthly, or Yearly.")
             
 class Signup(db.Model, SerializerMixin):
     __tablename__ = "signups"

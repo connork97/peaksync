@@ -225,50 +225,47 @@ def events():
             new_event = Event(
                 name=form_data['name'],
                 price=form_data['price'],
-                day=form_data['day'],
-                time=form_data['time'],
                 category=form_data['category'],
                 capacity=int(form_data['capacity']),
                 hours=int(form_data['hours']),
                 minutes=int(form_data['minutes']),
-                recurring=form_data['recurring'],
                 description=form_data['description']
             )
-            db.session.add(new_events)
+            db.session.add(new_event)
             db.session.commit()
-            response = make_response(new_events.to_dict(), 200)
+            response = make_response(new_event.to_dict(), 200)
 
         except:
             response = make_response({"error": "Unsuccessful creation of new events"}, 404)
 
     return response
 
-@app.route('/eventses/<int:id>', methods=['GET', 'PATCH', 'DELETE'])
+@app.route('/events/<int:id>', methods=['GET', 'PATCH', 'DELETE'])
 def events_by_id(id):
-    one_events = events.query.filter(events.id == id).one_or_none()
+    one_event = Event.query.filter(Event.id == id).one_or_none()
 
-    if one_events:
+    if one_event:
     
         if request.method == 'GET':
-            response = make_response(one_events.to_dict(), 200)
+            response = make_response(one_event.to_dict(), 200)
     
         if request.method == 'PATCH':
             
             try:
                 form_data = request.get_json()
                 for attr in form_data:
-                    setattr(one_events, attr, form_data[attr])
+                    setattr(one_event, attr, form_data[attr])
 
-                db.session.add(one_events)
+                db.session.add(one_event)
                 db.session.commit()
-                response = make_response(one_events.to_dict(), 200)
+                response = make_response(one_event.to_dict(), 200)
 
             except:
                 response = make_response({"error": f"404: Could not update user of id {id}."}, 404)
     
         if request.method == 'DELETE':
             try:
-                db.session.delete(one_events)
+                db.session.delete(one_event)
                 db.session.commit()
                 response = make_response({"success": f"events of id {id} deleted."}, 204)
             except:
@@ -330,13 +327,28 @@ def signup_by_id(id):
 
 @app.route('/sessions', methods=['GET', 'POST'])
 def sessions():
+    
     if request.method == 'GET':
         all_sessions_dict = [session.to_dict() for session in Session.query.all()]
         if all_sessions_dict:
             response = make_response(all_sessions_dict, 200)
         else:
             response = make_response({"error": "404: Sessions not found."})
-    
+
+    if request.method == 'POST':
+        try:
+            form_data = request.get_json()
+            new_session = Session(
+                date=form_data['date'],
+                time=form_data['time'],
+                event_id=form_data['event_id']
+            )
+            db.session.add(new_session)
+            db.session.commit()
+            response = make_response(new_session.to_dict(), 204)
+        except:
+            response = make_response({"error": "404: Could not create new session"})
+
     return response
 
 @app.route('/payments', methods=['GET'])

@@ -12,7 +12,7 @@ import Create from './Create'
 import { useHistory } from 'react-router-dom'
 import AccordionItem from 'react-bootstrap/esm/AccordionItem'
 
-const AdminDashboard = ({ currentUser, allUsers, setAllUsers, allEvents, setAllEvents, allMemberships, setAllMemberships }) => {
+const AdminDashboard = ({ currentUser, allUsers, setAllUsers, allEvents, setAllEvents, allMemberships, setAllMemberships, allSessions, setAllSessions }) => {
     
     const history = useHistory()
 
@@ -114,6 +114,8 @@ const AdminDashboard = ({ currentUser, allUsers, setAllUsers, allEvents, setAllE
                         setAllEvents={setAllEvents}
                         allMemberships={allMemberships}
                         setAllMemberships={setAllMemberships}
+                        allSessions={allSessions}
+                        setAllSessions={setAllSessions}
                     />
                 </Tab>
                 <Tab eventKey="userDatabase" title="User Database" style={{textAlign:"center"}}>

@@ -102,7 +102,7 @@ if __name__ == '__main__':
         db.session.commit()
 
         print("Generating events...")
-        belay_lesson = Event(name="Top Rope Belay Lesson", price=15, category="Climbing", hours=1, minutes=0, description="One hour class that teaches basic top rope belay safety skills. Without prior experience this class is required to climb in the roped section of the gym.  Free for members.")
+        belay_lesson = Event(name="Top Rope Belay Lesson", price=15, capacity=4, category="Climbing", hours=1, minutes=0, description="One hour class that teaches basic top rope belay safety skills. Without prior experience this class is required to climb in the roped section of the gym.  Free for members.")
         # db.session.add(belay_lesson)
         # db.session.commit()
 
