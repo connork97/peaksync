@@ -1,10 +1,15 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
+import { AllSessionsContext, AllEventsContext, GeneralToggleContext } from '../App'
 
 import Dropdown from 'react-bootstrap/Dropdown'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 
-const CreateSession = ({ allSessions, setAllSessions, allEvents, generalToggle, setGeneralToggle }) => {
+const CreateSession = () => {
+
+    const { allSessions, setAllSessions } = useContext(AllSessionsContext)
+    const { allEvents } = useContext(AllEventsContext)
+    const { generalToggle, setGeneralToggle } = useContext(GeneralToggleContext)
 
     const [selectedDropdownEvent, setSelectedDropdownEvent] = useState("Classes and Events")
 

@@ -1,8 +1,6 @@
-import { useRecoilState } from "recoil"
-import { userState, allUsersAtomState } from "../../atoms.js"
-
-import { useState, useEffect } from "react"
+import { useState, useContext, useEffect } from "react"
 import { useHistory } from 'react-router-dom'
+import { AllUsersContext, LoggedInUserContext } from "../App.js";
 
 // import ListGroup from "react-bootstrap/ListGroup"
 import ListGroup from 'react-bootstrap/ListGroup';
@@ -11,7 +9,10 @@ import Dropdown from "react-bootstrap/Dropdown"
 
 import UserProfile from "../UserProfile/UserProfile.js";
 
-const UserDatabase = ({ allUsers, setAllUsers, currentUser }) => {
+const UserDatabase = () => {
+
+    const { allUsers, setAllUsers } = useContext(AllUsersContext)
+    const { currentUser } = useContext(LoggedInUserContext)
 
     const history = useHistory()
 

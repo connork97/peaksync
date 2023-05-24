@@ -1,10 +1,13 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
+import { AllEventsContext } from '../App'
 
 import ListGroup from 'react-bootstrap/ListGroup'
 import Button from 'react-bootstrap/esm/Button'
 
-const EventData = ({ event, allEvents, setAllEvents }) => {
+const EventData = ({ event }) => {
     // console.log(event)
+    const { allEvents, setAllEvents } = useContext(AllEventsContext)
+
     const [editEventToggle, setEditEventToggle] = useState(false)
     const [editedEvent, setEditedEvent] = useState({
         "name": event.name,
@@ -48,6 +51,14 @@ const EventData = ({ event, allEvents, setAllEvents }) => {
         .then((editedEventData) => {
             setEditEventToggle(!editEventToggle)
             console.log(editedEventData)
+            const updatedAllEvents = allEvents.map((event) => {
+                if (event.id == event_id) {
+                    return editedEventData
+                } else {
+                    return event
+                }
+            })
+            setAllEvents(updatedAllEvents)
         })
     }
 

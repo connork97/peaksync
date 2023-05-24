@@ -1,11 +1,23 @@
-import { useState, useEffect } from "react"
+import { useState, useContext, useEffect } from "react"
 import { useHistory } from "react-router-dom"
 
-import Button from 'react-bootstrap/Button'
 
-const Login = ({ currentUser, setCurrentUser, allUsers, setAllUsers, setAllMemberships, setAllEvents, setAllSessions }) => {
+import Button from 'react-bootstrap/Button'
+import { LoggedInUserContext, AllUsersContext, AllMembershipsContext, AllEventsContext, AllSessionsContext } from "./App"
+
+const Login = ({ setAllSessions }) => {
 
     const history = useHistory()
+
+    const { setCurrentUser } = useContext(LoggedInUserContext)
+    const { setAllUsers } = useContext(AllUsersContext)
+    const { setAllMemberships } = useContext(AllMembershipsContext)
+    const { setAllEvents } = useContext(AllEventsContext)
+    const { allSessions, setAllSession } = useContext(AllSessionsContext)
+
+    useEffect(() => {
+        console.log("Set All Events Function on Login Page", setAllEvents)
+    }, [])
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")

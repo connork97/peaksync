@@ -1,10 +1,13 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
+import { AllMembershipsContext } from '../App'
 
 import ListGroup from 'react-bootstrap/ListGroup'
 import Button from 'react-bootstrap/esm/Button'
 
-const MembershipData = ({ membership, allMemberships, setAllMemberships }) => {
+const MembershipData = ({ membership }) => {
     
+    const { allMemberships, setAllMemberships } = useContext(AllMembershipsContext)
+
     const [editMembershipToggle, setEditMembershipToggle] = useState(false)
 
     const [editedMembership, setEditedMembership] = useState({

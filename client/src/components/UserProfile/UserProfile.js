@@ -1,16 +1,20 @@
-import Tabs from 'react-bootstrap/Tabs'
-import Tab from 'react-bootstrap/Tab'
+import { useContext } from 'react'
+import { LoggedInUserContext, AllUsersContext } from '../App'
 import { useHistory, useLocation } from 'react-router-dom'
 
 import ProfileInfo from "./ProfileInfo"
 import UserBookings from './UserBookings'
 import UserPayments from './UserPayments'
 
-const UserProfile = ({ currentUser, setAllUsers, allUsers }) => {
+import Tabs from 'react-bootstrap/Tabs'
+import Tab from 'react-bootstrap/Tab'
+
+const UserProfile = () => {
 
     const location = useLocation()
     
-    // const [currentUser, setCurrentUser] = useRecoilState(userState)
+    const { currentUser } = useContext(LoggedInUserContext)
+    const { allUsers, setAllUsers } = useContext(AllUsersContext)
 
     let selectedUser
     if (currentUser.admin === true) {
@@ -37,7 +41,6 @@ const UserProfile = ({ currentUser, setAllUsers, allUsers }) => {
             <Tab eventKey="bookings" title="Bookings">
                 <UserBookings selectedUser={selectedUser} />
             </Tab>
-                {/* <UserPayments selectedUser={selectedUser} /> */}
             <Tab eventKey="payments" title="Payments">
                 <UserPayments selectedUser={selectedUser} />
             </Tab>

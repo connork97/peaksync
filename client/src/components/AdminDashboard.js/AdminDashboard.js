@@ -1,40 +1,38 @@
-import Tabs from 'react-bootstrap/Tabs'
-import Tab from 'react-bootstrap/Tab'
-import Accordion from 'react-bootstrap/Accordion'
-import ListGroup from 'react-bootstrap/esm/ListGroup'
-import Button from 'react-bootstrap/Button'
+import { useContext } from 'react'
+import { useHistory } from 'react-router-dom'
+import { LoggedInUserContext, AllEventsContext, AllMembershipsContext } from '../App'
 
 import ProfileInfo from '../UserProfile/ProfileInfo'
 import MembershipData from './MembershipData'
 import EventData from './EventData'
 import Create from './Create'
 
-import { useHistory } from 'react-router-dom'
+import Tabs from 'react-bootstrap/Tabs'
+import Tab from 'react-bootstrap/Tab'
+import Accordion from 'react-bootstrap/Accordion'
+import ListGroup from 'react-bootstrap/esm/ListGroup'
+import Button from 'react-bootstrap/Button'
 import AccordionItem from 'react-bootstrap/esm/AccordionItem'
 
-const AdminDashboard = ({ currentUser, allUsers, setAllUsers, allEvents, setAllEvents, allMemberships, setAllMemberships, allSessions, setAllSessions, generalToggle, setGeneralToggle }) => {
+const AdminDashboard = () => {
     
+    const { currentUser } = useContext(LoggedInUserContext)
+    const { allEvents } = useContext(AllEventsContext)
+    const { allMemberships } = useContext(AllMembershipsContext)
+
     const history = useHistory()
 
     const renderAllMemberships = (type) => allMemberships.map((membership) => {
         if (membership.type === type) {
             return (
-                <MembershipData
-                    membership={membership}
-                    allMemberships={allMemberships}
-                    setAllMemberships={setAllMemberships}
-                />
+                <MembershipData membership={membership} />
             )
         }
     })
     const renderEvents = (category) => allEvents.map((event) => {
         if (event.category === (category)) {
             return (
-                <EventData
-                event={event}
-                allEvents={allEvents}
-                setAllEvents={setAllEvents}
-                />
+                <EventData event={event} />
             )
         }
     })
@@ -107,18 +105,7 @@ const AdminDashboard = ({ currentUser, allUsers, setAllUsers, allEvents, setAllE
                     </Accordion>
                 </Tab>
                 <Tab eventKey="create" title="Create" style={{textAlign:"center"}}>
-                    <Create
-                        allUsers={allUsers}
-                        setAllUsers={setAllUsers}
-                        allEvents={allEvents}
-                        setAllEvents={setAllEvents}
-                        allMemberships={allMemberships}
-                        setAllMemberships={setAllMemberships}
-                        allSessions={allSessions}
-                        setAllSessions={setAllSessions}
-                        generalToggle={generalToggle}
-                        setGeneralToggle={setGeneralToggle}
-                    />
+                    <Create />
                 </Tab>
                 <Tab eventKey="userDatabase" title="User Database" style={{textAlign:"center"}}>
                     <p>To view and manage the user database, a redirect is required.</p>

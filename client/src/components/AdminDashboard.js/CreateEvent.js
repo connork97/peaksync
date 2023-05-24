@@ -1,10 +1,13 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
+import { AllEventsContext } from '../App'
 
 import Card from 'react-bootstrap/Card'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 
-const CreateEvent = ({ allEvents, setAllEvents }) => {
+const CreateEvent = () => {
+
+    const { allEvents, setAllEvents } = useContext(AllEventsContext)
 
     const [newEvent, setNewEvent] = useState({
         "name": "",

@@ -1,14 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
+import { AllSessionsContext, GeneralToggleContext } from "./App"
 
 import { RRule } from 'rrule'
 
 const localizer = momentLocalizer(moment);
 
-const EventsCalendar = ({ currentUser, allEvents, allSessions, generalToggle }) => {
+const EventsCalendar = () => {
+
+  const { allSessions } = useContext(AllSessionsContext)
+  const { generalToggle } = useContext(GeneralToggleContext)
 
   const [events, setEvents] = useState([])
   console.log(allSessions)

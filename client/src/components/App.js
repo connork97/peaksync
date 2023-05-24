@@ -14,6 +14,13 @@ import UserDatabase from "./AdminDashboard.js/UserDatabase.js"
 import UserProfile from "./UserProfile/UserProfile.js";
 import AdminDashboard from "./AdminDashboard.js/AdminDashboard.js";
 
+export const AllUsersContext = React.createContext()
+export const AllEventsContext = React.createContext()
+export const AllSessionsContext = React.createContext()
+export const AllMembershipsContext = React.createContext()
+export const GeneralToggleContext = React.createContext()
+export const LoggedInUserContext = React.createContext()
+
 function App() {
 
   const [currentUser, setCurrentUser] = useState({})
@@ -22,6 +29,36 @@ function App() {
   const [allSessions, setAllSessions] = useState([])
   const [allMemberships, setAllMemberships] = useState([])
   const [generalToggle, setGeneralToggle] = useState(false)
+
+  const allUsersContextObject = {
+    allUsers,
+    setAllUsers
+  }
+
+  const allEventsContextObject = {
+    allEvents,
+    setAllEvents
+  }
+
+  const allSessionsContextObject = {
+    allSessions,
+    setAllSessions
+  }
+
+  const allMembershipsContextObject = {
+    allMemberships,
+    setAllMemberships
+  }
+
+  const generalToggleContextObject = {
+    generalToggle,
+    setGeneralToggle
+  }
+
+  const loggedInUserContextObject = {
+    currentUser,
+    setCurrentUser
+  }
 
   useEffect(() => {
     console.log(allUsers)
@@ -36,77 +73,48 @@ function App() {
 }, [generalToggle])
   return (
     <>
-      <NavBar
-        currentUser={currentUser}
-        allUsers={allUsers}
-      />
-      <Switch>
-        <Route exact path='/'>
-          <Home currentUser={currentUser} />
-        </Route>
-        <Route exact path='/rates'>
-          <Rates currentUser={currentUser} />
-        </Route>
-        <Route exact path='/calendar'>
-          <EventsCalendar
-            currentUser={currentUser}
-            allEvents={allEvents}
-            allSessions={allSessions}
-            generalToggle={generalToggle}
-          />
-        </Route>
-        <Route exact path='/about-us'>
-          <AboutUs currentUser={currentUser} />
-        </Route>
-        <Route exact path='/login'>
-          <Login
-            currentUser={currentUser}
-            setCurrentUser={setCurrentUser}
-            allUsers={allUsers}
-            setAllUsers={setAllUsers}
-            setAllMemberships={setAllMemberships}
-            setAllEvents={setAllEvents}
-            allSessions={allSessions}
-            setAllSessions={setAllSessions}
-          />
-        </Route>
-        <Route exact path='/signup'>
-          <SignUp
-            currentUser={currentUser}
-            setCurrentUser={setCurrentUser}
-          />
-        </Route>
-        <Route exact path='/admin-dashboard'>
-          <AdminDashboard
-            currentUser={currentUser}
-            allUsers={allUsers}
-            setAllUsers={setAllUsers}
-            allEvents={allEvents}
-            setAllEvents={setAllEvents}
-            allMemberships={allMemberships}
-            setAllMemberships={setAllMemberships}
-            allSessions={allSessions}
-            setAllSessions={setAllSessions}
-            generalToggle={generalToggle}
-            setGeneralToggle={setGeneralToggle}
-          />
-        </Route>
-        <Route exact path='/database'>
-          <UserDatabase
-            allUsers={allUsers}
-            setAllUsers={setAllUsers} 
-            currentUser={currentUser}
-          />
-        </Route>
-        <Route exact path='/profile'>
-          <UserProfile 
-            currentUser={currentUser}
-            setCurrentUser={setCurrentUser}
-            allUsers={allUsers}
-            setAllUsers={setAllUsers}
-          />
-        </Route>
-      </Switch>
+    <AllUsersContext.Provider value={allUsersContextObject}>
+      <AllEventsContext.Provider value={allEventsContextObject}>
+        <AllSessionsContext.Provider value={allSessionsContextObject}>
+          <AllMembershipsContext.Provider value={allMembershipsContextObject}>
+            <GeneralToggleContext.Provider value={generalToggleContextObject}>
+              <LoggedInUserContext.Provider value={loggedInUserContextObject}>
+                <NavBar/>
+                <Switch>
+                  <Route exact path='/'>
+                    <Home currentUser={currentUser} />
+                  </Route>
+                  <Route exact path='/rates'>
+                    <Rates currentUser={currentUser} />
+                  </Route>
+                  <Route exact path='/calendar'>
+                    <EventsCalendar />
+                  </Route>
+                  <Route exact path='/about-us'>
+                    <AboutUs currentUser={currentUser} />
+                  </Route>
+                  <Route exact path='/login'>
+                    <Login />
+                  </Route>
+                  <Route exact path='/signup'>
+                    <SignUp />
+                  </Route>
+                  <Route exact path='/admin-dashboard'>
+                    <AdminDashboard />
+                  </Route>
+                  <Route exact path='/database'>
+                    <UserDatabase />
+                  </Route>
+                  <Route exact path='/profile'>
+                    <UserProfile />
+                  </Route>
+                </Switch>
+              </LoggedInUserContext.Provider>
+            </GeneralToggleContext.Provider>
+          </AllMembershipsContext.Provider>
+        </AllSessionsContext.Provider>
+      </AllEventsContext.Provider>
+    </AllUsersContext.Provider>
     </>
   )
 }

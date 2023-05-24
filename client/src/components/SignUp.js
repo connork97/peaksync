@@ -1,6 +1,9 @@
-import { useState } from "react"
+import { useState, useContext } from "react"
+import { LoggedInUserContext } from "./App"
 
-const SignUp = ({ currentUser, setCurrentUser}) => {
+const SignUp = () => {
+
+    const { setCurrentUser } = useContext(LoggedInUserContext)
 
     const [newUser, setNewUser] = useState({
         "firstName": "",

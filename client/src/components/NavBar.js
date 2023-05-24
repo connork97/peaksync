@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom"
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
+import { LoggedInUserContext, AllUsersContext } from "./App"
 
-const NavBar = ({ currentUser, allUsers, setAllSessions, generalToggle }) => {
+const NavBar = () => {
 
+    const { currentUser } = useContext(LoggedInUserContext)
+    const { allUsers } = useContext(AllUsersContext)
     // useEffect(() => {
     //     console.log(currentUser)
     // }, [currentUser, allUsers])

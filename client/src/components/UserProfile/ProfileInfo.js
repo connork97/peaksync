@@ -1,11 +1,15 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
+import { AllUsersContext, LoggedInUserContext } from '../App'
 
 import Card from 'react-bootstrap/Card'
 import myImage from '../../images/profile-placeholder-300x237.png'
 import Tab from 'react-bootstrap/Tab'
 import Button from 'react-bootstrap/Button'
 
-const ProfileInfo = ({ selectedUser, setAllUsers, allUsers }) => {
+const ProfileInfo = ({ selectedUser }) => {
+
+    const { allUsers, setAllUsers } = useContext(AllUsersContext)
+    // const { currentUser, setCurrentUser } = useContext(LoggedInUserContext)
 
     const [userProfileInfo, setUserProfileInfo] = useState({
         "first_name": selectedUser.first_name,

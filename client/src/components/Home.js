@@ -1,21 +1,14 @@
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil"
-import { userState } from "../atoms.js"
-import { useState, useEffect } from 'react'
+import { useContext, useEffect } from 'react'
+import { LoggedInUserContext } from './App'
 
-const Home = ({ currentUser }) => {
+const Home = () => {
 
-    // const [user, setUser] = useRecoilState(userState)
-    
-    useEffect(() => {
-        console.log(currentUser)
-    }, [])
+    const { currentUser } = useContext(LoggedInUserContext)
 
     return (
         <div className="mainDiv">
-            <h1>Welcome to Crux Climbing Centers!</h1>
-            <form>
-                <input type="text" value={currentUser.address}></input>
-            </form>
+            <br></br><br></br><br></br><br></br><br></br>
+            <h1>Welcome to Crux Climbing Centers {currentUser.first_name}!</h1>
         </div>
     )
 }
