@@ -22,7 +22,6 @@ const UserProfile = () => {
     } else {
         selectedUser = currentUser
     }
-    console.log(selectedUser)
 
     return (
         <Tabs
@@ -32,11 +31,7 @@ const UserProfile = () => {
             justify
         >
             <Tab eventKey="profile" title="Profile">
-                <ProfileInfo
-                    selectedUser={selectedUser}
-                    setAllUsers={setAllUsers}
-                    allUsers={allUsers}
-                />
+                <ProfileInfo selectedUser={selectedUser} />
             </Tab>
             <Tab eventKey="bookings" title="Bookings">
                 <UserBookings selectedUser={selectedUser} />

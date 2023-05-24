@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom"
 import Button from 'react-bootstrap/Button'
 import { LoggedInUserContext, AllUsersContext, AllMembershipsContext, AllEventsContext, AllSessionsContext } from "./App"
 
-const Login = ({ setAllSessions }) => {
+const Login = () => {
 
     const history = useHistory()
 
@@ -13,7 +13,7 @@ const Login = ({ setAllSessions }) => {
     const { setAllUsers } = useContext(AllUsersContext)
     const { setAllMemberships } = useContext(AllMembershipsContext)
     const { setAllEvents } = useContext(AllEventsContext)
-    const { allSessions, setAllSession } = useContext(AllSessionsContext)
+    const { allSessions, setAllSessions } = useContext(AllSessionsContext)
 
     useEffect(() => {
         console.log("Set All Events Function on Login Page", setAllEvents)
@@ -22,7 +22,6 @@ const Login = ({ setAllSessions }) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
-    // const [currentUser, setCurrentUser] = useRecoilState(userState)
     const handleUserLogin = (event) => {
         event.preventDefault()
         fetch("/login", {
@@ -42,21 +41,21 @@ const Login = ({ setAllSessions }) => {
         })
     }
     
-    // const fetchAllSessions = () => {
-    //     fetch('/sessions')
-    //     .then((response) => response.json())
-    //     .then((allSessionsData) => {
-    //         console.log(allSessionsData)
-    //         setAllSessions(allSessionsData)
-    //     })
-    // }
+    const fetchAllSessions = () => {
+        fetch('/sessions')
+        .then((response) => response.json())
+        .then((allSessionsData) => {
+            console.log(allSessionsData)
+            setAllSessions(allSessionsData)
+        })
+    }
 
     const fetchAllEvents = () => {
         fetch("/events")
         .then((response) => response.json())
         .then((eventData) => {
             setAllEvents(eventData)
-            // fetchAllSessions()
+            fetchAllSessions()
         })
     }
 

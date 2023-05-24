@@ -7,7 +7,6 @@ import NavBar from "./NavBar.js";
 import Home from "./Home.js";
 import EventsCalendar from "./EventsCalendar.js"
 import Rates from "./Rates.js"
-import AboutUs from "./AboutUs.js"
 import Login from "./Login.js"
 import SignUp from "./SignUp.js"
 import UserDatabase from "./AdminDashboard.js/UserDatabase.js"
@@ -60,17 +59,18 @@ function App() {
     setCurrentUser
   }
 
-  useEffect(() => {
-    console.log(allUsers)
-  }, [allUsers])
-  useEffect(() => {
-    fetch('/sessions')
-    .then((response) => response.json())
-    .then((allSessionsData) => {
-        console.log(allSessionsData)
-        setAllSessions(allSessionsData)
-    })
-}, [generalToggle])
+  // useEffect(() => {
+  //   console.log(allUsers)
+  // }, [allUsers])
+  // useEffect(() => {
+  //   fetch('/sessions')
+  //   .then((response) => response.json())
+  //   .then((allSessionsData) => {
+  //       console.log(allSessionsData)
+  //       setAllSessions(allSessionsData)
+  //   })
+  // }, [generalToggle])
+
   return (
     <>
     <AllUsersContext.Provider value={allUsersContextObject}>
@@ -85,13 +85,10 @@ function App() {
                     <Home currentUser={currentUser} />
                   </Route>
                   <Route exact path='/rates'>
-                    <Rates currentUser={currentUser} />
+                    <Rates />
                   </Route>
                   <Route exact path='/calendar'>
                     <EventsCalendar />
-                  </Route>
-                  <Route exact path='/about-us'>
-                    <AboutUs currentUser={currentUser} />
                   </Route>
                   <Route exact path='/login'>
                     <Login />

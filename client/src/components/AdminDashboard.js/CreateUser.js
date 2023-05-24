@@ -3,10 +3,9 @@ import { AllUsersContext } from '../App'
 
 import Card from 'react-bootstrap/Card'
 import myImage from '../../images/profile-placeholder-300x237.png'
-import Tab from 'react-bootstrap/Tab'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
-import UserProfile from '../UserProfile/UserProfile'
+
 const CreateUser = () => {
 
     const { allUsers, setAllUsers } = useContext(AllUsersContext)

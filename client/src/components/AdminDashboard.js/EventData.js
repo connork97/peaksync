@@ -5,7 +5,7 @@ import ListGroup from 'react-bootstrap/ListGroup'
 import Button from 'react-bootstrap/esm/Button'
 
 const EventData = ({ event }) => {
-    // console.log(event)
+
     const { allEvents, setAllEvents } = useContext(AllEventsContext)
 
     const [editEventToggle, setEditEventToggle] = useState(false)
@@ -50,7 +50,6 @@ const EventData = ({ event }) => {
         .then((response) => response.json())
         .then((editedEventData) => {
             setEditEventToggle(!editEventToggle)
-            console.log(editedEventData)
             const updatedAllEvents = allEvents.map((event) => {
                 if (event.id == event_id) {
                     return editedEventData
@@ -66,7 +65,6 @@ const EventData = ({ event }) => {
         fetch(`/events/${event_id}`, {
             method: 'DELETE'
         })
-        // console.log(allEvents)
         const updatedEvents = allEvents.filter((event) => event.id != event_id)
         setAllEvents(updatedEvents)
     }

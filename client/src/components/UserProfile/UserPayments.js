@@ -1,5 +1,4 @@
 import ListGroup from 'react-bootstrap/ListGroup'
-import Tab from 'react-bootstrap/Tab'
 
 const UserPayments = ({ selectedUser }) => {
     const renderUserPayments = selectedUser.payments.map((payment) => {

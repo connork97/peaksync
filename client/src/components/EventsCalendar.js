@@ -5,8 +5,6 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import { AllSessionsContext, GeneralToggleContext } from "./App"
 
-import { RRule } from 'rrule'
-
 const localizer = momentLocalizer(moment);
 
 const EventsCalendar = () => {
@@ -15,7 +13,6 @@ const EventsCalendar = () => {
   const { generalToggle } = useContext(GeneralToggleContext)
 
   const [events, setEvents] = useState([])
-  console.log(allSessions)
   const eventStyleGetter = (event) => {
     const style = {
       backgroundColor: event.color,
@@ -40,20 +37,6 @@ const EventsCalendar = () => {
       return 'green'
     }
   }
-
-  // console.log(moment().isoWeekday())
-  // console.log(moment().isoWeekday("Monday"))
-  // const getNextOccurrence = (dayOfWeek) => {
-  //   const today = moment().isoWeekday();
-  //   const nextOccurrence = moment().isoWeekday(dayOfWeek);
-  //   if (today <= dayOfWeek) {
-  //     return nextOccurrence.toDate();
-  //   } else {
-  //     return nextOccurrence.add(1, "week").toDate();
-  //   }
-  // };
-
-  // console.log(getNextOccurrence(5))
 
   const handleDateAndTimeConversion = (date, time, hours, minutes) => {
     const splitTime = time.split(":")

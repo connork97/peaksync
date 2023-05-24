@@ -43,10 +43,9 @@ const CreateSession = () => {
             event_id: Number(event.target.id)
         }))
     }
-    const renderEventDropdownItems = allEvents.map((ev) => {
-        // console.log(ev)
+    const renderEventDropdownItems = allEvents.map((event) => {
         return (
-            <Dropdown.Item name={ev.name} id={ev.id} onClick={(event) => handleSelectDropdownEvent(event)}>{ev.name}</Dropdown.Item>
+            <Dropdown.Item name={event.name} id={event.id} onClick={(event) => handleSelectDropdownEvent(event)}>{event.name}</Dropdown.Item>
         )
     })
 
@@ -59,8 +58,14 @@ const CreateSession = () => {
             },
             body: JSON.stringify(newSession)
         })
+        .then((response) => response.json())
+        .then((newSessionData) => {
+            console.log(newSessionData)
+            const updatedAllSessions = [...allSessions, newSessionData]
+            setAllSessions(updatedAllSessions)
+        })
 
-        setGeneralToggle(!generalToggle)
+        // setGeneralToggle(!generalToggle)
     }
 
     return (

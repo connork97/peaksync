@@ -2,12 +2,8 @@ import { useState, useContext, useEffect } from "react"
 import { useHistory } from 'react-router-dom'
 import { AllUsersContext, LoggedInUserContext } from "../App.js";
 
-// import ListGroup from "react-bootstrap/ListGroup"
-import ListGroup from 'react-bootstrap/ListGroup';
 import Table from 'react-bootstrap/Table'
 import Dropdown from "react-bootstrap/Dropdown"
-
-import UserProfile from "../UserProfile/UserProfile.js";
 
 const UserDatabase = () => {
 
@@ -16,20 +12,11 @@ const UserDatabase = () => {
 
     const history = useHistory()
 
-    // console.log(allUsers)
-    // const [currentUser, setCurrentUser] = useRecoilState(userState)
-    // const [allUsers, setAllUsers] = useState([])
     const [searchParams, setSearchParams] = useState("")
     const [searchCategory, setSearchCategory] = useState("Filter By")
     const [activeLi, setActiveLi] = useState("")
 
     const [selectedUserProfile, setSelectedUserProfile] = useState(null)
-
-    // useEffect(() => {
-    //     fetch("/users")
-    //     .then((response) => response.json())
-    //     .then((userData) => setAllUsers(userData))
-    // }, [])
 
     const columnLabels = ["ID", "Last Name", "First Name", "Email", "Phone Number", "Waiver", "Address", "City", "State", "Zipcode", "Date of Birth", "Created At", "Admin"]
 
@@ -42,9 +29,6 @@ const UserDatabase = () => {
             <Dropdown.Item name={label} onClick={(event) => setSearchCategory(event.target.name)}>{label}</Dropdown.Item>
         )
     })
-    console.log(allUsers)
-
-    // const renderAllUsers = console.log(allUsers)
 
     const renderAllUsers = allUsers.map((user) => {
             return (
@@ -71,12 +55,10 @@ const UserDatabase = () => {
     const handleUserClick = (user) => {
         setActiveLi(user.id)
         setSelectedUserProfile(user)
-        console.log(user.signups)
     }
 
     const handleUserDoubleClick = (user) => {
         setSelectedUserProfile(user)
-        console.log(user)
         history.push({pathname:"/profile", state:selectedUserProfile})
     }
 

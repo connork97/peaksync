@@ -5,6 +5,12 @@ const Home = () => {
 
     const { currentUser } = useContext(LoggedInUserContext)
 
+    useEffect(() => {
+        fetch('/lastsession')
+        .then((response) => response.json())
+        .then((sessionData) => console.log(sessionData))
+    }, [])
+
     return (
         <div className="mainDiv">
             <br></br><br></br><br></br><br></br><br></br>

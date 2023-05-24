@@ -58,16 +58,14 @@ def users():
             )
             db.session.add(new_user)
             db.session.commit()
-            # session['user_email'] = new_user.email
             response = make_response(new_user.to_dict(), 201)
-            # newest_user = User.query.order_by(User.id.desc()).first()
         
         except:
             response = make_response({"error": "Unsuccessful creation of new user"}, 404)
 
     return response
 
-@app.route('/signup', methods=['POST'])
+@app.route('/usersignup', methods=['POST'])
 def signup():
     if request.method == 'POST':
 
@@ -93,9 +91,7 @@ def signup():
             )
             db.session.add(new_user)
             db.session.commit()
-            # session['user_email'] = new_user.email
             response = make_response(new_user.to_dict(), 201)
-            # newest_user = User.query.order_by(User.id.desc()).first()
             response.set_cookie('user_email', new_user.email)
     
         except:
@@ -114,16 +110,13 @@ def user_by_id(id):
             response = make_response(user.to_dict(), 200)
 
         if request.method == 'PATCH':
-
             try:
                 form_data = request.get_json()
                 for attr in form_data:
                     setattr(user, attr, form_data[attr])
-
                 db.session.add(user)
                 db.session.commit()
                 response = make_response(user.to_dict(), 200)
-
             except:
                 response = make_response({"error": f"404: Could not update user of id {id}."}, 404)
 
@@ -134,6 +127,7 @@ def user_by_id(id):
                 response = make_response({"success": f"User of id {id} deleted."}, 204)
             except:
                 response = make_response({"error": f"User of id {id} not deleted"}, 404)
+    
     else:
         response = make_response({"error": f"404: User of id {id} not found."})
 
@@ -142,6 +136,7 @@ def user_by_id(id):
         
 @app.route('/memberships', methods=['GET', 'POST'])
 def memberships():
+
     if request.method == 'GET':
         print("Fetching all memberships...")
         all_memberships_dict = [membership.to_dict() for membership in Membership.query.all()]
@@ -151,9 +146,7 @@ def memberships():
             response = make_response({"error": "Memberships not found."}, 404)
 
     if request.method == 'POST':
-
         print("Creating new memberhip...")
-
         try:
             form_data = request.get_json()
             new_membership = Membership(
@@ -166,7 +159,6 @@ def memberships():
             db.session.add(new_membership)
             db.session.commit()
             response = make_response(new_membership.to_dict(), 200)
-
         except:
             response = make_response({"error": "Unsuccessful creation of new membership."}, 404)
 
@@ -174,29 +166,27 @@ def memberships():
 
 @app.route('/memberships/<int:id>', methods=['GET', 'PATCH', 'DELETE'])
 def membership_by_id(id):
+
     membership = Membership.query.filter(Membership.id == id).one_or_none()
+    
     if membership:
+    
         if request.method == 'GET':
             response = make_response(membership.to_dict(), 200)
 
         if request.method == 'PATCH':
-            
             try:
                 form_data = request.get_json()
                 for attr in form_data:
                     setattr(membership, attr, form_data[attr])
-
                 db.session.add(membership)
                 db.session.commit()
                 response = make_response(membership.to_dict(), 200)
-
             except:
                 response = make_response({"error": f"404: Could not update user of id {id}."}, 404)
 
         if request.method == 'DELETE':
-
             print(f"Deleting membership of id {id}...")
-
             try:
                 db.session.delete(membership)
                 db.session.commit()
@@ -211,6 +201,7 @@ def membership_by_id(id):
 
 @app.route('/events', methods=['GET', 'POST'])
 def events():
+
     if request.method == 'GET':
         print("Fetching all events...")
         all_events_dict = [event.to_dict() for event in Event.query.all()]
@@ -235,7 +226,6 @@ def events():
             db.session.add(new_event)
             db.session.commit()
             response = make_response(new_event.to_dict(), 200)
-
         except:
             response = make_response({"error": "Unsuccessful creation of new events"}, 404)
 
@@ -243,6 +233,7 @@ def events():
 
 @app.route('/events/<int:id>', methods=['GET', 'PATCH', 'DELETE'])
 def events_by_id(id):
+
     one_event = Event.query.filter(Event.id == id).one_or_none()
 
     if one_event:
@@ -250,17 +241,14 @@ def events_by_id(id):
         if request.method == 'GET':
             response = make_response(one_event.to_dict(), 200)
     
-        if request.method == 'PATCH':
-            
+        if request.method == 'PATCH':        
             try:
                 form_data = request.get_json()
                 for attr in form_data:
                     setattr(one_event, attr, form_data[attr])
-
                 db.session.add(one_event)
                 db.session.commit()
                 response = make_response(one_event.to_dict(), 200)
-
             except:
                 response = make_response({"error": f"404: Could not update user of id {id}."}, 404)
     
@@ -271,6 +259,7 @@ def events_by_id(id):
                 response = make_response({"success": f"events of id {id} deleted."}, 204)
             except:
                 response = make_response({"error": f"events of id {id} not deleted"}, 404)
+
     else:
         response = make_response({"error": f"404: events of id {id} not found."})
 
@@ -281,11 +270,11 @@ def signups():
 
     if request.method == 'GET':
         print("Fetching all signups...")
+        
         signups_dict = [signup.to_dict() for signup in Signup.query.all()]
-        
+
         if signups_dict:
-            response = make_response(signups_dict, 200)
-        
+            response = make_response(signups_dict, 200)        
         else:
             response = make_response({"error": "404: Signups not found."})
     
@@ -297,7 +286,6 @@ def signups():
             events_id=form_data['eventsId']
             # paid ?
         )
-
         db.session.add(new_signup)
         db.session.commit()
         response = make_response(new_signup.to_dict(), 204)
@@ -306,6 +294,7 @@ def signups():
 
 @app.route('/signups/<int:id>', methods=['GET', 'DELETE'])
 def signup_by_id(id):
+
     signup = Signup.query.filter(Signup.id == id).one_or_none()
 
     if signup:
@@ -331,6 +320,7 @@ def sessions():
     
     if request.method == 'GET':
         all_sessions_dict = [session.to_dict() for session in Session.query.all()]
+    
         if all_sessions_dict:
             response = make_response(all_sessions_dict, 200)
         else:
@@ -346,23 +336,24 @@ def sessions():
             )
             db.session.add(new_session)
             db.session.commit()
-            # last_session = Session.query.order_by(Session.id.desc()).first()
-            response = make_response(new_session.to_dict(only=('event_id')), 204)
-            # get_last_session()
+            response = make_response(new_session.to_dict(), 200)
         except:
             response = make_response({"error": "404: Could not create new session"})
 
     return response
 
-@app.route('/lastsession', methods=['GET'])
-def get_last_session():
-    last_session = Session.query.order_by(Session.id.desc()).first().to_dict()
-    if request.method == 'GET':
-        if last_session:
-            response = make_response(last_session.id, 204)
+@app.route('/sessions/<int:id>', methods=['GET'])
+def session_by_id(id):
 
-        else:
-            response = make_response({"error": "404: Could not find last session"})
+    session = Session.query.filter(Session.id == id).one_or_none()
+
+    if session:
+
+        if request.method == 'GET':
+            response = make_response(session.to_dict(), 200)
+    
+    else:
+        response = make_response({"error": f"Could not find session of id {id}"})
     
     return response
 
@@ -395,12 +386,7 @@ def login():
         if user and user.authenticate(password):
             response = make_response(user.to_dict(), 200)
             # session['user_id'] = user.id
-            # session['user_last_name'] = user.last_name
-            # session['user_address'] = user.address
-
-            # response.set_cookie('user_id', user.id)
             response.set_cookie('user_email', user.email)
-            # response.set_cookie('user_first_name', user.first_name)
 
         else:
             response = make_response({"error": "Unable to authenticate user login."}, 404)
@@ -412,8 +398,6 @@ def logout():
     if request.method == 'DELETE':
         print("Logging out user...")
         response = make_response({"success": "Logged out and cookies cleared."})
-
-        # for cookie in request.cookies:
         response.set_cookie('user_email', '', expires=0)
 
         return response

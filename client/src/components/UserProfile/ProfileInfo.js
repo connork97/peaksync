@@ -3,13 +3,11 @@ import { AllUsersContext, LoggedInUserContext } from '../App'
 
 import Card from 'react-bootstrap/Card'
 import myImage from '../../images/profile-placeholder-300x237.png'
-import Tab from 'react-bootstrap/Tab'
 import Button from 'react-bootstrap/Button'
 
 const ProfileInfo = ({ selectedUser }) => {
 
     const { allUsers, setAllUsers } = useContext(AllUsersContext)
-    // const { currentUser, setCurrentUser } = useContext(LoggedInUserContext)
 
     const [userProfileInfo, setUserProfileInfo] = useState({
         "first_name": selectedUser.first_name,
@@ -52,7 +50,6 @@ const ProfileInfo = ({ selectedUser }) => {
     }
 
     const handleProfileEdit = () => {
-        console.log(userProfileInfo)
         fetch(`/users/${selectedUser.id}`, {
             method: 'PATCH',
             headers: {
@@ -62,7 +59,6 @@ const ProfileInfo = ({ selectedUser }) => {
         })
         .then((response) => response.json())
         .then((editedUserData) => {
-            console.log(editedUserData.id)
             const updatedAllUsersState = allUsers.map((user) => {
                 if (user.id == editedUserData.id) {
                     return editedUserData

@@ -1,7 +1,6 @@
 import { useState, useContext } from 'react'
 import { AllEventsContext } from '../App'
 
-import Card from 'react-bootstrap/Card'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 
@@ -62,16 +61,6 @@ const CreateEvent = () => {
         })
     }
 
-    // const frequency_options = ['Once', 'Weekly', 'Biweekly', 'Monthly', 'Biannual', 'Yearly']
-    // const radio_options = frequency_options.map((option) => {
-    //     return (
-    //         <>
-    //             <Form.Label>{option}</Form.Label>
-    //             <Form.Check name="frequency" value={option} type="radio" onChange={handleNewEventChange} style={{marginLeft:"1rem", marginRight:"1rem"}}></Form.Check>
-    //         </>
-    //     )
-    // })
-
     return (
         <Form id="createEventForm" onSubmit={handleEventSubmit}>
             <h4>Note! This is not for adding existing classes to the calendar.</h4>
@@ -83,14 +72,6 @@ const CreateEvent = () => {
             <Form.Label>Price:</Form.Label>
             <Form.Control name="price" type="text" value={newEvent.price} onChange={handleNewEventChange}></Form.Control>
             <br></br>
-            {/* <Form.Label>Start Date:</Form.Label>
-            <Form.Control name="day" type="text" value={newEvent.day} onChange={handleNewEventChange}></Form.Control>
-            <Form.Text>Format must be YYYY-MM-DD</Form.Text> */}
-            {/* <br></br>
-            <Form.Label>Time of Day:</Form.Label>
-            <Form.Control name="time" type="text" value={newEvent.time} onChange={handleNewEventChange}></Form.Control>
-            <Form.Text>Must be in the format HH:MM on a 24 hour time clock.</Form.Text>
-            <br></br> */}
             <Form.Label>Category:</Form.Label>
             <Form.Control name="category" type="text" value={newEvent.category} onChange={handleNewEventChange}></Form.Control>
             <Form.Text>Ex: "Climing", "Yoga", "Fitness", "Event", etc</Form.Text>
@@ -107,11 +88,6 @@ const CreateEvent = () => {
             <Form.Label>Description:</Form.Label>
             <Form.Control name="description" type="text" value={newEvent.description} onChange={handleNewEventChange}></Form.Control>
             <br></br>
-            {/* <Form.Label>Frequency of Event:</Form.Label>
-            <br></br>
-            <div style={{display:"inline-flex"}}>
-                {radio_options}
-            </div> */}
             <br></br>
             <Button type="submit">Create Event</Button>
             <Button onClick={handleDiscardEvent}>Discard Event</Button>

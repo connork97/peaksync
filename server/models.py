@@ -15,7 +15,6 @@ class User(db.Model, SerializerMixin):
 
     serialize_rules=(
         '-signups.user',
-        # '-signups.event',
         '-payments.user'
     )
 
@@ -51,7 +50,6 @@ class User(db.Model, SerializerMixin):
     @password_hash.setter
     def password_hash(self, password):
         password_hash = bcrypt.generate_password_hash(password.encode('utf-8'))
-        # print(password_hash)
         self._password_hash = password_hash.decode('utf-8')
 
     def authenticate(self, password):
@@ -115,37 +113,9 @@ class Event(db.Model, SerializerMixin):
     # time = db.Column(Time)
     # signups = db.relationship('Signup', back_populates="event")
 
-    # @validates('frequency')
-    # def validate_event(self, key, value):
-        # if key == 'day':
-        #     days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
-        #     if value in days:
-        #         return value
-        #     else:
-        #         raise ValueError('Day must be a day of the week.')
-        # if key == 'time':
-        #     if type(value) == str:
-        #         split_time=(value.split(":"))
-        #         formatted_time = time(int(split_time[0]), int(split_time[1]))
-        #         return formatted_time
-        #     else:
-        #         return value
-        # if key == 'frequency':
-            # options = ['Once', 'Weekly', 'Biweekly' 'Monthly', 'Biannual', 'Yearly']
-            # if value in options:
-                # return value
-            # else:
-                # raise ValueError("Options for frequency of event must be Once, Daily, Weekly, Biweekly, Monthly, or Yearly.")
-
 class Session(db.Model, SerializerMixin):
     __tablename__ = "sessions"
 
-    # serialize_rules=(
-    #     '-signups.session',
-    #     '-event.sessions'
-    # )
-
-    # serialize_only=('id', 'date', 'time', 'event')
     serialize_rules=(
         '-signups.session',
         '-signups.user',
@@ -169,12 +139,6 @@ class Session(db.Model, SerializerMixin):
 
     @validates('date', 'time')
     def validate_session(self, key, value):
-        # if key == 'day':
-        #     days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
-        #     if value in days:
-        #         return value
-        #     else:
-        #         raise ValueError('Day must be a day of the week.')
         if key == 'time':
             if type(value) == str:
                 split_time=(value.split(":"))
@@ -197,12 +161,6 @@ class Session(db.Model, SerializerMixin):
                 return value
             else:
                 raise ValueError
-        # if key == 'frequency':
-        #     options = ['Once', 'Weekly', 'Biweekly' 'Monthly', 'Biannual', 'Yearly']
-        #     if value in options:
-        #         return value
-        #     else:
-        #         raise ValueError("Options for frequency of event must be Once, Daily, Weekly, Biweekly, Monthly, or Yearly.")
             
 class Signup(db.Model, SerializerMixin):
     __tablename__ = "signups"
@@ -213,9 +171,7 @@ class Signup(db.Model, SerializerMixin):
         '-user_id',
         '-event.signups',
         '-session.signups'
-        # '-event_id'
     )
-    # serialize_only = ('id', 'user_id', 'session_id', 'paid', 'created_at', 'updated_at', 'user')
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
@@ -228,9 +184,6 @@ class Signup(db.Model, SerializerMixin):
 
     session_id = db.Column(db.Integer, db.ForeignKey("sessions.id"))
     session = db.relationship('Session', back_populates="signups")
-
-    # event_id = db.Column(db.Integer, db.ForeignKey("events.id"))
-    # event = db.relationship('Event', back_populates="signups")
 
 class Payment(db.Model, SerializerMixin):
     __tablename__ = "payments"

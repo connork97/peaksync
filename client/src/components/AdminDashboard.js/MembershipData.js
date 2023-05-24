@@ -19,14 +19,6 @@ const MembershipData = ({ membership }) => {
         "description": membership.description
     })
 
-    // const renderAllMemberships = allMemberships.map((membership) => {
-    //     return (
-    //         <ListGroup.Item>
-    //             {membership.id} - {editMembershipToggle ? <input value={membership.name}></input> : <span>{membership.name}</span>} - ${membership.price} - {membership.type} - {membership.subtype} - {membership.description}
-    //             <Button onClick={() => setEditMembershipToggle(!editMembershipToggle)}>Edit Membership</Button>
-    //         </ListGroup.Item>
-    //     )
-    // })
     const handleDiscardMembershipChanges = (event) => {
         setEditedMembership({
             "id": membership.id,
@@ -57,14 +49,12 @@ const MembershipData = ({ membership }) => {
         .then((response) => response.json())
         .then((editedMembershipData) => {
             setEditMembershipToggle(!editMembershipToggle)
-            console.log(editedMembershipData)
         })
     }
     const handleMembershipDelete = (membership_id) => {
         fetch(`/memberships/${membership_id}`, {
             method: 'DELETE'
         })
-        console.log(allMemberships)
         const updatedMemberships = allMemberships.filter((memb) => memb.id != membership_id)
         setAllMemberships(updatedMemberships)
     }
