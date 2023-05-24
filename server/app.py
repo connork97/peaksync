@@ -3,7 +3,7 @@
 # Standard library imports
 
 # Remote library imports
-from flask import request
+from flask import request, jsonify
 from flask_restful import Resource
 from flask import request, make_response, session
 from flask_cors import CORS
@@ -345,6 +345,7 @@ def sessions():
             )
             db.session.add(new_session)
             db.session.commit()
+            # last_session = Session.query.order_by(Session.id.desc()).first()
             response = make_response(new_session.to_dict(), 204)
         except:
             response = make_response({"error": "404: Could not create new session"})

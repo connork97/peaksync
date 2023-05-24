@@ -10,6 +10,7 @@ const localizer = momentLocalizer(moment);
 
 const EventsCalendar = ({ currentUser, allEvents, allSessions }) => {
 
+  const [events, setEvents] = useState([])
   // const rule = new RRule({
   //   freq: RRule.WEEKLY,
   //   byweekday: [RRule.MO, RRule.FR],
@@ -22,7 +23,6 @@ const EventsCalendar = ({ currentUser, allEvents, allSessions }) => {
     dtstart: moment("2023-05-24 11:30").toDate(),
     until: moment("2023-12-31 11:30").toDate() // Adjust the end date as needed
   });
-  const [events, setEvents] = useState([])
 
   const eventStyleGetter = (event) => {
     const style = {
@@ -49,8 +49,8 @@ const EventsCalendar = ({ currentUser, allEvents, allSessions }) => {
     }
   }
 
-  console.log(moment().isoWeekday())
-  console.log(moment().isoWeekday("Monday"))
+  // console.log(moment().isoWeekday())
+  // console.log(moment().isoWeekday("Monday"))
   const getNextOccurrence = (dayOfWeek) => {
     const today = moment().isoWeekday();
     const nextOccurrence = moment().isoWeekday(dayOfWeek);
@@ -61,26 +61,66 @@ const EventsCalendar = ({ currentUser, allEvents, allSessions }) => {
     }
   };
 
-  console.log(getNextOccurrence(5))
+  // console.log(getNextOccurrence(5))
+
+  const handleDateAndTimeConversion = (date, time, hours, minutes) => {
+    const splitTime = time.split(":")
+    let endSplitHours = Number(splitTime[0]) + hours
+    let endSplitMinutes = Number(splitTime[1]) + minutes
+    let finalTime
+    if (endSplitMinutes > 60) {
+      endSplitHours += 1
+      // console.log("finalHours", finalHours)
+      endSplitMinutes -= 60
+      finalTime = endSplitHours + ":" + endSplitMinutes
+      // console.log("finalTime", finalTime)
+    } else if (endSplitMinutes === 60) {
+      endSplitHours += 1
+      // console.log("finalHours", finalHours)
+      endSplitMinutes -= 60
+      finalTime = endSplitHours + ":0" + endSplitMinutes
+      // console.log("finalTime", finalTime)
+    } else {
+      finalTime = time
+    }
+    const endDateAndTime = date + " " + finalTime
+    return endDateAndTime
+    // console.log("FINAL DATE AND TIME", dateAndTime)
+    // console.log(splitTime)
+    // console.log("hours", endSplitHours)
+    // console.log("minutes", endSplitMinutes)
+  }
 
   useEffect(() => {
     const newEvents = allSessions.map((session) => {
-      const { name, day, time, hours, minutes, frequency, category } = session;
-      const split_time = time.split(":");
-      const start_hour = Number(split_time[0]);
-      const start_minute = Number(split_time[1]);
-      const end_hour = start_hour + hours;
-      const end_minute = start_minute + minutes;
+      const { date, time } = session;
+      const { name, hours, minutes, category } = session.event
       
-      let color = selectEventColor(category)
+      const startDateAndTime = date + " " + time
+      const endDateAndTime = handleDateAndTimeConversion(date, time, hours, minutes)
 
-      console.log(frequency)
       return {
         title: name,
-        start: moment().day(day).hour(start_hour).minute(start_minute).second(0).toDate(),
-        end: moment().day(day).hour(end_hour).minute(end_minute).second(0).toDate(),
-        color: color,
-      };
+        start: moment(startDateAndTime),
+        end: moment(endDateAndTime),
+      }
+      // console.log(startDateAndTime)
+      // const split_time = time.split(":");
+      // const start_hour = Number(split_time[0]);
+      // const start_minute = Number(split_time[1]);
+      // const end_hour = start_hour + hours;
+      // const end_minute = start_minute + minutes;
+      
+      // let color = selectEventColor(category)
+      
+
+
+      // return {
+      //   title: name,
+      //   start: moment().day(day).hour(start_hour).minute(start_minute).second(0).toDate(),
+      //   end: moment().day(day).hour(end_hour).minute(end_minute).second(0).toDate(),
+      //   color: color,
+      // };
     });
 
     setEvents(newEvents)

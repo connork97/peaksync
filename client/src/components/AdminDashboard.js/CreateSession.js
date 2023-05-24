@@ -52,14 +52,18 @@ const CreateSession = ({ allSessions, setAllSessions, allEvents }) => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(newSession),
+            body: JSON.stringify(newSession)
         })
         .then((response) => response.json())
         .then((newSessionData) => {
             console.log(newSessionData)
+            // setAllSessions((prevState) => [...prevState, newSessionData])
             const updatedAllSessions = [...allSessions, newSessionData]
             setAllSessions(updatedAllSessions)
         })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
     }
 
     // const frequency_options = ['Once', 'Weekly', 'Biweekly', 'Monthly', 'Biannual', 'Yearly']

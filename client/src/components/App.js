@@ -57,6 +57,7 @@ function App() {
             setAllUsers={setAllUsers}
             setAllMemberships={setAllMemberships}
             setAllEvents={setAllEvents}
+            allSessions={allSessions}
             setAllSessions={setAllSessions}
           />
         </Route>
