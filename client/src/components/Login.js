@@ -30,21 +30,21 @@ const Login = ({ currentUser, setCurrentUser, allUsers, setAllUsers, setAllMembe
         })
     }
     
-    const fetchAllSessions = () => {
-        fetch('/sessions')
-        .then((response) => response.json())
-        .then((allSessionsData) => {
-            console.log(allSessionsData)
-            setAllSessions(allSessionsData)
-        })
-    }
+    // const fetchAllSessions = () => {
+    //     fetch('/sessions')
+    //     .then((response) => response.json())
+    //     .then((allSessionsData) => {
+    //         console.log(allSessionsData)
+    //         setAllSessions(allSessionsData)
+    //     })
+    // }
 
     const fetchAllEvents = () => {
         fetch("/events")
         .then((response) => response.json())
         .then((eventData) => {
             setAllEvents(eventData)
-            fetchAllSessions()
+            // fetchAllSessions()
         })
     }
 

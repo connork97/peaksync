@@ -7,6 +7,7 @@ from flask import request, jsonify
 from flask_restful import Resource
 from flask import request, make_response, session
 from flask_cors import CORS
+from sqlalchemy import desc
 # Local imports
 from config import app, db, api
 from models import User, Membership, Event, Signup, Payment, Session
@@ -346,10 +347,23 @@ def sessions():
             db.session.add(new_session)
             db.session.commit()
             # last_session = Session.query.order_by(Session.id.desc()).first()
-            response = make_response(new_session.to_dict(), 204)
+            response = make_response(new_session.to_dict(only=('event_id')), 204)
+            # get_last_session()
         except:
             response = make_response({"error": "404: Could not create new session"})
 
+    return response
+
+@app.route('/lastsession', methods=['GET'])
+def get_last_session():
+    last_session = Session.query.order_by(Session.id.desc()).first().to_dict()
+    if request.method == 'GET':
+        if last_session:
+            response = make_response(last_session.id, 204)
+
+        else:
+            response = make_response({"error": "404: Could not find last session"})
+    
     return response
 
 @app.route('/payments', methods=['GET'])

@@ -5,7 +5,7 @@ import CreateMembership from "./CreateMembership"
 
 import Accordion from 'react-bootstrap/Accordion'
 
-const Create = ({ allUsers, setAllUsers, allEvents, setAllEvents, allMemberships, setAllMemberships, allSessions, setAllSessions }) => {
+const Create = ({ allUsers, setAllUsers, allEvents, setAllEvents, allMemberships, setAllMemberships, allSessions, setAllSessions, generalToggle, setGeneralToggle }) => {
 
     return (
         <Accordion>
@@ -34,6 +34,8 @@ const Create = ({ allUsers, setAllUsers, allEvents, setAllEvents, allMemberships
                         allSessions={allSessions}
                         setAllSessions={setAllSessions}
                         allEvents={allEvents}
+                        generalToggle={generalToggle}
+                        setGeneralToggle={setGeneralToggle}
                     />
                 </Accordion.Body>
             </Accordion.Item>

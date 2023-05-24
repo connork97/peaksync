@@ -21,16 +21,24 @@ function App() {
   const [allEvents, setAllEvents] = useState([])
   const [allSessions, setAllSessions] = useState([])
   const [allMemberships, setAllMemberships] = useState([])
+  const [generalToggle, setGeneralToggle] = useState(false)
 
   useEffect(() => {
     console.log(allUsers)
   }, [allUsers])
-
+  useEffect(() => {
+    fetch('/sessions')
+    .then((response) => response.json())
+    .then((allSessionsData) => {
+        console.log(allSessionsData)
+        setAllSessions(allSessionsData)
+    })
+}, [generalToggle])
   return (
     <>
       <NavBar
         currentUser={currentUser}
-        allUsers={allUsers}  
+        allUsers={allUsers}
       />
       <Switch>
         <Route exact path='/'>
@@ -44,6 +52,7 @@ function App() {
             currentUser={currentUser}
             allEvents={allEvents}
             allSessions={allSessions}
+            generalToggle={generalToggle}
           />
         </Route>
         <Route exact path='/about-us'>
@@ -78,6 +87,8 @@ function App() {
             setAllMemberships={setAllMemberships}
             allSessions={allSessions}
             setAllSessions={setAllSessions}
+            generalToggle={generalToggle}
+            setGeneralToggle={setGeneralToggle}
           />
         </Route>
         <Route exact path='/database'>

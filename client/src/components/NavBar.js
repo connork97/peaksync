@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import { useState, useEffect } from 'react'
 
-const NavBar = ({ currentUser, allUsers }) => {
+const NavBar = ({ currentUser, allUsers, setAllSessions, generalToggle }) => {
 
     // useEffect(() => {
     //     console.log(currentUser)

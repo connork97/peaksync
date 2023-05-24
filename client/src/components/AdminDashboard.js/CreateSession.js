@@ -4,7 +4,7 @@ import Dropdown from 'react-bootstrap/Dropdown'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 
-const CreateSession = ({ allSessions, setAllSessions, allEvents }) => {
+const CreateSession = ({ allSessions, setAllSessions, allEvents, generalToggle, setGeneralToggle }) => {
 
     const [selectedDropdownEvent, setSelectedDropdownEvent] = useState("Classes and Events")
 
@@ -54,28 +54,9 @@ const CreateSession = ({ allSessions, setAllSessions, allEvents }) => {
             },
             body: JSON.stringify(newSession)
         })
-        .then((response) => response.json())
-        .then((newSessionData) => {
-            console.log(newSessionData)
-            // setAllSessions((prevState) => [...prevState, newSessionData])
-            const updatedAllSessions = [...allSessions, newSessionData]
-            setAllSessions(updatedAllSessions)
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
+
+        setGeneralToggle(!generalToggle)
     }
-
-    // const frequency_options = ['Once', 'Weekly', 'Biweekly', 'Monthly', 'Biannual', 'Yearly']
-    // const radio_options = frequency_options.map((option) => {
-    //     return (
-    //         <>
-    //             <Form.Label>{option}</Form.Label>
-    //             <Form.Check name="frequency" value={option} type="radio" onChange={handleNewSessionChange} style={{marginLeft:"1rem", marginRight:"1rem"}}></Form.Check>
-    //         </>
-    //     )
-    // })
-
 
     return (
         <Form id="createEventForm" onSubmit={handleSessionSubmit}>
