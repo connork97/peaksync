@@ -180,6 +180,8 @@ class Session(db.Model, SerializerMixin):
                 split_time=(value.split(":"))
                 formatted_time = time(int(split_time[0]), int(split_time[1]))
                 return formatted_time
+            elif type(value) == time:
+                return value
             else:
                 raise ValueError
         
@@ -191,6 +193,10 @@ class Session(db.Model, SerializerMixin):
                 formatted_date = int(split_date[0]), int(split_date[1]), int(split_date[2])
                 print(formatted_date)
                 return datetime(int(split_date[0]), int(split_date[1]), int(split_date[2]))
+            elif type(value) == datetime:
+                return value
+            else:
+                raise ValueError
         # if key == 'frequency':
         #     options = ['Once', 'Weekly', 'Biweekly' 'Monthly', 'Biannual', 'Yearly']
         #     if value in options:
