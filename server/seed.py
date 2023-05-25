@@ -11,6 +11,7 @@ from sqlalchemy import Date, Time
 # Local imports
 from app import app
 from models import db, User, Membership, Event, Signup, Payment, Session
+import stripe
 
 if __name__ == '__main__':
     fake = Faker()

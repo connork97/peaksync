@@ -156,12 +156,21 @@ def memberships():
         print("Creating new memberhip...")
         try:
             form_data = request.get_json()
+            new_stripe_product = stripe.Product.create(
+                name=form_data['name'],
+                default_price_data={
+                    'currency': 'usd',
+                    'unit_amount_decimal': float(int(form_data['price']) * 100)
+                },
+                description=form_data['description']
+            )
             new_membership = Membership(
                 name=form_data['name'],
                 price=form_data['price'],
                 type=form_data['type'],
                 subtype=form_data['subtype'],
-                description=form_data['description']
+                description=form_data['description'],
+                stripe_id=new_stripe_product.id
             )
             db.session.add(new_membership)
             db.session.commit()

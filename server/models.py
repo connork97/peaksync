@@ -212,7 +212,8 @@ class Membership(db.Model, SerializerMixin):
     description = db.Column(db.Text)
     type = db.Column(db.String)
     subtype = db.Column(db.String)
-    price = db.Column(db.Float)
+    price = db.Column(db.Integer)
+    stripe_id = db.Column(db.String)
 
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
