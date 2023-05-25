@@ -2,6 +2,8 @@ import { Link } from "react-router-dom"
 import { useContext } from 'react'
 import { LoggedInUserContext, AllUsersContext } from "./App"
 
+import Dropdown from 'react-bootstrap/Dropdown'
+
 const NavBar = () => {
 
     const { currentUser } = useContext(LoggedInUserContext)
@@ -24,6 +26,18 @@ const NavBar = () => {
             <Link to="/" exact="true" className="navBarLink">Home</Link>
             <Link to="/rates" exact="true" className="navBarLink">Rates</Link>
             <Link to="/calendar" exact="true" className="navBarLink">Calendar</Link>
+            <Dropdown className="navBarLink">
+                <Dropdown.Toggle style={{background:"white", color:'black', border:'none', textDecoration:'underline', fontSize:'1.9rem'}}>Rates and Offerings</Dropdown.Toggle>
+                <Dropdown.Menu style={{color:'black', width:'100%', textAlign:'right'}}>
+                    <Dropdown.Item style={{color:'black'}}>
+                        {/* Memberships */}
+                        <Link to='/offerings/memberships' exact="true" className='navBarDropdownLink' style={{color:'black', textDecoration:'none'}}>Memberships</Link>
+                    </Dropdown.Item>
+                    <Dropdown.Item>
+                        <Link to='/offerings/classes' exact="true" className='navBarDropdownLink' style={{color:'black', textDecoration:'none'}}>Classes</Link>
+                    </Dropdown.Item>
+                </Dropdown.Menu>
+            </Dropdown>
             <Link to="/login" exact="true" className="navBarLink">Login</Link>
             {Object.keys(currentUser).length !== 0 ? renderDashboardNavLink() : null}
         </div>

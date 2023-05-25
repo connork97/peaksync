@@ -12,6 +12,8 @@ import SignUp from "./SignUp.js"
 import UserDatabase from "./AdminDashboard.js/UserDatabase.js"
 import UserProfile from "./UserProfile/UserProfile.js";
 import AdminDashboard from "./AdminDashboard.js/AdminDashboard.js";
+import MembershipOfferings from "./Offerings/MembershipOfferings.js";
+import ClassOfferings from "./Offerings/ClassOfferings.js";
 
 export const AllUsersContext = React.createContext()
 export const AllEventsContext = React.createContext()
@@ -104,6 +106,12 @@ function App() {
                   </Route>
                   <Route exact path='/profile'>
                     <UserProfile />
+                  </Route>
+                  <Route exact path='/offerings/memberships'>
+                    <MembershipOfferings />
+                  </Route>
+                  <Route exact path='/offerings/classes'>
+                    <ClassOfferings />
                   </Route>
                 </Switch>
               </LoggedInUserContext.Provider>

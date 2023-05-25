@@ -23,7 +23,7 @@ class User(db.Model, SerializerMixin):
     last_name = db.Column(db.String)
     email = db.Column(db.String, unique=True)
     _password_hash = db.Column(db.String)
-    phone_number = db.Column(db.Integer)
+    phone_number = db.Column(db.String)
     address = db.Column(db.String)
     city = db.Column(db.String)
     state = db.Column(db.String)

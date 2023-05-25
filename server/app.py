@@ -13,12 +13,19 @@ from config import app, db, api
 from models import User, Membership, Event, Signup, Payment, Session
 
 CORS(app)
+
+import stripe
+stripe.api_key = 'sk_test_51NBMlfBoM5Q6sMKnOSgo4QBNYWSJQS1SZ9KY559Li3ZZDCw2bm95qgKrDQ80LJkBq5paMqGKiF2cATnNJO796srX007Nk47WFY'
+YOUR_DOMAIN = 'http://127.0.0.1:5555'
+LOCAL_DOMAIN = 'http://localhost:4000'
 # Views go here!
 
 @app.route('/')
 def home():
     return ''
 
+# @app.route('/create-checkout-session', methods=['POST'])
+# def create_checkout_session():
 
 @app.route('/users', methods=['GET', 'POST'])
 def users():
@@ -45,14 +52,14 @@ def users():
                 last_name=form_data['last_name'],
                 email=form_data['email'],
                 password_hash=form_data['password'],
-                phone_number=int(form_data['phone_number']),
+                phone_number=form_data['phone_number'],
                 address=form_data['address'],
                 city=form_data['city'],
                 state=form_data['state'],
                 zipcode=int(form_data['zipcode']),
                 date_of_birth=form_data['date_of_birth'],
                 emergency_contact_name=form_data['emergency_contact_name'],
-                emergency_contact_phone_number=int(form_data['emergency_contact_phone_number']),
+                emergency_contact_phone_number=form_data['emergency_contact_phone_number'],
                 waiver=form_data['waiver'],
                 admin=form_data['admin']
             )
