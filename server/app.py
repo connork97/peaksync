@@ -170,7 +170,8 @@ def memberships():
                 type=form_data['type'],
                 subtype=form_data['subtype'],
                 description=form_data['description'],
-                stripe_id=new_stripe_product.id
+                stripe_product_id=new_stripe_product.id,
+                stripe_price_id=new_stripe_product.default_price
             )
             db.session.add(new_membership)
             db.session.commit()
@@ -230,6 +231,14 @@ def events():
         print("Creating new events...")
         try:
             form_data = request.get_json()
+            new_stripe_product = stripe.Product.create(
+                name=form_data['name'],
+                default_price_data={
+                    'currency': 'usd',
+                    'unit_amount_decimal': float(int(form_data['price']) * 100)
+                },
+                description=form_data['description']
+            )
             new_event = Event(
                 name=form_data['name'],
                 price=form_data['price'],
@@ -237,7 +246,9 @@ def events():
                 capacity=int(form_data['capacity']),
                 hours=int(form_data['hours']),
                 minutes=int(form_data['minutes']),
-                description=form_data['description']
+                description=form_data['description'],
+                stripe_product_id=new_stripe_product.id,
+                stripe_price_id=new_stripe_product.default_price
             )
             db.session.add(new_event)
             db.session.commit()
