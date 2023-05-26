@@ -105,6 +105,7 @@ class Event(db.Model, SerializerMixin):
     
     stripe_product_id = db.Column(db.String)
     stripe_price_id = db.Column(db.String)
+    # recurring = db.Column(db.Boolean, default=False)
 
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())

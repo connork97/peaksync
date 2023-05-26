@@ -5,7 +5,7 @@
 # Remote library imports
 from flask import request, jsonify
 from flask_restful import Resource
-from flask import request, make_response, session
+from flask import request, make_response, session, redirect
 from flask_cors import CORS
 from sqlalchemy import desc
 # Local imports
@@ -26,6 +26,48 @@ def home():
 
 # @app.route('/create-checkout-session', methods=['POST'])
 # def create_checkout_session():
+
+@app.route('/create-event-checkout-session/<int:id>', methods=['POST'])
+def create_event_checkout_session(id):
+    event = Event.query.filter(Event.id == id).one_or_none()
+
+    try:
+        checkout_session = stripe.checkout.session.create(
+            line_items=[
+                {
+                    'price': event.stripe_price_id,
+                    'quantity': 1,
+                },
+            ],
+            mode='payment',
+            success_url=LOCAL_DOMAIN + '/calendar',
+            cancel_url=LOCAL_DOMAIN + '/'
+        )
+    except Exception as e:
+        return str(e)
+    
+    return redirect(checkout_session.url, code=303)
+
+@app.route('/create-membership-checkout-session/<int:id>', methods=['POST'])
+def create_membership_checkout_session(id):
+    membership = Membership.query.filter(Membership.id == id).one_or_none()
+
+    try:
+        checkout_session = stripe.checkout.Session.create(
+            line_items=[
+                {
+                    'price': membership.stripe_price_id,
+                    'quantity': 1,
+                },
+            ],
+            mode='payment',
+            success_url=LOCAL_DOMAIN + '/calendar',
+            cancel_url=LOCAL_DOMAIN + '/'
+        )
+    except Exception as e:
+        return str(e)
+    
+    return redirect(checkout_session.url, code=303)
 
 @app.route('/users', methods=['GET', 'POST'])
 def users():

@@ -1,4 +1,5 @@
 import { useContext } from 'react'
+import { useHistory } from 'react-router-dom'
 import { AllMembershipsContext } from '../App'
 
 import ListGroup from 'react-bootstrap/ListGroup'
@@ -6,6 +7,9 @@ import Accordion from 'react-bootstrap/Accordion'
 import Button from 'react-bootstrap/Button'
 
 const MembershipOfferings = () => {
+
+    const history = useHistory()
+
     const { allMemberships } = useContext(AllMembershipsContext)
     // console.log(allMemberships)
 
@@ -18,7 +22,9 @@ const MembershipOfferings = () => {
                     <br></br><br></br>
                     Description: {membership.description}
                     <br></br><br></br>
-                    <Button>Sign Up Here!</Button>
+                    {membership.type === 'Guest' ? null 
+                    : <Button onClick={() => history.push({pathname:"/confirm-order", state:membership})}>Sign Up Here!</Button>
+                    }
                 </Accordion.Body>
             </Accordion.Item>
         )

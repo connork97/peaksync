@@ -14,6 +14,7 @@ import UserProfile from "./UserProfile/UserProfile.js";
 import AdminDashboard from "./AdminDashboard.js/AdminDashboard.js";
 import MembershipOfferings from "./Offerings/MembershipOfferings.js";
 import ClassOfferings from "./Offerings/ClassOfferings.js";
+import ConfirmOrderDetails from "./Stripe/ConfirmOrderDetails.js";
 
 export const AllUsersContext = React.createContext()
 export const AllEventsContext = React.createContext()
@@ -112,6 +113,9 @@ function App() {
                   </Route>
                   <Route exact path='/offerings/classes'>
                     <ClassOfferings />
+                  </Route>
+                  <Route exact path='/confirm-order'>
+                    <ConfirmOrderDetails />
                   </Route>
                 </Switch>
               </LoggedInUserContext.Provider>
