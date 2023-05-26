@@ -172,14 +172,14 @@ class Signup(db.Model, SerializerMixin):
     serialize_rules=(
         '-user.signups',
         '-user._password_hash',
-        '-user_id',
+        # '-user_id',
         '-event.signups',
         '-session.signups'
     )
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
-    paid = db.Column(db.Boolean)
+    # paid = db.Column(db.Boolean)
 
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
@@ -203,6 +203,8 @@ class Payment(db.Model, SerializerMixin):
     signup_id = db.Column(db.Integer, db.ForeignKey("signups.id"))
     membership_id = db.Column(db.Integer, db.ForeignKey("memberships.id"))
 
+    stripe_payment_id = db.Column(db.String)
+    
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 

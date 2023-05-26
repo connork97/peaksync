@@ -23,7 +23,7 @@ const MembershipOfferings = () => {
                     Description: {membership.description}
                     <br></br><br></br>
                     {membership.type === 'Guest' ? null 
-                    : <Button onClick={() => history.push({pathname:"/confirm-order", state:membership})}>Sign Up Here!</Button>
+                    : <Button onClick={() => history.push({pathname:"/confirm-membership-order", state:membership})}>Sign Up Here!</Button>
                     }
                 </Accordion.Body>
             </Accordion.Item>

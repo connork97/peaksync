@@ -32,7 +32,7 @@ def create_event_checkout_session(id):
     event = Event.query.filter(Event.id == id).one_or_none()
 
     try:
-        checkout_session = stripe.checkout.session.create(
+        checkout_session = stripe.checkout.Session.create(
             line_items=[
                 {
                     'price': event.stripe_price_id,
@@ -61,13 +61,50 @@ def create_membership_checkout_session(id):
                 },
             ],
             mode='payment',
-            success_url=LOCAL_DOMAIN + '/calendar',
+            # success_url=f'{LOCAL_DOMAIN}',
+            success_url = LOCAL_DOMAIN + '/calendar',
+
             cancel_url=LOCAL_DOMAIN + '/'
         )
+        print(checkout_session.id)
     except Exception as e:
         return str(e)
-    
+    # print(checkout_session.to_dict())
+    get_payment_intent(checkout_session.id)
     return redirect(checkout_session.url, code=303)
+    # return {redirect(checkout_session.url, code=303), checkout_session.payment_intent}
+
+    # payment_intent = stripe.checkout.Session.retrieve(
+        # checkout_session.id,
+        # expand=["payment_intent"],
+    # )
+    # print(payment_intent.payment_intent)
+    # response = checkout_session.to_dict()
+    # print(response)
+    # return response
+# @app.route('/checkout-success')
+# def checkout_success():
+#     session_id = request.args.get('session_id')
+#     # You can use the session_id to fetch additional details or update your database
+#     # For example, you can retrieve the transaction associated with the session ID from your database
+#     checkout_session = stripe.checkout.Session.retrieve(
+#         checkout_session.id,
+#         expand=["payment_intent"],
+#     )
+#     print(checkout_session)
+#     # Redirect to your desired success page
+#     return redirect(LOCAL_DOMAIN + '/payment-redirect/' + session_id)
+
+@app.route('/payment_intent', methods=['GET'])
+def get_payment_intent(checkout_session_id):
+    if request.method == 'GET':
+        try:
+            session = stripe.checkout.Session.retrieve(checkout_session_id)
+            print(session)
+            return session
+        except stripe.error.StripeError as e:
+            return None
+
 
 @app.route('/users', methods=['GET', 'POST'])
 def users():

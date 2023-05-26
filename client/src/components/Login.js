@@ -15,10 +15,6 @@ const Login = () => {
     const { setAllEvents } = useContext(AllEventsContext)
     const { allSessions, setAllSessions } = useContext(AllSessionsContext)
 
-    useEffect(() => {
-        console.log("Set All Events Function on Login Page", setAllEvents)
-    }, [])
-
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
@@ -37,36 +33,11 @@ const Login = () => {
         .then((response) => response.json())
         .then((userData) => {
             setCurrentUser(userData)
+            console.log(userData)
             fetchAllUsers(userData)
         })
     }
-    
-    const fetchAllSessions = () => {
-        fetch('/sessions')
-        .then((response) => response.json())
-        .then((allSessionsData) => {
-            console.log(allSessionsData)
-            setAllSessions(allSessionsData)
-        })
-    }
 
-    const fetchAllEvents = () => {
-        fetch("/events")
-        .then((response) => response.json())
-        .then((eventData) => {
-            setAllEvents(eventData)
-            fetchAllSessions()
-        })
-    }
-
-    const fetchAllMemberships = () => {
-        fetch("/memberships")
-        .then((response) => response.json())
-        .then((membershipData) => {
-            setAllMemberships(membershipData)
-            fetchAllEvents()
-        })
-    }
     
     const fetchAllUsers = (user) => {
         if (user.admin === true) {
@@ -74,7 +45,6 @@ const Login = () => {
             .then((response) => response.json())
             .then((userData) => {
                 setAllUsers(userData)
-                fetchAllMemberships()
             })
         } else {
             console.log("No admin priveledges")

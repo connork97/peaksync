@@ -5,16 +5,18 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 import NavBar from "./NavBar.js";
 import Home from "./Home.js";
-import EventsCalendar from "./EventsCalendar.js"
+import EventsCalendar from "./Calendar/EventsCalendar.js"
 import Rates from "./Rates.js"
 import Login from "./Login.js"
 import SignUp from "./SignUp.js"
-import UserDatabase from "./AdminDashboard.js/UserDatabase.js"
+import UserDatabase from "./AdminDashboard/UserDatabase.js"
 import UserProfile from "./UserProfile/UserProfile.js";
-import AdminDashboard from "./AdminDashboard.js/AdminDashboard.js";
+import AdminDashboard from "./AdminDashboard/AdminDashboard.js";
 import MembershipOfferings from "./Offerings/MembershipOfferings.js";
 import ClassOfferings from "./Offerings/ClassOfferings.js";
-import ConfirmOrderDetails from "./Stripe/ConfirmOrderDetails.js";
+import ConfirmMembershipOrderDetails from "./Offerings/ConfirmMembershipOrderDetails.js";
+import PaymentRedirect from "./Stripe/PaymentRedirect.js";
+import ConfirmClassSignupDetails from "./Offerings/ConfirmClassSignupDetails.js";
 
 export const AllUsersContext = React.createContext()
 export const AllEventsContext = React.createContext()
@@ -74,6 +76,30 @@ function App() {
   //   })
   // }, [generalToggle])
 
+
+  useEffect(() => {
+    fetch('/sessions')
+    .then((response) => response.json())
+    .then((allSessionsData) => {
+      setAllSessions(allSessionsData)
+    })
+  }, [])    
+
+  useEffect(() => {
+    fetch("/events")
+    .then((response) => response.json())
+    .then((eventData) => {
+      setAllEvents(eventData)
+    })
+  }, [])
+  useEffect(() => {
+    fetch("/memberships")
+    .then((response) => response.json())
+    .then((membershipData) => {
+      setAllMemberships(membershipData)
+    })
+  }, [])
+
   return (
     <>
     <AllUsersContext.Provider value={allUsersContextObject}>
@@ -114,8 +140,14 @@ function App() {
                   <Route exact path='/offerings/classes'>
                     <ClassOfferings />
                   </Route>
-                  <Route exact path='/confirm-order'>
-                    <ConfirmOrderDetails />
+                  <Route exact path='/confirm-membership-order'>
+                    <ConfirmMembershipOrderDetails />
+                  </Route>
+                  <Route exact path='/confirm-event-order'>
+                    <ConfirmClassSignupDetails />
+                  </Route>
+                  <Route path='/payment-redirect' >
+                    <PaymentRedirect />
                   </Route>
                 </Switch>
               </LoggedInUserContext.Provider>
