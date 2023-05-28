@@ -12,18 +12,23 @@ const CreateSession = () => {
     const { generalToggle, setGeneralToggle } = useContext(GeneralToggleContext)
 
     const [selectedDropdownEvent, setSelectedDropdownEvent] = useState("Classes and Events")
+    const [selectedFrequency, setSelectedFrequency] = useState("Once")
 
     const [newSession, setNewSession] = useState({
         "date": "",
         "time": "",
-        "event_id": null
+        "event_id": null,
+        "frequency": selectedFrequency
     })
 
     const handleDiscardSession = () => {
+        setSelectedDropdownEvent("Classes and Events")
+        setSelectedFrequency("Once")
         setNewSession({
             "date": "",
             "time": "",
-            "event_id": null
+            "event_id": null,
+            "frequency": "Once"
         })
     }
 
@@ -49,6 +54,21 @@ const CreateSession = () => {
         )
     })
 
+    const handleSelectFrequency = (event) => {
+        setSelectedFrequency(event.target.name)
+        console.log(event.target.id)
+        setNewSession((prevState) => ({
+            ...prevState,
+            frequency: event.target.name
+        }))
+    }
+
+    const frequencyOptions = ['Once', 'Daily', 'Weekly', 'Monthly', 'Biweekly', 'Monthly']
+
+    const renderFrequencyDropdownItems = frequencyOptions.map((option) => {
+        return <Dropdown.Item name={option} onClick={(event) => handleSelectFrequency(event)}>{option}</Dropdown.Item>
+    })
+
     const handleSessionSubmit = (event) => {
         event.preventDefault()
         fetch('/sessions', {
@@ -64,7 +84,6 @@ const CreateSession = () => {
             const updatedAllSessions = [...allSessions, newSessionData]
             setAllSessions(updatedAllSessions)
         })
-
         // setGeneralToggle(!generalToggle)
     }
 
@@ -91,6 +110,16 @@ const CreateSession = () => {
             <Form.Label>Start Time:</Form.Label>
             <Form.Control name="time" value={newSession.time} onChange={handleNewSessionChange}></Form.Control>
             <Form.Text>Time must be in the format of HH:MM</Form.Text>
+            <br></br><br></br>
+            <Form.Label>Frequency:</Form.Label>
+            <Dropdown>
+                <br></br>
+                <Dropdown.Toggle>{selectedFrequency}</Dropdown.Toggle>
+                <Dropdown.Menu>
+                    <Dropdown.Item name="Classes and Events" onClick={handleSelectFrequency}></Dropdown.Item>
+                    {renderFrequencyDropdownItems}
+                </Dropdown.Menu>
+            </Dropdown>
             <br></br><br></br>
             <Button type="submit">Create New Calendar Item</Button>
             <Button onClick={handleDiscardSession}>Discard Calendar Item</Button>

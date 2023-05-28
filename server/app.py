@@ -12,6 +12,8 @@ from sqlalchemy import desc
 from config import app, db, api
 from models import User, Membership, Event, Signup, Payment, Session
 
+from datetime import datetime, timedelta
+
 CORS(app)
 
 import stripe
@@ -435,14 +437,55 @@ def sessions():
     if request.method == 'POST':
         try:
             form_data = request.get_json()
-            new_session = Session(
-                date=form_data['date'],
-                time=form_data['time'],
-                event_id=form_data['event_id']
-            )
-            db.session.add(new_session)
+
+            date_string = form_data['date']
+            time_string = form_data['time']
+
+            start_date_obj = datetime.strptime(date_string, "%Y-%m-%d")
+            start_time_obj = datetime.strptime(time_string, "%H:%M").time()
+            datetime_obj = datetime.combine(start_date_obj, start_time_obj)
+
+            frequency = form_data['frequency']
+            event_id = form_data['event_id']
+
+            current_date = start_date_obj
+            current_time = start_time_obj
+            print(datetime_obj)
+
+            end_date = start_date_obj + timedelta(days=365)
+            print(end_date)
+
+            current_date = start_date_obj
+            while current_date <= end_date:
+                new_session = Session(
+                    date=current_date,
+                    time=start_time_obj,
+                    event_id=event_id
+                )
+                db.session.add(new_session)
+
+                if frequency == 'Daily':
+                    current_date += timedelta(days=1)
+                elif frequency == 'Weekly':
+                    current_date += timedelta(weeks=1)
+                elif frequency == 'Biweekly':
+                    current_date += timedelta(weeks=2)
+                elif frequency == 'Monthly':
+                    current_date += timedelta(days=30)
+            
             db.session.commit()
-            response = make_response(new_session.to_dict(), 200)
+
+            response = make_response({"success": f"200: You have created events on a {frequency} basis starting on {date_string} at {time_string}"})
+            # end_date = date + datetime.timedelta(days=365)
+            
+            # new_session = Session(
+            #     date=form_data['date'],
+            #     time=form_data['time'],
+            #     event_id=form_data['event_id']
+            # )
+            # db.session.add(new_session)
+            # db.session.commit()
+            # response = make_response(new_session.to_dict(), 200)
         except:
             response = make_response({"error": "404: Could not create new session"})
 
