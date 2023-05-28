@@ -203,7 +203,7 @@ class Payment(db.Model, SerializerMixin):
     signup_id = db.Column(db.Integer, db.ForeignKey("signups.id"))
     membership_id = db.Column(db.Integer, db.ForeignKey("memberships.id"))
 
-    stripe_payment_id = db.Column(db.String)
+    # stripe_payment_id = db.Column(db.String)
     
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())

@@ -61,7 +61,7 @@ if __name__ == '__main__':
         )
         db.session.add_all([guest, admin])
         db.session.commit()
-        for i in range(25):
+        for i in range(500):
             phone_number = fake.random_number(digits=10)
             while len(str(phone_number)) < 10:
                 phone_number = int("1" + str(phone_number))
@@ -194,11 +194,11 @@ if __name__ == '__main__':
 
         print("Generating signups...")
 
-        for i in range(500):
+        for i in range(50):
             new_signup = Signup(
                 user_id=randint(1, 100),
                 session_id=randint(1, 7),
-                paid=fake.boolean()
+                # paid=fake.boolean()
             )
             db.session.add(new_signup)
             db.session.commit()

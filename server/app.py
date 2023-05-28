@@ -388,8 +388,8 @@ def signups():
         print("Creating new signup...")
         form_data = request.get_json()
         new_signup= Signup(
-            user_id=form_data['userId'],
-            events_id=form_data['eventsId']
+            user_id=form_data['user_id'],
+            session_id=form_data['session_id'],
             # paid ?
         )
         db.session.add(new_signup)
@@ -492,7 +492,8 @@ def login():
         if user and user.authenticate(password):
             response = make_response(user.to_dict(), 200)
             # session['user_id'] = user.id
-            response.set_cookie('user_email', user.email)
+            session['user_email'] = user.email
+            # response.set_cookie('user_email', user.email)
 
         else:
             response = make_response({"error": "Unable to authenticate user login."}, 404)

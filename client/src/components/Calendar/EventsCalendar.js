@@ -79,12 +79,13 @@ const EventsCalendar = () => {
       const startDate = new Date(startDateAndTime);
       const dayOfWeek = startDate.toLocaleDateString(undefined, { weekday: 'long' });
       return {
-        title: `${name} ( ${session.signups.length} / ${session.event.capacity} spots taken)`,
-        start: moment(startDateAndTime),
-        end: moment(endDateAndTime),
+        title: name,
+        start: moment(startDateAndTime).toDate(),
+        end: moment(endDateAndTime).toDate(),
         color: eventColor,
         values: {
-          id: session.id,
+          event_id: session.event.id,
+          session_id: session.id,
           name: name,
           day: dayOfWeek,
           date: date,
