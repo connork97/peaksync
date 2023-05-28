@@ -212,7 +212,7 @@ def user_by_id(id):
             try:
                 db.session.delete(user)
                 db.session.commit()
-                response = make_response({"success": f"User of id {id} deleted."}, 204)
+                response = make_response({"success": f"User of id {id} deleted."}, 200)
             except:
                 response = make_response({"error": f"User of id {id} not deleted"}, 404)
     
@@ -288,7 +288,7 @@ def membership_by_id(id):
             try:
                 db.session.delete(membership)
                 db.session.commit()
-                response = make_response({"success": f"Membership of id {id} deleted."}, 204)
+                response = make_response({"success": f"Membership of id {id} deleted."}, 200)
             except:
                 response = make_response({"error": f"Membership of id {id} not deleted"}, 404)
 
@@ -364,7 +364,7 @@ def events_by_id(id):
             try:
                 db.session.delete(one_event)
                 db.session.commit()
-                response = make_response({"success": f"events of id {id} deleted."}, 204)
+                response = make_response({"success": f"events of id {id} deleted."}, 200)
             except:
                 response = make_response({"error": f"events of id {id} not deleted"}, 404)
 
@@ -391,12 +391,12 @@ def signups():
         form_data = request.get_json()
         new_signup= Signup(
             user_id=form_data['user_id'],
-            session_id=form_data['session_id'],
+            session_id=form_data['session_id']
             # paid ?
         )
         db.session.add(new_signup)
         db.session.commit()
-        response = make_response(new_signup.to_dict(), 204)
+        response = make_response(new_signup.to_dict(), 201)
 
     return response
 

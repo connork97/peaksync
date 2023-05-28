@@ -4,13 +4,14 @@ import { LoggedInUserContext } from '../App';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button'
 
-const EventDetailsModal = ({ clickedSession, show, setShow }) => {
+const EventDetailsModal = ({ clickedSession, setClickedSession, show, setShow }) => {
 
     const { currentUser } = useContext(LoggedInUserContext)
 
     const handleClose = () => setShow(false);
   
-    const handleSignup = () => {
+    const handleSignup = (event) => {
+        event.preventDefault()
         console.log("Test Signup")
         fetch('/signups', {
             method: 'POST',
@@ -19,11 +20,18 @@ const EventDetailsModal = ({ clickedSession, show, setShow }) => {
             },
             body: JSON.stringify({
                 'user_id': currentUser.id,
-                'session_id': clickedSession.session_id,
+                'session_id': clickedSession.values.session_id,
             })
         })
         .then((response) => response.json())
-        .then((signupData) => console.log(signupData))
+        .then((signupData) => {
+            console.log(signupData)
+            const spaces = clickedSession.values.spaces
+            setClickedSession((prevState) => ({
+                ...prevState,
+                [prevState.values.spaces]: spaces - 1
+            }))
+        })
     }
 
     return (

@@ -174,7 +174,7 @@ class Signup(db.Model, SerializerMixin):
         '-user._password_hash',
         # '-user_id',
         '-event.signups',
-        '-session.signups'
+        # '-session.signups'
     )
 
     id = db.Column(db.Integer, primary_key=True)

@@ -16,7 +16,7 @@ const EventsCalendar = () => {
 
   const handleClose = () => setShow(false);
 
-  const [clickedSession, setClickSession] = useState({})
+  const [clickedSession, setClickedSession] = useState({})
 
   const { allSessions } = useContext(AllSessionsContext)
   const { generalToggle } = useContext(GeneralToggleContext)
@@ -86,6 +86,7 @@ const EventsCalendar = () => {
           time: time,
           description: session.event.description,
           spaces: session.event.capacity - session.signups.length,
+          signups: session.signups
         },
       };
     });
@@ -97,7 +98,7 @@ const EventsCalendar = () => {
     console.log("clicked!")
 
     console.log(event)
-    setClickSession(event)
+    setClickedSession(event)
     setShow(true)
     // return <EventDetailsModal />
 
@@ -106,7 +107,7 @@ const EventsCalendar = () => {
   return (
     <div>
       {Object.keys(clickedSession).length > 0 ? 
-      <EventDetailsModal clickedSession={clickedSession} show={show} setShow={setShow} />
+      <EventDetailsModal clickedSession={clickedSession} setClickedSession={setClickedSession} show={show} setShow={setShow} />
       : null}
       <h1>Calendar Page</h1>
         <Calendar
