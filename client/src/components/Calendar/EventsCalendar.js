@@ -48,40 +48,34 @@ const EventsCalendar = () => {
   }
 
   const handleDateAndTimeConversion = (date, time, hours, minutes) => {
-    const splitTime = time.split(":")
-    let endSplitHours = Number(splitTime[0]) + hours
-    let endSplitMinutes = Number(splitTime[1]) + minutes
-    let finalTime
-    if (endSplitMinutes > 60) {
-      endSplitHours += 1
-      endSplitMinutes -= 60
-      finalTime = endSplitHours + ":" + endSplitMinutes
-    } else if (endSplitMinutes === 60) {
-      endSplitHours += 1
-      endSplitMinutes -= 60
-      finalTime = endSplitHours + ":0" + endSplitMinutes
-    } else {
-      finalTime = time
+    const splitTime = time.split(":");
+    let endSplitHours = Number(splitTime[0]) + hours;
+    let endSplitMinutes = Number(splitTime[1]) + minutes;
+    if (endSplitMinutes >= 60) {
+      endSplitHours += Math.floor(endSplitMinutes / 60);
+      endSplitMinutes %= 60;
     }
-    const endDateAndTime = date + " " + finalTime
-    return endDateAndTime
-  }
-
+    const finalTime = endSplitHours.toString().padStart(2, "0") + ":" + endSplitMinutes.toString().padStart(2, "0");
+    const endDateAndTime = date + " " + finalTime;
+    return endDateAndTime;
+  };
+  
   useEffect(() => {
     const newEvents = allSessions.map((session) => {
       const { date, time } = session;
-      const { name, hours, minutes, category } = session.event
+      const { name, hours, minutes, category } = session.event;
       
-      const startDateAndTime = date + " " + time
-      const endDateAndTime = handleDateAndTimeConversion(date, time, hours, minutes)
-      const eventColor = selectEventColor(category)
-      // console.log(session)
-      const startDate = new Date(startDateAndTime);
-      const dayOfWeek = startDate.toLocaleDateString(undefined, { weekday: 'long' });
+      const startDateAndTime = moment(date + " " + time, "YYYY-MM-DD HH:mm").toDate();
+      const endDateAndTime = handleDateAndTimeConversion(date, time, hours, minutes);
+      const endDate = moment(endDateAndTime, "YYYY-MM-DD HH:mm").toDate();
+      const eventColor = selectEventColor(category);
+  
+      const dayOfWeek = moment(startDateAndTime).format("dddd");
+  
       return {
         title: name,
-        start: moment(startDateAndTime).toDate(),
-        end: moment(endDateAndTime).toDate(),
+        start: startDateAndTime,
+        end: endDate,
         color: eventColor,
         values: {
           event_id: session.event.id,
@@ -91,12 +85,12 @@ const EventsCalendar = () => {
           date: date,
           time: time,
           description: session.event.description,
-          spaces: session.event.capacity - session.signups.length
-        }
-      }
+          spaces: session.event.capacity - session.signups.length,
+        },
+      };
     });
-
-    setEvents(newEvents)
+  
+    setEvents(newEvents);
   }, [allSessions, generalToggle]);
 
   const handleClickedEvent = (event) => {
@@ -123,7 +117,6 @@ const EventsCalendar = () => {
           timeslots={1}
           style={{ height: "85vh", width:"85vw", margin:"auto" }}
           eventPropGetter={eventStyleGetter}
-
           selectable
           onSelectEvent={handleClickedEvent}
         />
