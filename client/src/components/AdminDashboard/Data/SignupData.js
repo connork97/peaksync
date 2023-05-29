@@ -17,8 +17,8 @@ const SignupData = ({ signup }) => {
     return (
         <ListGroup.Item>
             {signup.session.date}, {signup.session.time} - {signup.session ? signup.session.event.name + " - " : null} {signup.user.last_name}, {signup.user.first_name}
-            <br></br>
-            Created At: {signup.created_at} <Button onClick={() => handleEditSignup(signup)}>Edit Signup</Button> <Button style={{background:'red'}}>Cancel Booking (not functional)</Button>
+            Created At: {signup.created_at} 
+            <Button onClick={() => handleEditSignup(signup)}>Edit Signup</Button>
         </ListGroup.Item>
     )
 }

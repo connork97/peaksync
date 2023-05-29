@@ -1,20 +1,25 @@
-import { useContext } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useState, useEffect, useContext } from 'react'
+import { useLocation, useHistory } from 'react-router-dom'
 import { AllSessionsContext, AllSignupsContext } from '../../App'
 
 import moment from 'moment'
 
 import ListGroup from 'react-bootstrap/ListGroup'
 import Button from 'react-bootstrap/Button'
+import Modal from 'react-bootstrap/Modal'
 
 const EditSignup = () => {
 
     const location = useLocation()
+    const history = useHistory()
     const signupToEdit = location.state
     console.log(signupToEdit)
     const { allSessions, setAllSessions } = useContext(AllSessionsContext)
     const { allSignups, setAllSignups } = useContext(AllSignupsContext)
 
+    const eventStart = moment(signupToEdit.session.date + " " + signupToEdit.session.time, "YYYY-MM-DD HH:mm").toDate()
+    const currentDate = new Date()
+    
     const handleEditSignup = (event) => {
         if (window.confirm("Are you sure you want to relocate this signup?") === true) {
             fetch(`/signups/${signupToEdit.id}`, {
@@ -31,19 +36,28 @@ const EditSignup = () => {
         }
     }
 
+    const handleDeleteSignup = () => {
+        if (window.confirm("Are you sure you want to cancel this signup?  This cannot be undone!") === true) {
+
+            fetch(`/signups/${signupToEdit.id}`, {
+                method: 'DELETE',
+            })
+            .then((response) => response.json())
+            .then((deletedSignupData) => console.log(deletedSignupData))
+        } else {
+            window.alert("Okay, the signup will not be deleted.")
+        }
+    }
+
     const renderAllAvailableSessions = allSessions.map((session) => {
         const availableSpaces = session.event.capacity - session.signups
         const availableSession = session.event.capacity > session.signups
         const sameEventName = session.event.name === signupToEdit.session.event.name
         const eventStart = moment(session.date + " " + session.time, "YYYY-MM-DD HH:mm").toDate()
-        const currentDate = new Date()
         const isFutureDate = eventStart > currentDate
-        // const currentTime = new Time()
         if (availableSession && sameEventName && isFutureDate) {
             return (
                 <ListGroup.Item>
-                    {signupToEdit.session.id} - 
-                    {session.id} - 
                     {session.event.name} - 
                     {session.date} - 
                     {session.time} - 
@@ -53,18 +67,33 @@ const EditSignup = () => {
                     </Button>
                 </ListGroup.Item>
             )
-            // console.log(session)
-            // console.log(signupToEdit)
-            // console.log(eventStart)
-            // console.log(new Date())
-            // console.log(eventStart)
-            // console.log(eventStart > currentDate)
-            // console.log(currentDate.getHours())
         }
     })
 
+    const [showWarning, setShowWarning] = useState(false)
+
+    useEffect(() => {
+        if (eventStart < currentDate) {
+            setShowWarning(true)
+        }
+    }, [])
+    
+    console.log(eventStart, currentDate, eventStart < currentDate)
     return (
         <>
+            <Modal show={showWarning}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Warning!</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>This event has already passed.
+                    <br></br><br></br>
+                    Unless you are making an intentional exception, do not move this signup from it's original booking.
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button style={{background:'grey'}} onClick={() => setShowWarning(false)}>I understand and wish to proceed.</Button>
+                    <Button onClick={() => history.push({pathname:'/admin-dashboard'})}>Whoops, take me back!</Button>
+                </Modal.Footer>
+            </Modal>
             <h1>Edit Signup Page</h1>
             <h4>Current Signup:</h4>
             <p>{signupToEdit.session.event.name} - Date: {signupToEdit.session.date} Time: {signupToEdit.session.time}</p>
@@ -72,6 +101,13 @@ const EditSignup = () => {
             <ListGroup>
                 {renderAllAvailableSessions}
             </ListGroup>
+            <br></br>
+            {eventStart > currentDate ?
+            <h2>Or you can cancel your booking (refunds/credits not functional):
+                <br></br><br></br>
+                <Button onClick={handleDeleteSignup} style={{background:'red'}}>Cancel Booking (not functional)</Button>
+            </h2>
+            : null}
         </>
     )
 }
