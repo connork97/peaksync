@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react'
-import { LoggedInUserContext } from '../App';
+import { LoggedInUserContext, AllSessionsContext, GeneralToggleContext } from '../App';
 
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button'
@@ -7,7 +7,9 @@ import Button from 'react-bootstrap/Button'
 const EventDetailsModal = ({ clickedSession, setClickedSession, show, setShow }) => {
 
     const { currentUser } = useContext(LoggedInUserContext)
-    
+    const { setAllSession } = useContext(AllSessionsContext)
+    const { generalToggle, setGeneralToggle } = useContext(GeneralToggleContext)
+
     const currentDate = new Date()
     console.log("Start Date", clickedSession.start)
     console.log("Current Date", currentDate)
@@ -31,11 +33,12 @@ const EventDetailsModal = ({ clickedSession, setClickedSession, show, setShow })
         .then((response) => response.json())
         .then((signupData) => {
             console.log(signupData)
-            const spaces = clickedSession.values.spaces
-            setClickedSession((prevState) => ({
-                ...prevState,
-                [prevState.values.spaces]: spaces - 1
-            }))
+            setGeneralToggle(!generalToggle)
+            // const updatedSpaces = Number(clickedSession.values.spaces) - 1
+            // setClickedSession((prevState) => ({
+            //     ...prevState,
+            //     [prevState.values.spaces]: updatedSpaces
+            // }))
         })
     }
 
@@ -50,7 +53,7 @@ const EventDetailsModal = ({ clickedSession, setClickedSession, show, setShow })
     }
 
     return (
-        <Modal show={show} onHide={handleClose}>
+        <Modal show={show} onHide={handleClose} style={{position:'relative', scale:'1.75', top:'-60vh'}}>
             <Modal.Header closeButton>
             <Modal.Title>{clickedSession.values.name}</Modal.Title>
             </Modal.Header>
@@ -58,9 +61,6 @@ const EventDetailsModal = ({ clickedSession, setClickedSession, show, setShow })
             <Modal.Body>{clickedSession.values.description}</Modal.Body>
             <Modal.Footer>
                 {renderSpacesOrAvailability()}
-                {/* {clickedSession.values.spaces > 0 ? 
-                <span style={{marginRight:'30%'}}>{clickedSession.values.spaces} spaces remaining.</span>
-                : <span style={{marginRight:'50%'}}>No spaces remaining.</span>} */}
                 <Button variant="secondary" onClick={handleClose}>
                     Close
                 </Button>

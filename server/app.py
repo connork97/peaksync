@@ -456,6 +456,8 @@ def sessions():
             print(end_date)
 
             current_date = start_date_obj
+            add_30_days = ['04', '06', '09', '11']
+            add_31_days = ['01', '03', '05', '07', '08', '10', '10']
             while current_date <= end_date:
                 new_session = Session(
                     date=current_date,
@@ -471,11 +473,16 @@ def sessions():
                 elif frequency == 'Biweekly':
                     current_date += timedelta(weeks=2)
                 elif frequency == 'Monthly':
-                    current_date += timedelta(days=30)
-            
+                    if date_string.split('-')[1] in add_30_days:
+                        current_date += timedelta(days=30)
+                    elif date_string.split('-')[1] in add_31_days:
+                        current_date += timedelta(days=31)
+                    elif date_string.split('-')[1] == '02':
+                        current_date += timedelta(days=28)
+
             db.session.commit()
 
-            response = make_response({"success": f"200: You have created events on a {frequency} basis starting on {date_string} at {time_string}"})
+            response = make_response({"success": f"200: You have created events on a {frequency} basis starting on {date_string} at {time_string}"}, 200)
             # end_date = date + datetime.timedelta(days=365)
             
             # new_session = Session(

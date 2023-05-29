@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import moment from 'moment'
 import ListGroup from 'react-bootstrap/ListGroup'
 import Button from 'react-bootstrap/Button'
 
@@ -21,10 +22,26 @@ const UserBookings = ({ selectedUser }) => {
         }
     }
 
-    const renderBookings = selectedUserBookings.map((signup) => {
+    const renderBookings = selectedUserBookings.reverse().map((signup) => {
+        console.log(signup.session)
+        const datetimeString = `${signup.session.date}T${signup.session.time}:00`
+
+        const datetime = new Date(datetimeString)
+
+        const options = {
+            weekday: 'long',
+            month: 'long',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true
+        }
+
+        const formattedDateTime = datetime.toLocaleString('en-US', options)
+
         return (
             <ListGroup.Item style={{display:"flex"}}>
-                {signup.id} - {signup.session.event.name} - {signup.created_at} - {signup.paid === true ? "Paid" : <Button style={{color:"white", backgroundColor:"red", borderRadius:"15px"}}>Payment Owed</Button>}<Button onClick={() => handleCancelBooking(signup)} style={{marginLeft:"auto"}}>Cancel Booking</Button>
+                {signup.session.event.name} - {formattedDateTime} - {signup.paid === true ? "Paid" : <Button style={{color:"white", backgroundColor:"red", borderRadius:"15px"}}>Payment Owed</Button>}  <Button onClick={() => handleCancelBooking(signup)} style={{marginLeft:"auto"}}>Cancel Booking</Button>
             </ListGroup.Item>
         )
     })

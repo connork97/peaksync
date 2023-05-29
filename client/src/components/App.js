@@ -17,6 +17,7 @@ import ClassOfferings from "./Offerings/ClassOfferings.js";
 import ConfirmMembershipOrderDetails from "./Offerings/ConfirmMembershipOrderDetails.js";
 import PaymentRedirect from "./Stripe/PaymentRedirect.js";
 import ConfirmClassSignupDetails from "./Offerings/ConfirmClassSignupDetails.js";
+import PaySession from "./Calendar/PaySession.js";
 
 export const AllUsersContext = React.createContext()
 export const AllEventsContext = React.createContext()
@@ -83,7 +84,7 @@ function App() {
     .then((allSessionsData) => {
       setAllSessions(allSessionsData)
     })
-  }, [])    
+  }, [allEvents, generalToggle])
 
   useEffect(() => {
     fetch("/events")
@@ -91,14 +92,14 @@ function App() {
     .then((eventData) => {
       setAllEvents(eventData)
     })
-  }, [])
+  }, [generalToggle])
   useEffect(() => {
     fetch("/memberships")
     .then((response) => response.json())
     .then((membershipData) => {
       setAllMemberships(membershipData)
     })
-  }, [])
+  }, [generalToggle])
 
   return (
     <>
@@ -148,6 +149,9 @@ function App() {
                   </Route>
                   <Route path='/payment-redirect' >
                     <PaymentRedirect />
+                  </Route>
+                  <Route exact path='/signup/pay'>
+                    <PaySession />
                   </Route>
                 </Switch>
               </LoggedInUserContext.Provider>
