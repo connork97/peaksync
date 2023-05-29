@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react'
-import { AllSessionsContext, AllEventsContext, GeneralToggleContext } from '../App'
+import { AllSessionsContext, AllEventsContext, GeneralToggleContext } from '../../App'
 
 import Dropdown from 'react-bootstrap/Dropdown'
 import Form from 'react-bootstrap/Form'

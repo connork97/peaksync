@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react'
-import { AllEventsContext } from '../App'
+import { AllEventsContext } from '../../App'
 
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'

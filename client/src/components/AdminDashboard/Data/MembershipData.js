@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react'
-import { AllMembershipsContext } from '../App'
+import { AllMembershipsContext } from '../../App'
 
 import ListGroup from 'react-bootstrap/ListGroup'
 import Button from 'react-bootstrap/esm/Button'

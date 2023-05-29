@@ -384,7 +384,7 @@ def signups():
 
     return response
 
-@app.route('/signups/<int:id>', methods=['GET', 'DELETE'])
+@app.route('/signups/<int:id>', methods=['GET', 'PATCH', 'DELETE'])
 def signup_by_id(id):
 
     signup = Signup.query.filter(Signup.id == id).one_or_none()
@@ -394,6 +394,17 @@ def signup_by_id(id):
         if request.method == 'GET':
             response = make_response(signup.to_dict(), 200)
     
+        if request.method == 'PATCH':
+            form_data = request.get_json()
+            try:
+                for attr in form_data:
+                    setattr(signup, attr, form_data[attr])
+                db.session.add(signup)
+                db.session.commit()
+                response = make_response(signup.to_dict(), 200)
+            except:
+                response = make_response({"error": f"404: could not change information for signup of id {id}"}, 404)
+
         if request.method == 'DELETE':
             try:
                 db.session.delete(signup)

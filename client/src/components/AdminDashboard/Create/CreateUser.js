@@ -1,8 +1,8 @@
 import { useState, useContext } from 'react'
-import { AllUsersContext } from '../App'
+import { AllUsersContext } from '../../App'
 
 import Card from 'react-bootstrap/Card'
-import myImage from '../../images/profile-placeholder-300x237.png'
+import myImage from '../../../images/profile-placeholder-300x237.png'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 

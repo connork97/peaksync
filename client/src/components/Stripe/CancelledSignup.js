@@ -1,8 +1,10 @@
 import { useContext, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 import { LoggedInUserContext } from '../App'
 
 const CancelledSignup = () => {
 
+    const history = useHistory()
     const { currentUser } = useContext(LoggedInUserContext)
 
     if (currentUser.id !== undefined) {
@@ -10,6 +12,7 @@ const CancelledSignup = () => {
         .then((response) => response.json())
         .then((userData) => {
             const signup_id = userData.signups.reverse()[0].id
+            console.log(signup_id)
             deleteUnpaidSignup(signup_id)
         })
     }
@@ -26,7 +29,10 @@ const CancelledSignup = () => {
     }
 
     return (
-        <h1>Hi there, your signup was cancelled SIMON. WITH AN EXCLAMATION POINT?</h1>
+        <div>
+            <h1>Hi {currentUser.first_name}, it seems like your payment did not go through, so your signup was cancelled.</h1>
+            <h2>If you'd still like to create this booking, please navigate back to the calendar page and try again!</h2>
+        </div>
     )
 }
 

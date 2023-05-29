@@ -17,10 +17,12 @@ import ConfirmMembershipOrderDetails from "./Offerings/ConfirmMembershipOrderDet
 import ConfirmClassSignupDetails from "./Offerings/ConfirmClassSignupDetails.js";
 import CancelledSignup from "./Stripe/CancelledSignup.js";
 import SuccessfulSignup from "./Stripe/SuccessfulSignup.js";
+import EditSignup from './AdminDashboard/Edit/EditSignup.js'
 
 export const AllUsersContext = React.createContext()
 export const AllEventsContext = React.createContext()
 export const AllSessionsContext = React.createContext()
+export const AllSignupsContext = React.createContext()
 export const AllMembershipsContext = React.createContext()
 export const GeneralToggleContext = React.createContext()
 export const LoggedInUserContext = React.createContext()
@@ -31,6 +33,7 @@ function App() {
   const [allUsers, setAllUsers] = useState([])
   const [allEvents, setAllEvents] = useState([])
   const [allSessions, setAllSessions] = useState([])
+  const [allSignups, setAllSignups] = useState([])
   const [allMemberships, setAllMemberships] = useState([])
   const [generalToggle, setGeneralToggle] = useState(false)
 
@@ -49,6 +52,11 @@ function App() {
     setAllSessions
   }
 
+  const allSignupsContextObject = {
+    allSignups,
+    setAllSignups
+  }
+
   const allMembershipsContextObject = {
     allMemberships,
     setAllMemberships
@@ -63,66 +71,12 @@ function App() {
     currentUser,
     setCurrentUser
   }
-
-  // useEffect(() => {
-  //   console.log(allUsers)
-  // }, [allUsers])
-  // useEffect(() => {
-  //   fetch('/sessions')
-  //   .then((response) => response.json())
-  //   .then((allSessionsData) => {
-  //       console.log(allSessionsData)
-  //       setAllSessions(allSessionsData)
-  //   })
-  // }, [generalToggle])
-
-
-  useEffect(() => {
-    fetch('/sessions')
-    .then((response) => response.json())
-    .then((allSessionsData) => {
-      setAllSessions(allSessionsData)
-    })
-  }, [allEvents, generalToggle])
-
-  useEffect(() => {
-    fetch("/events")
-    .then((response) => response.json())
-    .then((eventData) => {
-      setAllEvents(eventData)
-    })
-  }, [generalToggle])
-
-  useEffect(() => {
-    fetch("/memberships")
-    .then((response) => response.json())
-    .then((membershipData) => {
-      setAllMemberships(membershipData)
-    })
-  }, [generalToggle])
-
-
-  // const fetchAllUsers = () => {
-  useEffect(() => {
-
-    if (currentUser.admin === true) {
-      fetch("/users")
-      .then((response) => response.json())
-      .then((userData) => {
-        setAllUsers(userData)
-      })
-    } else {
-      console.log("No admin priveledges")
-    }
-  }, [currentUser])
-  // }
-
+        
   const fetchLoggedInUser = (sessionData) => {
     fetch(`/users/${sessionData}`)
     .then((response) => response.json())
     .then((userData) => {
         setCurrentUser(userData)
-        // fetchAllUsers()
     })
   }
 
@@ -135,6 +89,51 @@ function App() {
     })
   }, [generalToggle])
 
+  useEffect(() => {
+    fetch("/events")
+    .then((response) => response.json())
+    .then((eventData) => {
+      setAllEvents(eventData)
+    })
+  }, [generalToggle])
+  
+  useEffect(() => {
+    fetch("/memberships")
+    .then((response) => response.json())
+    .then((membershipData) => {
+      setAllMemberships(membershipData)
+    })
+  }, [generalToggle])
+
+  useEffect(() => {
+    fetch('/sessions')
+    .then((response) => response.json())
+    .then((allSessionsData) => {
+      setAllSessions(allSessionsData)
+    })
+  }, [allEvents, generalToggle])
+
+  useEffect(() => {
+    if (currentUser.admin === true) {
+      fetch("/users")
+      .then((response) => response.json())
+      .then((userData) => {
+        setAllUsers(userData)
+      })
+    } else {
+      console.log("No admin priveledges")
+    }
+  }, [currentUser])
+
+  useEffect(() => {
+    if (currentUser.admin === true) {
+      fetch('/signups')
+      .then((response) => response.json())
+      .then((signupData) => setAllSignups(signupData))
+    }
+  }, [currentUser])
+
+
 
   return (
     <>
@@ -142,54 +141,59 @@ function App() {
       <AllEventsContext.Provider value={allEventsContextObject}>
         <AllSessionsContext.Provider value={allSessionsContextObject}>
           <AllMembershipsContext.Provider value={allMembershipsContextObject}>
-            <GeneralToggleContext.Provider value={generalToggleContextObject}>
-              <LoggedInUserContext.Provider value={loggedInUserContextObject}>
-                <NavBar/>
-                <Switch>
-                  <Route exact path='/'>
-                    <Home currentUser={currentUser} />
-                  </Route>
-                  <Route exact path='/calendar'>
-                    <EventsCalendar />
-                  </Route>
-                  <Route exact path='/login'>
-                    <Login />
-                  </Route>
-                  <Route exact path='/signup'>
-                    <SignUp />
-                  </Route>
-                  <Route exact path='/admin-dashboard'>
-                    {currentUser.admin ? 
-                    <AdminDashboard />
-                    : <Home />}
-                  </Route>
-                  <Route exact path='/database'>
-                    <UserDatabase />
-                  </Route>
-                  <Route exact path='/profile'>
-                    <UserProfile />
-                  </Route>
-                  <Route exact path='/offerings/memberships'>
-                    <MembershipOfferings />
-                  </Route>
-                  <Route exact path='/offerings/classes'>
-                    <ClassOfferings />
-                  </Route>
-                  <Route exact path='/confirm-membership-order'>
-                    <ConfirmMembershipOrderDetails />
-                  </Route>
-                  <Route exact path='/confirm-event-order'>
-                    <ConfirmClassSignupDetails />
-                  </Route>
-                  <Route exact path='/signup/cancelled'>
-                    <CancelledSignup />
-                  </Route>
-                  <Route exact path='/signup/success'>
-                    <SuccessfulSignup />
-                  </Route>
-                </Switch>
-              </LoggedInUserContext.Provider>
-            </GeneralToggleContext.Provider>
+            <AllSignupsContext.Provider value={allSignupsContextObject}>
+              <GeneralToggleContext.Provider value={generalToggleContextObject}>
+                <LoggedInUserContext.Provider value={loggedInUserContextObject}>
+                  <NavBar/>
+                  <Switch>
+                    <Route exact path='/'>
+                      <Home currentUser={currentUser} />
+                    </Route>
+                    <Route exact path='/calendar'>
+                      <EventsCalendar />
+                    </Route>
+                    <Route exact path='/login'>
+                      <Login />
+                    </Route>
+                    <Route exact path='/signup'>
+                      <SignUp />
+                    </Route>
+                    <Route exact path='/admin-dashboard'>
+                      {currentUser.admin ? 
+                      <AdminDashboard />
+                      : <Home />}
+                    </Route>
+                    <Route exact path='/database'>
+                      <UserDatabase />
+                    </Route>
+                    <Route exact path='/profile'>
+                      <UserProfile />
+                    </Route>
+                    <Route exact path='/offerings/memberships'>
+                      <MembershipOfferings />
+                    </Route>
+                    <Route exact path='/offerings/classes'>
+                      <ClassOfferings />
+                    </Route>
+                    <Route exact path='/edit/signup'>
+                      <EditSignup />
+                    </Route>
+                    <Route exact path='/confirm-membership-order'>
+                      <ConfirmMembershipOrderDetails />
+                    </Route>
+                    <Route exact path='/confirm-event-order'>
+                      <ConfirmClassSignupDetails />
+                    </Route>
+                    <Route exact path='/signup/cancelled'>
+                      <CancelledSignup />
+                    </Route>
+                    <Route exact path='/signup/success'>
+                      <SuccessfulSignup />
+                    </Route>
+                  </Switch>
+                </LoggedInUserContext.Provider>
+              </GeneralToggleContext.Provider>
+            </AllSignupsContext.Provider>
           </AllMembershipsContext.Provider>
         </AllSessionsContext.Provider>
       </AllEventsContext.Provider>

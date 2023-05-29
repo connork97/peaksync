@@ -1,11 +1,12 @@
 import { useContext } from 'react'
 import { useHistory } from 'react-router-dom'
-import { LoggedInUserContext, AllEventsContext, AllMembershipsContext } from '../App'
+import { LoggedInUserContext, AllEventsContext, AllMembershipsContext, AllSignupsContext } from '../App'
 
 import ProfileInfo from '../UserProfile/ProfileInfo'
-import MembershipData from './MembershipData'
-import EventData from './EventData'
-import Create from './Create'
+import MembershipData from './Data/MembershipData'
+import EventData from './Data/EventData'
+import Create from './Create/Create'
+import SignupData from './Data/SignupData'
 
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
@@ -19,6 +20,7 @@ const AdminDashboard = () => {
     const { currentUser } = useContext(LoggedInUserContext)
     const { allEvents } = useContext(AllEventsContext)
     const { allMemberships } = useContext(AllMembershipsContext)
+    const { allSignups } = useContext(AllSignupsContext)
 
     const history = useHistory()
 
@@ -37,7 +39,12 @@ const AdminDashboard = () => {
             )
         }
     })
-
+    const renderAllSignups = allSignups.map((signup) => {
+        console.log(signup)
+        return (
+            <SignupData signup={signup} />
+        )
+    })
     return (
         <>
             <h1>Admin Dashboard</h1>
@@ -105,6 +112,19 @@ const AdminDashboard = () => {
                             </Accordion.Body>
                         </Accordion.Item>
                     </Accordion>
+                </Tab>
+                <Tab eventKey="signups" title="Signups">
+                    
+                    {/* <Accordion> */}
+                        {/* <Accordion.Item eventKey='0'style={{marginBottom:"20px"}}> */}
+                            {/* <Accordion.Header>Climbing Classes</Accordion.Header> */}
+                            {/* <Accordion.Body id="adminSignupsListGroup"> */}
+                            <ListGroup>
+                                {renderAllSignups}
+                            </ListGroup>
+                            {/* </Accordion.Body> */}
+                        {/* </Accordion.Item> */}
+                    {/* </Accordion> */}
                 </Tab>
                 <Tab eventKey="create" title="Create" style={{textAlign:"center"}}>
                     <Create />

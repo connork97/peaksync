@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react'
-import { AllEventsContext } from '../App'
+import { AllEventsContext } from '../../App'
 
 import ListGroup from 'react-bootstrap/ListGroup'
 import Button from 'react-bootstrap/esm/Button'
