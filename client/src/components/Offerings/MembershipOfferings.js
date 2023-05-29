@@ -11,7 +11,6 @@ const MembershipOfferings = () => {
     const history = useHistory()
 
     const { allMemberships } = useContext(AllMembershipsContext)
-    // console.log(allMemberships)
 
     const renderAllMemberships = allMemberships.map((membership) => {
         return (

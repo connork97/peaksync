@@ -67,26 +67,26 @@ const CreateEvent = () => {
             <h4>This is for creating brand new offerings.</h4>
             <h4>Please navigate to the "Add to Calendar" for specific occurances of a class.</h4>
             <Form.Label>Name:</Form.Label>
-            <Form.Control name="name" type="text" value={newEvent.name} onChange={handleNewEventChange}></Form.Control>
+                <Form.Control name="name" type="text" value={newEvent.name} onChange={handleNewEventChange}></Form.Control>
             <br></br>
             <Form.Label>Price:</Form.Label>
-            <Form.Control name="price" type="text" value={newEvent.price} onChange={handleNewEventChange}></Form.Control>
+                <Form.Control name="price" type="text" value={newEvent.price} onChange={handleNewEventChange}></Form.Control>
             <br></br>
             <Form.Label>Category:</Form.Label>
-            <Form.Control name="category" type="text" value={newEvent.category} onChange={handleNewEventChange}></Form.Control>
-            <Form.Text>Ex: "Climing", "Yoga", "Fitness", "Event", etc</Form.Text>
+                <Form.Control name="category" type="text" value={newEvent.category} onChange={handleNewEventChange}></Form.Control>
+                <Form.Text>Ex: "Climing", "Yoga", "Fitness", "Event", etc</Form.Text>
             <br></br><br></br>
             <Form.Label>Capacity:</Form.Label>
-            <Form.Control name="capacity" type="number" value={newEvent.capacity} onChange={handleNewEventChange}></Form.Control>
+                <Form.Control name="capacity" type="number" value={newEvent.capacity} onChange={handleNewEventChange}></Form.Control>
             <br></br>
             <Form.Label>Hours:</Form.Label>
-            <Form.Control name="hours" type="number" value={newEvent.hours} onChange={handleNewEventChange}></Form.Control>
+                <Form.Control name="hours" type="number" value={newEvent.hours} onChange={handleNewEventChange}></Form.Control>
             <br></br>
             <Form.Label>Minutes:</Form.Label>
-            <Form.Control name="minutes" type="number" value={newEvent.minutes} onChange={handleNewEventChange}></Form.Control>
+                <Form.Control name="minutes" type="number" value={newEvent.minutes} onChange={handleNewEventChange}></Form.Control>
             <br></br>
             <Form.Label>Description:</Form.Label>
-            <Form.Control name="description" type="text" value={newEvent.description} onChange={handleNewEventChange}></Form.Control>
+                <Form.Control name="description" type="text" value={newEvent.description} onChange={handleNewEventChange}></Form.Control>
             <br></br>
             <br></br>
             <Button type="submit">Create Event</Button>

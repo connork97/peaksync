@@ -22,6 +22,7 @@ const EventsCalendar = () => {
   const { generalToggle } = useContext(GeneralToggleContext)
 
   const [events, setEvents] = useState([])
+  
   const eventStyleGetter = (event) => {
     const style = {
       backgroundColor: event.color,
@@ -100,8 +101,6 @@ const EventsCalendar = () => {
     console.log(event)
     setClickedSession(event)
     setShow(true)
-    // return <EventDetailsModal />
-
   }
 
   return (

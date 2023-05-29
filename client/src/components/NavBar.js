@@ -8,8 +8,6 @@ const NavBar = () => {
 
     const { currentUser } = useContext(LoggedInUserContext)
     const { allUsers } = useContext(AllUsersContext)
-    const userId = Number(currentUser.id)
-    console.log(currentUser.id == undefined)
 
     const renderDashboardNavLink = () => {
         if (currentUser.admin && allUsers.length !== 0) {
@@ -32,7 +30,6 @@ const NavBar = () => {
                 <Dropdown.Toggle style={{background:"white", color:'black', border:'none', textDecoration:'underline', fontSize:'1.9rem'}}>Rates and Offerings</Dropdown.Toggle>
                 <Dropdown.Menu style={{color:'black', width:'100%', textAlign:'right'}}>
                     <Dropdown.Item style={{color:'black'}}>
-                        {/* Memberships */}
                         <Link to='/offerings/memberships' exact="true" className='navBarDropdownLink' style={{color:'black', textDecoration:'none'}}>Memberships</Link>
                     </Dropdown.Item>
                     <Dropdown.Item>

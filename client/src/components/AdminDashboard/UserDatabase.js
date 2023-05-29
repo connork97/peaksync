@@ -15,11 +15,9 @@ const UserDatabase = () => {
     const [searchParams, setSearchParams] = useState("")
     const [searchCategory, setSearchCategory] = useState("Filter By")
     const [activeLi, setActiveLi] = useState("")
-
     const [selectedUserProfile, setSelectedUserProfile] = useState(null)
 
     const columnLabels = ["ID", "Last Name", "First Name", "Email", "Phone Number", "Waiver", "Address", "City", "State", "Zipcode", "Date of Birth", "Created At", "Admin"]
-
     const renderColumnLabels = columnLabels.map((label) => {
         return <th>{label}</th>
     })

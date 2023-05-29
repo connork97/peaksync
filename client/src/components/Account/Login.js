@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom"
 
 
 import Button from 'react-bootstrap/Button'
-import { LoggedInUserContext, AllUsersContext, AllMembershipsContext, AllEventsContext, AllSessionsContext } from "./App"
+import { LoggedInUserContext, AllUsersContext } from "../App"
 
 const Login = () => {
 
@@ -11,9 +11,6 @@ const Login = () => {
 
     const { currentUser, setCurrentUser } = useContext(LoggedInUserContext)
     const { setAllUsers } = useContext(AllUsersContext)
-    const { setAllMemberships } = useContext(AllMembershipsContext)
-    const { setAllEvents } = useContext(AllEventsContext)
-    const { allSessions, setAllSessions } = useContext(AllSessionsContext)
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -28,7 +25,6 @@ const Login = () => {
     }
 
     useEffect(() => {
-        // console.log(currentUser.id)
         fetch('/check-session')
         .then((response) => response.json())
         .then((sessionData) => fetchUserBySessionData(sessionData))

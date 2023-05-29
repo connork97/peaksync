@@ -84,7 +84,6 @@ const CreateSession = () => {
             const updatedAllSessions = [...allSessions, newSessionData]
             setAllSessions(updatedAllSessions)
         })
-        // setGeneralToggle(!generalToggle)
     }
 
     return (
@@ -104,22 +103,22 @@ const CreateSession = () => {
             </Dropdown>
             <br></br>
             <Form.Label>Start Date:</Form.Label>
-            <Form.Control name="date" value={newSession.date} onChange={handleNewSessionChange}></Form.Control>
-            <Form.Text>Date must be in format of YYYY-MM-DD</Form.Text>
+                <Form.Control name="date" value={newSession.date} onChange={handleNewSessionChange}></Form.Control>
+                <Form.Text>Date must be in format of YYYY-MM-DD</Form.Text>
             <br></br><br></br>
             <Form.Label>Start Time:</Form.Label>
-            <Form.Control name="time" value={newSession.time} onChange={handleNewSessionChange}></Form.Control>
-            <Form.Text>Time must be in the format of HH:MM</Form.Text>
+                <Form.Control name="time" value={newSession.time} onChange={handleNewSessionChange}></Form.Control>
+                <Form.Text>Time must be in the format of HH:MM</Form.Text>
             <br></br><br></br>
             <Form.Label>Frequency:</Form.Label>
-            <Dropdown>
-                <br></br>
-                <Dropdown.Toggle>{selectedFrequency}</Dropdown.Toggle>
-                <Dropdown.Menu>
-                    <Dropdown.Item name="Classes and Events" onClick={handleSelectFrequency}></Dropdown.Item>
-                    {renderFrequencyDropdownItems}
-                </Dropdown.Menu>
-            </Dropdown>
+                <Dropdown>
+                    <br></br>
+                    <Dropdown.Toggle>{selectedFrequency}</Dropdown.Toggle>
+                    <Dropdown.Menu>
+                        <Dropdown.Item name="Classes and Events" onClick={handleSelectFrequency}></Dropdown.Item>
+                        {renderFrequencyDropdownItems}
+                    </Dropdown.Menu>
+                </Dropdown>
             <br></br><br></br>
             <Button type="submit">Create New Calendar Item</Button>
             <Button onClick={handleDiscardSession}>Discard Calendar Item</Button>

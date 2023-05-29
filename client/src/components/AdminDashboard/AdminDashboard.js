@@ -29,6 +29,7 @@ const AdminDashboard = () => {
             )
         }
     })
+    
     const renderEvents = (category) => allEvents.map((event) => {
         if (event.category === (category)) {
             return (
@@ -36,6 +37,7 @@ const AdminDashboard = () => {
             )
         }
     })
+
     return (
         <>
             <h1>Admin Dashboard</h1>

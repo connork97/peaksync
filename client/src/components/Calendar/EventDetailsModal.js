@@ -16,34 +16,6 @@ const EventDetailsModal = ({ clickedSession, setClickedSession, show, setShow })
     console.log(currentDate > clickedSession.start)
 
     const handleClose = () => setShow(false);
-  
-    // const handleSignup = () => {
-    //     console.log("Test Signup")
-    //     fetch('/signups', {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify({
-    //             'user_id': currentUser.id,
-    //             'session_id': clickedSession.values.session_id,
-    //         })
-    //     })
-    //     .then((response) => response.json())
-    //     .then((signupData) => {
-    //         console.log(signupData)
-    //         setGeneralToggle(!generalToggle)
-    //         // const updatedSpaces = Number(clickedSession.values.spaces) - 1
-    //         // setClickedSession((prevState) => ({
-    //         //     ...prevState,
-    //         //     [prevState.values.spaces]: updatedSpaces
-    //         // }))
-    //     })
-    // }
-
-    const handleSignup = () => {
-        fetch(`/create-event-checkout-session/${clickedSession.values.event_id}/${currentUser.id}/${clickedSession.values.session_id}`)
-    }
 
     const renderSpacesOrAvailability = () => {
         if (currentDate > clickedSession.start === true) {
@@ -64,20 +36,8 @@ const EventDetailsModal = ({ clickedSession, setClickedSession, show, setShow })
         }
     }
 
-    // const handleCancelBooking = (signup) => {
-    //     if (window.confirm("Are you sure you want to cancel this booking?") == true) {
-    //         fetch(`/signups/${signup.id}`, {
-    //             method: 'DELETE',
-    //         })
-    //         .then((response) => response.json())
-    //         .then((deletedSignupData) => console.log(deletedSignupData))
-    //         window.alert("Booking cancelled.")
-    //         setSelectedUserBookings(selectedUserBookings.filter((booking) => booking.id !== signup.id))
-    //     } else {
-    //         window.alert("Okay. Your booking is still active.")
-    //     }
-    // }
     const formAction = `/create-event-checkout-session/${clickedSession.values.event_id}/${currentUser.id}/${clickedSession.values.session_id}`
+    
     return (
         <Modal show={show} onHide={handleClose} style={{position:'relative', scale:'1.75', top:'-70vh'}}>
             <Modal.Header closeButton>

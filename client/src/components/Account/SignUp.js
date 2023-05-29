@@ -1,5 +1,5 @@
 import { useState, useContext } from "react"
-import { LoggedInUserContext } from "./App"
+import { LoggedInUserContext } from "../App"
 
 const SignUp = () => {
 

@@ -48,6 +48,7 @@ const MembershipData = ({ membership }) => {
         })
         .then((response) => response.json())
         .then((editedMembershipData) => {
+            console.log(editedMembershipData)
             setEditMembershipToggle(!editMembershipToggle)
         })
     }
@@ -79,7 +80,7 @@ const MembershipData = ({ membership }) => {
             {editMembershipToggle ?
             <Button onClick={handleDiscardMembershipChanges}>Discard Changes</Button>
             : null}
-        <Button onClick={() => handleMembershipDelete(membership.id)} style={{background:"red"}}>Delete Membership</Button>
+            <Button onClick={() => handleMembershipDelete(membership.id)} style={{background:"red"}}>Delete Membership</Button>
 
         </ListGroup.Item>
     )

@@ -2,7 +2,6 @@ import { useContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import { AllEventsContext } from '../App'
 
-import ListGroup from 'react-bootstrap/ListGroup'
 import Accordion from 'react-bootstrap/Accordion'
 import Button from 'react-bootstrap/Button'
 
@@ -11,7 +10,6 @@ const ClassOfferings = () => {
     const history = useHistory()
 
     const { allEvents } = useContext(AllEventsContext)
-    // console.log(allEvents)
 
     const renderAllEvents = allEvents.map((event) => {
         return (
@@ -25,6 +23,7 @@ const ClassOfferings = () => {
             </Accordion.Item>
         )
     })
+
     return (
         <div style={{margin:'auto', textAlign:'center'}}>
             <h1>Classes</h1>

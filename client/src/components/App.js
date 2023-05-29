@@ -6,19 +6,17 @@ import 'bootstrap/dist/css/bootstrap.css';
 import NavBar from "./NavBar.js";
 import Home from "./Home.js";
 import EventsCalendar from "./Calendar/EventsCalendar.js"
-import Rates from "./Rates.js"
-import Login from "./Login.js"
-import SignUp from "./SignUp.js"
+import Login from "./Account/Login.js"
+import SignUp from "./Account/SignUp.js"
 import UserDatabase from "./AdminDashboard/UserDatabase.js"
 import UserProfile from "./UserProfile/UserProfile.js";
 import AdminDashboard from "./AdminDashboard/AdminDashboard.js";
 import MembershipOfferings from "./Offerings/MembershipOfferings.js";
 import ClassOfferings from "./Offerings/ClassOfferings.js";
 import ConfirmMembershipOrderDetails from "./Offerings/ConfirmMembershipOrderDetails.js";
-import PaymentRedirect from "./Stripe/PaymentRedirect.js";
 import ConfirmClassSignupDetails from "./Offerings/ConfirmClassSignupDetails.js";
-import CancelledSignup from "./Calendar/CancelledSignup.js";
-import SuccessfulSignup from "./Calendar/SuccessfulSignup.js";
+import CancelledSignup from "./Stripe/CancelledSignup.js";
+import SuccessfulSignup from "./Stripe/SuccessfulSignup.js";
 
 export const AllUsersContext = React.createContext()
 export const AllEventsContext = React.createContext()
@@ -151,9 +149,6 @@ function App() {
                   <Route exact path='/'>
                     <Home currentUser={currentUser} />
                   </Route>
-                  <Route exact path='/rates'>
-                    <Rates />
-                  </Route>
                   <Route exact path='/calendar'>
                     <EventsCalendar />
                   </Route>
@@ -185,9 +180,6 @@ function App() {
                   </Route>
                   <Route exact path='/confirm-event-order'>
                     <ConfirmClassSignupDetails />
-                  </Route>
-                  <Route path='/payment-redirect' >
-                    <PaymentRedirect />
                   </Route>
                   <Route exact path='/signup/cancelled'>
                     <CancelledSignup />
