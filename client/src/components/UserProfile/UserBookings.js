@@ -1,10 +1,13 @@
 import { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 
 import moment from 'moment'
 import ListGroup from 'react-bootstrap/ListGroup'
 import Button from 'react-bootstrap/Button'
 
 const UserBookings = ({ selectedUser }) => {
+
+    const history = useHistory()
 
     const [selectedUserBookings, setSelectedUserBookings] = useState(selectedUser.signups)
 
@@ -41,7 +44,8 @@ const UserBookings = ({ selectedUser }) => {
 
         return (
             <ListGroup.Item style={{display:"flex"}}>
-                {signup.session.event.name} - {formattedDateTime} - {signup.paid === true ? "Paid" : <Button style={{color:"white", backgroundColor:"red", borderRadius:"15px"}}>Payment Owed</Button>}  <Button onClick={() => handleCancelBooking(signup)} style={{marginLeft:"auto"}}>Cancel Booking</Button>
+                {signup.session.event.name} - {formattedDateTime} - {signup.paid === true ? "Paid" : <Button style={{color:"white", backgroundColor:"red", borderRadius:"15px"}}>Payment Owed</Button>}
+                <Button onClick={() => history.push({pathname:'/edit/signup', state:signup})} style={{marginLeft:"auto"}}>Edit Booking</Button>
             </ListGroup.Item>
         )
     })
