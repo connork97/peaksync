@@ -26,9 +26,6 @@ LOCAL_DOMAIN = 'http://localhost:4000'
 def home():
     return ''
 
-# @app.route('/create-checkout-session', methods=['POST'])
-# def create_checkout_session():
-
 @app.route('/create-event-checkout-session/<int:event_id>/<int:user_id>/<int:session_id>', methods=['POST'])
 def create_event_checkout_session(event_id, user_id, session_id):
     event = Event.query.filter(Event.id == event_id).one_or_none()
@@ -78,9 +75,10 @@ def create_membership_checkout_session(id):
             cancel_url=LOCAL_DOMAIN + '/signup/cancelled'
         )
         print(checkout_session.id)
+
     except Exception as e:
         return str(e)
-    get_payment_intent(checkout_session.id)
+
     return redirect(checkout_session.url, code=303)
 
 @app.route('/last_user_signup/<int:id>', methods=['GET'])
@@ -89,44 +87,10 @@ def last_user_signup(id):
         user = User.query.filter(User.id == id).first()
         if user:
             user_dict = user.to_dict()
-            # print(user.signups)
-            # user_signups = user_dict.signups
             response = make_response(user_dict, 200)
         else:
             response = {"error": f"user of id {id} not found"}
     return response
-
-    # payment_intent = stripe.checkout.Session.retrieve(
-        # checkout_session.id,
-        # expand=["payment_intent"],
-    # )
-    # print(payment_intent.payment_intent)
-    # response = checkout_session.to_dict()
-    # print(response)
-    # return response
-# @app.route('/checkout-success')
-# def checkout_success():
-#     session_id = request.args.get('session_id')
-#     # You can use the session_id to fetch additional details or update your database
-#     # For example, you can retrieve the transaction associated with the session ID from your database
-#     checkout_session = stripe.checkout.Session.retrieve(
-#         checkout_session.id,
-#         expand=["payment_intent"],
-#     )
-#     print(checkout_session)
-#     # Redirect to your desired success page
-#     return redirect(LOCAL_DOMAIN + '/payment-redirect/' + session_id)
-
-@app.route('/payment_intent', methods=['GET'])
-def get_payment_intent(checkout_session_id):
-    if request.method == 'GET':
-        try:
-            session = stripe.checkout.Session.retrieve(checkout_session_id)
-            print(session)
-            return session
-        except stripe.error.StripeError as e:
-            return None
-
 
 @app.route('/users', methods=['GET', 'POST'])
 def users():
@@ -173,7 +137,7 @@ def users():
 
     return response
 
-@app.route('/usersignup', methods=['POST'])
+@app.route('/create-account', methods=['POST'])
 def signup():
     if request.method == 'POST':
 
@@ -460,24 +424,16 @@ def sessions():
 
             date_string = form_data['date']
             time_string = form_data['time']
-
             start_date_obj = datetime.strptime(date_string, "%Y-%m-%d")
             start_time_obj = datetime.strptime(time_string, "%H:%M").time()
-            datetime_obj = datetime.combine(start_date_obj, start_time_obj)
-
             frequency = form_data['frequency']
             event_id = form_data['event_id']
-
             current_date = start_date_obj
-            current_time = start_time_obj
-            print(datetime_obj)
-
             end_date = start_date_obj + timedelta(days=365)
-            print(end_date)
-
             current_date = start_date_obj
             add_30_days = ['04', '06', '09', '11']
             add_31_days = ['01', '03', '05', '07', '08', '10', '10']
+
             while current_date <= end_date:
                 new_session = Session(
                     date=current_date,
@@ -503,16 +459,7 @@ def sessions():
             db.session.commit()
 
             response = make_response({"success": f"200: You have created events on a {frequency} basis starting on {date_string} at {time_string}"}, 200)
-            # end_date = date + datetime.timedelta(days=365)
-            
-            # new_session = Session(
-            #     date=form_data['date'],
-            #     time=form_data['time'],
-            #     event_id=form_data['event_id']
-            # )
-            # db.session.add(new_session)
-            # db.session.commit()
-            # response = make_response(new_session.to_dict(), 200)
+
         except:
             response = make_response({"error": "404: Could not create new session"})
 
@@ -553,20 +500,18 @@ def login():
 
     if request.method == 'POST':
         print("Logging in user...")
-        form_data = request.get_json()
-        email = form_data['email']
-        password = form_data['password']
+        try:
+            form_data = request.get_json()
+            email = form_data['email']
+            password = form_data['password']
 
-        user = User.query.filter(User.email == email).one_or_none()
+            user = User.query.filter(User.email == email).one_or_none()
 
-        if user and user.authenticate(password):
-            response = make_response(user.to_dict(), 200)
-            session['user_id'] = user.id
-            # session['user_email'] = user.email
-            # response.set_cookie('user_email', user.email)
+            if user and user.authenticate(password):
+                response = make_response(user.to_dict(), 200)
+                session['user_id'] = user.id
 
-
-        else:
+        except:
             response = make_response({"error": "Unable to authenticate user login."}, 404)
 
     return response
@@ -575,20 +520,19 @@ def login():
 def logout():
     if request.method == 'DELETE':
         print("Logging out user...")
-        response = make_response({"success": "Logged out and cookies cleared."})
-        # response.set_cookie('user_email', '', expires=0)
-        session.pop('user_id', None)
+        try:
+            session.pop('user_id', None)
+            response = make_response({"success": "Logged out and cookies cleared."})
+        except:
+            response = make_response({"error": "No user or cookies to logout or clear."})
 
-        return response
+    return response
 
 @app.route('/check-session')
 def check_session():
     user_session_id = session.get('user_id')
     if user_session_id:
-        # logged_in_user = User.query.filter(User.id == user_sesion_id)
-        # response = f"Your user session is is {user_session_id}"
         response = f"{user_session_id}"
-        print(response)
     else:
         response = make_response({"error": "no session cookie for user id found"}, 404)
     return response
