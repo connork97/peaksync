@@ -94,6 +94,7 @@ function App() {
       setAllEvents(eventData)
     })
   }, [generalToggle])
+
   useEffect(() => {
     fetch("/memberships")
     .then((response) => response.json())
@@ -101,6 +102,41 @@ function App() {
       setAllMemberships(membershipData)
     })
   }, [generalToggle])
+
+
+  // const fetchAllUsers = () => {
+  useEffect(() => {
+
+    if (currentUser.admin === true) {
+      fetch("/users")
+      .then((response) => response.json())
+      .then((userData) => {
+        setAllUsers(userData)
+      })
+    } else {
+      console.log("No admin priveledges")
+    }
+  }, [currentUser])
+  // }
+
+  const fetchLoggedInUser = (sessionData) => {
+    fetch(`/users/${sessionData}`)
+    .then((response) => response.json())
+    .then((userData) => {
+        setCurrentUser(userData)
+        // fetchAllUsers()
+    })
+  }
+
+  useEffect(() => {
+    fetch('/check-session')
+    .then((response) => response.json())
+    .then((sessionData) => {
+      console.log(sessionData)
+      fetchLoggedInUser(sessionData)
+    })
+  }, [generalToggle])
+
 
   return (
     <>
@@ -128,7 +164,9 @@ function App() {
                     <SignUp />
                   </Route>
                   <Route exact path='/admin-dashboard'>
+                    {currentUser.admin ? 
                     <AdminDashboard />
+                    : <Home />}
                   </Route>
                   <Route exact path='/database'>
                     <UserDatabase />

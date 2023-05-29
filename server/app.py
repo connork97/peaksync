@@ -561,9 +561,10 @@ def login():
 
         if user and user.authenticate(password):
             response = make_response(user.to_dict(), 200)
-            # session['user_id'] = user.id
+            session['user_id'] = user.id
             # session['user_email'] = user.email
-            response.set_cookie('user_email', user.email)
+            # response.set_cookie('user_email', user.email)
+
 
         else:
             response = make_response({"error": "Unable to authenticate user login."}, 404)
@@ -575,9 +576,22 @@ def logout():
     if request.method == 'DELETE':
         print("Logging out user...")
         response = make_response({"success": "Logged out and cookies cleared."})
-        response.set_cookie('user_email', '', expires=0)
+        # response.set_cookie('user_email', '', expires=0)
+        session.pop('user_id', None)
 
         return response
+
+@app.route('/check-session')
+def check_session():
+    user_session_id = session.get('user_id')
+    if user_session_id:
+        # logged_in_user = User.query.filter(User.id == user_sesion_id)
+        # response = f"Your user session is is {user_session_id}"
+        response = f"{user_session_id}"
+        print(response)
+    else:
+        response = make_response({"error": "no session cookie for user id found"}, 404)
+    return response
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

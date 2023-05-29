@@ -8,6 +8,8 @@ const NavBar = () => {
 
     const { currentUser } = useContext(LoggedInUserContext)
     const { allUsers } = useContext(AllUsersContext)
+    const userId = Number(currentUser.id)
+    console.log(currentUser.id == undefined)
 
     const renderDashboardNavLink = () => {
         if (currentUser.admin && allUsers.length !== 0) {
@@ -20,13 +22,7 @@ const NavBar = () => {
                 )
         }
     }
-    const userId = Number(currentUser.id)
-    console.log(currentUser.id == undefined)
-    // useEffect(() => {
-        // console.log(currentUser.id)
-
-    // }, [currentUser])
-
+      
     return (
         <div id="navBarDiv" style={{display:"flex", justifyContent:"space-evenly", textDecoration:"none"}}>
             <Link to="/" exact="true" className="navBarLink">Home</Link>

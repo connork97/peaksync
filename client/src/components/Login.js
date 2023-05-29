@@ -9,7 +9,7 @@ const Login = () => {
 
     const history = useHistory()
 
-    const { setCurrentUser } = useContext(LoggedInUserContext)
+    const { currentUser, setCurrentUser } = useContext(LoggedInUserContext)
     const { setAllUsers } = useContext(AllUsersContext)
     const { setAllMemberships } = useContext(AllMembershipsContext)
     const { setAllEvents } = useContext(AllEventsContext)
@@ -18,6 +18,22 @@ const Login = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
+    const fetchUserBySessionData = (sessionData) => {
+        fetch(`/users/${sessionData}`)
+        .then((response) => response.json())
+        .then((userData) => {
+            setCurrentUser(userData)
+            fetchAllUsers(currentUser)
+        })
+    }
+
+    useEffect(() => {
+        // console.log(currentUser.id)
+        fetch('/check-session')
+        .then((response) => response.json())
+        .then((sessionData) => fetchUserBySessionData(sessionData))
+    }, [])
+    
     const handleUserLogin = (event) => {
         event.preventDefault()
         fetch("/login", {
@@ -55,6 +71,9 @@ const Login = () => {
         fetch('/logout', {
             method: 'DELETE'
         })
+        setCurrentUser({})
+        setAllUsers([])
+        history.push({pathname:"/"})
     }
 
     return (
