@@ -17,7 +17,8 @@ import ClassOfferings from "./Offerings/ClassOfferings.js";
 import ConfirmMembershipOrderDetails from "./Offerings/ConfirmMembershipOrderDetails.js";
 import PaymentRedirect from "./Stripe/PaymentRedirect.js";
 import ConfirmClassSignupDetails from "./Offerings/ConfirmClassSignupDetails.js";
-import PaySession from "./Calendar/PaySession.js";
+import CancelledSignup from "./Calendar/CancelledSignup.js";
+import SuccessfulSignup from "./Calendar/SuccessfulSignup.js";
 
 export const AllUsersContext = React.createContext()
 export const AllEventsContext = React.createContext()
@@ -150,8 +151,11 @@ function App() {
                   <Route path='/payment-redirect' >
                     <PaymentRedirect />
                   </Route>
-                  <Route exact path='/signup/pay'>
-                    <PaySession />
+                  <Route exact path='/signup/cancelled'>
+                    <CancelledSignup />
+                  </Route>
+                  <Route exact path='/signup/success'>
+                    <SuccessfulSignup />
                   </Route>
                 </Switch>
               </LoggedInUserContext.Provider>

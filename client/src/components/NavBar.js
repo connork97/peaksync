@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { LoggedInUserContext, AllUsersContext } from "./App"
 
 import Dropdown from 'react-bootstrap/Dropdown'
@@ -20,6 +20,12 @@ const NavBar = () => {
                 )
         }
     }
+    const userId = Number(currentUser.id)
+    console.log(currentUser.id == undefined)
+    // useEffect(() => {
+        // console.log(currentUser.id)
+
+    // }, [currentUser])
 
     return (
         <div id="navBarDiv" style={{display:"flex", justifyContent:"space-evenly", textDecoration:"none"}}>

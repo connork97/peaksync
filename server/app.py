@@ -29,9 +29,10 @@ def home():
 # @app.route('/create-checkout-session', methods=['POST'])
 # def create_checkout_session():
 
-@app.route('/create-event-checkout-session/<int:id>', methods=['POST'])
-def create_event_checkout_session(id):
-    event = Event.query.filter(Event.id == id).one_or_none()
+@app.route('/create-event-checkout-session/<int:event_id>/<int:user_id>/<int:session_id>', methods=['POST'])
+def create_event_checkout_session(event_id, user_id, session_id):
+    event = Event.query.filter(Event.id == event_id).one_or_none()
+    successful_transaction = False
 
     try:
         checkout_session = stripe.checkout.Session.create(
@@ -42,12 +43,22 @@ def create_event_checkout_session(id):
                 },
             ],
             mode='payment',
-            success_url=LOCAL_DOMAIN + '/calendar',
-            cancel_url=LOCAL_DOMAIN + '/'
+            success_url=LOCAL_DOMAIN + '/signup/success',
+            cancel_url=LOCAL_DOMAIN + '/signup/cancelled'
         )
+
+        successful_transaction = True
     except Exception as e:
         return str(e)
     
+    if successful_transaction:
+        new_signup = Signup(
+            user_id=user_id,
+            session_id=session_id
+            # paid ?
+        )
+        db.session.add(new_signup)
+        db.session.commit()
     return redirect(checkout_session.url, code=303)
 
 @app.route('/create-membership-checkout-session/<int:id>', methods=['POST'])
@@ -63,18 +74,27 @@ def create_membership_checkout_session(id):
                 },
             ],
             mode='payment',
-            # success_url=f'{LOCAL_DOMAIN}',
-            success_url = LOCAL_DOMAIN + '/calendar',
-
-            cancel_url=LOCAL_DOMAIN + '/'
+            success_url = LOCAL_DOMAIN + '/signup/success',
+            cancel_url=LOCAL_DOMAIN + '/signup/cancelled'
         )
         print(checkout_session.id)
     except Exception as e:
         return str(e)
-    # print(checkout_session.to_dict())
     get_payment_intent(checkout_session.id)
     return redirect(checkout_session.url, code=303)
-    # return {redirect(checkout_session.url, code=303), checkout_session.payment_intent}
+
+@app.route('/last_user_signup/<int:id>', methods=['GET'])
+def last_user_signup(id):
+    if request.method == 'GET':
+        user = User.query.filter(User.id == id).first()
+        if user:
+            user_dict = user.to_dict()
+            # print(user.signups)
+            # user_signups = user_dict.signups
+            response = make_response(user_dict, 200)
+        else:
+            response = {"error": f"user of id {id} not found"}
+    return response
 
     # payment_intent = stripe.checkout.Session.retrieve(
         # checkout_session.id,
@@ -389,7 +409,7 @@ def signups():
     if request.method == 'POST':
         print("Creating new signup...")
         form_data = request.get_json()
-        new_signup= Signup(
+        new_signup = Signup(
             user_id=form_data['user_id'],
             session_id=form_data['session_id']
             # paid ?
@@ -542,8 +562,8 @@ def login():
         if user and user.authenticate(password):
             response = make_response(user.to_dict(), 200)
             # session['user_id'] = user.id
-            session['user_email'] = user.email
-            # response.set_cookie('user_email', user.email)
+            # session['user_email'] = user.email
+            response.set_cookie('user_email', user.email)
 
         else:
             response = make_response({"error": "Unable to authenticate user login."}, 404)
