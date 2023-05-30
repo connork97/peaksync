@@ -20,6 +20,8 @@ import ConfirmClassSignupDetails from "./Offerings/ConfirmClassSignupDetails.js"
 import CancelledSignup from "./Stripe/CancelledSignup.js";
 import SuccessfulSignup from "./Stripe/SuccessfulSignup.js";
 import EditSignup from './AdminDashboard/Edit/EditSignup.js'
+import SuccessfulMembershipPurchase from "./Stripe/SuccessfulMembershipPurchase";
+import CancelledMembershipPurchase from "./Stripe/CancelledMembershipPurchase";
 
 export const AllUsersContext = React.createContext()
 export const AllEventsContext = React.createContext()
@@ -28,6 +30,7 @@ export const AllSignupsContext = React.createContext()
 export const AllMembershipsContext = React.createContext()
 export const GeneralToggleContext = React.createContext()
 export const LoggedInUserContext = React.createContext()
+export const CurrentTransactionContext = React.createContext()
 
 function App() {
 
@@ -38,6 +41,7 @@ function App() {
   const [allSignups, setAllSignups] = useState([])
   const [allMemberships, setAllMemberships] = useState([])
   const [generalToggle, setGeneralToggle] = useState(false)
+  const [currentTransaction, setCurrentTransaction] = useState({})
 
   const allUsersContextObject = {
     allUsers,
@@ -73,6 +77,15 @@ function App() {
     currentUser,
     setCurrentUser
   }
+
+  const currentTransactionContextObject = {
+    currentTransaction,
+    setCurrentTransaction
+  }
+
+  // useEffect(() => {
+  //   setGeneralToggle(!generalToggle)
+  // }, [])
         
   const fetchLoggedInUser = (sessionData) => {
     fetch(`/users/${sessionData}`)
@@ -146,53 +159,61 @@ function App() {
             <AllSignupsContext.Provider value={allSignupsContextObject}>
               <GeneralToggleContext.Provider value={generalToggleContextObject}>
                 <LoggedInUserContext.Provider value={loggedInUserContextObject}>
-                  <NavBar/>
-                  <Switch>
-                    <Route exact path='/'>
-                      <Home currentUser={currentUser} />
-                    </Route>
-                    <Route exact path='/calendar'>
-                      <EventsCalendar />
-                    </Route>
-                    <Route exact path='/login'>
-                      <Login />
-                    </Route>
-                    <Route exact path='/signup'>
-                      <SignUp />
-                    </Route>
-                    <Route exact path='/admin-dashboard'>
-                      {currentUser.admin ? 
-                      <AdminDashboard />
-                      : <Home />}
-                    </Route>
-                    <Route exact path='/database'>
-                      <UserDatabase />
-                    </Route>
-                    <Route exact path='/profile'>
-                      <UserProfile />
-                    </Route>
-                    <Route exact path='/offerings/memberships'>
-                      <MembershipOfferings />
-                    </Route>
-                    <Route exact path='/offerings/classes'>
-                      <ClassOfferings />
-                    </Route>
-                    <Route exact path='/edit/signup'>
-                      <EditSignup />
-                    </Route>
-                    <Route exact path='/confirm-membership-order'>
-                      <ConfirmMembershipOrderDetails />
-                    </Route>
-                    <Route exact path='/confirm-event-order'>
-                      <ConfirmClassSignupDetails />
-                    </Route>
-                    <Route exact path='/signup/cancelled'>
-                      <CancelledSignup />
-                    </Route>
-                    <Route exact path='/signup/success'>
-                      <SuccessfulSignup />
-                    </Route>
-                  </Switch>
+                  <CurrentTransactionContext.Provider value={currentTransactionContextObject}>
+                    <NavBar/>
+                    <Switch>
+                      <Route exact path='/'>
+                        <Home currentUser={currentUser} />
+                      </Route>
+                      <Route exact path='/calendar'>
+                        <EventsCalendar />
+                      </Route>
+                      <Route exact path='/login'>
+                        <Login />
+                      </Route>
+                      <Route exact path='/signup'>
+                        <SignUp />
+                      </Route>
+                      <Route exact path='/admin-dashboard'>
+                        {currentUser.admin ? 
+                        <AdminDashboard />
+                        : <Home />}
+                      </Route>
+                      <Route exact path='/database'>
+                        <UserDatabase />
+                      </Route>
+                      <Route exact path='/profile'>
+                        <UserProfile />
+                      </Route>
+                      <Route exact path='/offerings/memberships'>
+                        <MembershipOfferings />
+                      </Route>
+                      <Route exact path='/offerings/classes'>
+                        <ClassOfferings />
+                      </Route>
+                      <Route exact path='/edit/signup'>
+                        <EditSignup />
+                      </Route>
+                      <Route exact path='/confirm-membership-order'>
+                        <ConfirmMembershipOrderDetails />
+                      </Route>
+                      <Route exact path='/confirm-event-order'>
+                        <ConfirmClassSignupDetails />
+                      </Route>
+                      <Route exact path='/signup/cancelled'>
+                        <CancelledSignup />
+                      </Route>
+                      <Route exact path='/signup/success'>
+                        <SuccessfulSignup />
+                      </Route>
+                      <Route exact path='/purchase/membership/success'>
+                        <SuccessfulMembershipPurchase />
+                      </Route>
+                      <Route exact path='/purchase/membership/cancelled'>
+                        <CancelledMembershipPurchase />
+                      </Route>
+                    </Switch>
+                  </CurrentTransactionContext.Provider>
                 </LoggedInUserContext.Provider>
               </GeneralToggleContext.Provider>
             </AllSignupsContext.Provider>

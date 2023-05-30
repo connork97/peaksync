@@ -61,7 +61,6 @@ const EventDetailsModal = ({ clickedSession, setClickedSession, showGuestModal, 
     }
 
     const formAction = `/create-event-checkout-session/${clickedSession.values.event_id}/${currentUser.id}/${clickedSession.values.session_id}`
-    
 
     const handleShowAdminModal = () => {
         handleCloseGuestModal()

@@ -26,8 +26,8 @@ LOCAL_DOMAIN = 'http://localhost:4000'
 def home():
     return ''
 
-@app.route('/create-event-checkout-session/<int:event_id>/<int:user_id>/<int:session_id>', methods=['POST'])
-def create_event_checkout_session(event_id, user_id, session_id):
+@app.route('/create-event-checkout-session/<int:event_id>/<int:session_id>/<int:user_id>', methods=['POST'])
+def create_event_checkout_session(event_id, session_id, user_id):
     event = Event.query.filter(Event.id == event_id).one_or_none()
     successful_transaction = False
 
@@ -58,9 +58,10 @@ def create_event_checkout_session(event_id, user_id, session_id):
         db.session.commit()
     return redirect(checkout_session.url, code=303)
 
-@app.route('/create-membership-checkout-session/<int:id>', methods=['POST'])
-def create_membership_checkout_session(id):
-    membership = Membership.query.filter(Membership.id == id).one_or_none()
+@app.route('/create-membership-checkout-session/<int:membership_id>/<int:user_id>', methods=['POST'])
+def create_membership_checkout_session(membership_id, user_id):
+    membership = Membership.query.filter(Membership.id == membership_id).one_or_none()
+    user = User.query.filter(User.id == user_id).one_or_none()
 
     try:
         checkout_session = stripe.checkout.Session.create(
@@ -71,11 +72,17 @@ def create_membership_checkout_session(id):
                 },
             ],
             mode='payment',
-            success_url = LOCAL_DOMAIN + '/signup/success',
-            cancel_url=LOCAL_DOMAIN + '/signup/cancelled'
+            success_url = LOCAL_DOMAIN + '/purchase/membership/success',
+            cancel_url=LOCAL_DOMAIN + '/purchase/membership/cancelled'
         )
         print(checkout_session.id)
-
+        new_payment = Payment(
+            user_id=user.id,
+            membership_id=membership.id,
+            stripe_payment_id=checkout_session.id
+        )
+        db.session.add(new_payment)
+        db.session.commit()
     except Exception as e:
         return str(e)
 
@@ -90,6 +97,22 @@ def last_user_signup(id):
             response = make_response(user_dict, 200)
         else:
             response = {"error": f"user of id {id} not found"}
+    return response
+
+@app.route('/last-user-membership-purchase/<int:user_id>', methods=['GET'])
+def last_user_membership_purchase(user_id):
+    last_membership_purchase = Payment.query.filter_by(user_id=user_id).order_by(Payment.id.desc()).first()
+    user = User.query.filter(User.id == user_id).first()
+    if last_membership_purchase:
+        if request.method == 'GET':
+            try:
+                setattr(user, 'membership_id', last_membership_purchase.membership_id)
+                db.session.add(user)
+                db.session.commit()
+                response = make_response({"success": f"user of id {user_id} membership status updated."}, 200)
+            except:
+                response = make_response({"error": f"could not find last membership purchase with user ID of {user_id}"}, 404)
+
     return response
 
 @app.route('/users', methods=['GET', 'POST'])
