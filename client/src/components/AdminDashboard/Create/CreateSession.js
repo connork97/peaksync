@@ -83,6 +83,7 @@ const CreateSession = () => {
             console.log(newSessionData)
             const updatedAllSessions = [...allSessions, newSessionData]
             setAllSessions(updatedAllSessions)
+            setGeneralToggle(!generalToggle)
         })
     }
 

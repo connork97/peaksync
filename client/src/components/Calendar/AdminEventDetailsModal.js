@@ -10,6 +10,10 @@ const AdminEventDetailsModal = ({ clickedSession, setClickedSession, showGuestMo
     
     const history = useHistory()
 
+    console.log(clickedSession)
+
+    const { generalToggle, setGeneralToggle } = useContext(GeneralToggleContext)
+
     const handleEditSignupClick = (event) => {
         console.log(clickedSession.values.id)
         console.log(event.target.value)
@@ -25,6 +29,25 @@ const AdminEventDetailsModal = ({ clickedSession, setClickedSession, showGuestMo
         )
     })
 
+    const handleDeleteSession = () => {
+        if (clickedSession.values.signups.length === 0 && window.confirm("Are you sure you want to delete this session?  This cannot be undone.") === true) {
+            fetch(`/sessions/${clickedSession.values.session_id}`, {
+                method: 'DELETE',
+            })
+            .then((response) => response.json())
+            .then((deletedSessionData) => {
+                console.log(deletedSessionData)
+                setGeneralToggle(!generalToggle)
+                // history.push({pathname: '/calendar'})
+                setShowAdminModal(false)
+            })
+        } else if (clickedSession.values.signups.length > 0) {
+            window.alert("This session has people signed up!  Make sure to relocate their bookings before deleting the event.")
+        } else {
+            window.alert("Okay, this session will remain on the calendar.")
+        }
+    }
+
     return (
         <Modal id="adminSessionDetailsModal" show={showAdminModal} onHide={() => setShowAdminModal(false)}>
                 <Modal.Header closeButton>
@@ -39,6 +62,9 @@ const AdminEventDetailsModal = ({ clickedSession, setClickedSession, showGuestMo
                     : <ListGroup.Item>There are no signups for this event yet.</ListGroup.Item>}
                 </div>
                 </Modal.Body>
+                <Modal.Footer>
+                    <Button onClick={handleDeleteSession}>Delete Session</Button>
+                </Modal.Footer>
             </Modal>
     )
 }

@@ -25,9 +25,9 @@ const EventDetailsModal = ({ clickedSession, setClickedSession, showGuestModal, 
         if (currentDate > clickedSession.start === true) {
             return <span>This event's start date has already passed.  Please sign up for a future {clickedSession.values.name}.</span>
         } else if (currentDate <= clickedSession.start && clickedSession.values.spaces > 0) {
-            return <span style={{marginRight:'30%'}}>{clickedSession.values.spaces} spaces remaining.</span>
+            return <span style={{marginRight:'auto'}}>{clickedSession.values.spaces} spaces remaining.</span>
         } else {
-            return <span style={{marginRight:'50%'}}>No spaces remaining.</span>
+            return <span style={{marginRight:'auto'}}>No spaces remaining.</span>
         }
     }
 
@@ -68,7 +68,7 @@ const EventDetailsModal = ({ clickedSession, setClickedSession, showGuestModal, 
                     </form>
                     : null}
                     {currentUser.admin ?
-                    <Button onClick={handleShowAdminModal}>View Details</Button>
+                    <Button onClick={handleShowAdminModal}>View/Edit</Button>
                     : null}
                 </Modal.Footer>
             </Modal>

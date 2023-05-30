@@ -476,7 +476,7 @@ def sessions():
 
     return response
 
-@app.route('/sessions/<int:id>', methods=['GET'])
+@app.route('/sessions/<int:id>', methods=['GET', 'DELETE'])
 def session_by_id(id):
 
     session = Session.query.filter(Session.id == id).one_or_none()
@@ -485,6 +485,11 @@ def session_by_id(id):
 
         if request.method == 'GET':
             response = make_response(session.to_dict(), 200)
+
+        if request.method == 'DELETE':
+            db.session.delete(session)
+            db.session.commit()
+            response = make_response({"success": f"session of id {id} successfully deleted."})
     
     else:
         response = make_response({"error": f"Could not find session of id {id}"})
