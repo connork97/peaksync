@@ -122,7 +122,7 @@ class Session(db.Model, SerializerMixin):
 
     serialize_rules=(
         '-signups.session',
-        '-signups.user',
+        # '-signups.user',
         '-event.sessions'
     )
 

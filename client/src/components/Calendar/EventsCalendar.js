@@ -9,12 +9,14 @@ import EventDetailsModal from "./EventDetailsModal";
 
 import Modal from 'react-bootstrap/Modal'
 import Button from "react-bootstrap/Button";
+import AdminEventDetailsModal from "./AdminEventDetailsModal";
 const localizer = momentLocalizer(moment);
 
 const EventsCalendar = () => {
-  const [show, setShow] = useState(false);
+  const [showGuestModal, setShowGuestModal] = useState(false);
+  const [showAdminModal, setShowAdminModal] = useState(false)
 
-  const handleClose = () => setShow(false);
+  const handleClose = () => setShowGuestModal(false);
 
   const [clickedSession, setClickedSession] = useState({})
 
@@ -100,13 +102,30 @@ const EventsCalendar = () => {
 
     console.log(event)
     setClickedSession(event)
-    setShow(true)
+    setShowGuestModal(true)
   }
 
   return (
     <div>
       {Object.keys(clickedSession).length > 0 ? 
-      <EventDetailsModal clickedSession={clickedSession} setClickedSession={setClickedSession} show={show} setShow={setShow} />
+      <EventDetailsModal
+        clickedSession={clickedSession}
+        setClickedSession={setClickedSession}
+        showGuestModal={showGuestModal}
+        setShowGuestModal={setShowGuestModal} 
+        showAdminModal={showAdminModal}
+        setShowAdminModal={setShowAdminModal}
+      />
+      : null}
+      {Object.keys(clickedSession).length > 0 ? 
+      <AdminEventDetailsModal 
+        clickedSession={clickedSession}
+        setClickedSession={setClickedSession}
+        showGuestModal={showGuestModal}
+        setShowGuestModal={setShowGuestModal} 
+        showAdminModal={showAdminModal}
+        setShowAdminModal={setShowAdminModal}
+      />
       : null}
       <h1>Calendar Page</h1>
         <Calendar

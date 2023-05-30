@@ -24,7 +24,6 @@ const NavBar = () => {
     return (
         <div id="navBarDiv" style={{display:"flex", justifyContent:"space-evenly", textDecoration:"none"}}>
             <Link to="/" exact="true" className="navBarLink">Home</Link>
-            <Link to="/rates" exact="true" className="navBarLink">Rates</Link>
             <Link to="/calendar" exact="true" className="navBarLink">Calendar</Link>
             <Dropdown className="navBarLink">
                 <Dropdown.Toggle style={{background:"white", color:'black', border:'none', textDecoration:'underline', fontSize:'1.9rem'}}>Rates and Offerings</Dropdown.Toggle>

@@ -31,6 +31,7 @@ const EditSignup = () => {
             })
             .then((response) => response.json())
             .then((editedSignupData) => console.log(editedSignupData))
+            history.push({pathname:'/admin-dashboard'})
         } else {
             window.alert("Okay, your signup will remain unchanged.")
         }
