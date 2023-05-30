@@ -60,7 +60,7 @@ const MembershipData = ({ membership }) => {
         setAllMemberships(updatedMemberships)
     }
     return (
-        <ListGroup.Item>
+        <ListGroup.Item className="listGroupItemWithEndButtons">
             ID: {membership.id} 
             <br></br>
             Name: {editMembershipToggle ? <input name="name" value={editedMembership.name} onChange={handleMembershipDetailChange}></input> : <span>{editedMembership.name}</span>} 
@@ -75,12 +75,12 @@ const MembershipData = ({ membership }) => {
             <br></br>
             {editMembershipToggle ? null : <Button onClick={() => setEditMembershipToggle(!editMembershipToggle)}>Edit Membership</Button>}
             {editMembershipToggle ?
-            <Button onClick={() => handleMembershipChangeSubmit(membership.id)}>Save Changes</Button>
+            <Button className='listGroupEndButton' onClick={() => handleMembershipChangeSubmit(membership.id)}>Save Changes</Button>
             : null}
             {editMembershipToggle ?
-            <Button onClick={handleDiscardMembershipChanges}>Discard Changes</Button>
+            <Button className='listGroupEndButton' onClick={handleDiscardMembershipChanges}>Discard Changes</Button>
             : null}
-            <Button onClick={() => handleMembershipDelete(membership.id)} style={{background:"red"}}>Delete Membership</Button>
+            <Button className='listGroupEndButton' onClick={() => handleMembershipDelete(membership.id)} style={{background:"red"}}>Delete Membership</Button>
 
         </ListGroup.Item>
     )

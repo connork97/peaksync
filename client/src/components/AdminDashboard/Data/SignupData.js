@@ -15,10 +15,10 @@ const SignupData = ({ signup }) => {
 
 
     return (
-        <ListGroup.Item>
+        <ListGroup.Item className='inlineListGroupItemWithEndButtons'>
             {signup.session.date}, {signup.session.time} - {signup.session ? signup.session.event.name + " - " : null} {signup.user.last_name}, {signup.user.first_name}
             Created At: {signup.created_at} 
-            <Button onClick={() => handleEditSignup(signup)}>Edit Signup</Button>
+            <Button className='listGroupEndButton' onClick={() => handleEditSignup(signup)}>Edit Signup</Button>
         </ListGroup.Item>
     )
 }

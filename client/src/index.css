@@ -1,5 +1,11 @@
+* {
+    /* font-family: monospace; */
+    font-family: Helvetica, Arial, Lucida, sans-serif;
+}
+
 body {
     margin: auto;
+    /* font-family: monospace; */
 }
 
 .navBarLink {
@@ -13,4 +19,50 @@ h1 {
 
 .mainDiv {
     text-align: center;
+}
+
+.inlineListGroupItemWithEndButtons {
+    position: relative;
+    display: flex !important;
+    width: 75vw;
+    margin: auto;
+}
+
+Button.listGroupEndButton {
+    align-self: center;
+    margin-left: auto;
+}
+
+#adminSessionDetailsModal {
+    position: relative;
+    scale: 1.75;
+    overflow-y: visible !important;
+    top: 15vh;
+}
+
+.modal-content {
+    margin-top: 10vh;
+}
+
+.adminModalDiv.ListGroup {
+    display: flex;
+    max-height: 75vh !important;
+    overflow-y: auto !important;
+}
+
+.modalListGroupWithButton {
+    display: flex !important;
+    align-items: center;
+    overflow: visible;
+}
+
+.modalButton {
+    margin-left: auto !important;
+}
+
+.offeringsDiv {
+    display: flex;
+    margin: auto;
+    text-align: center;
+    width: 75vw;
 }

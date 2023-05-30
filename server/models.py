@@ -104,6 +104,7 @@ class Event(db.Model, SerializerMixin):
     hours = db.Column(db.Integer)
     minutes = db.Column(db.Integer)
     description = db.Column(db.Text)
+    free_for_members = db.Column(db.Boolean, default=False)
     
     stripe_product_id = db.Column(db.String)
     stripe_price_id = db.Column(db.String)

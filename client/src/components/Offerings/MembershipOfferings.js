@@ -29,12 +29,14 @@ const MembershipOfferings = () => {
         )
     })
     return (
-        <div>
-            <h1>Memberships</h1>
+        <>
+        <h1>Memberships</h1>
+        <div className="offeringsDiv">
             <Accordion style={{margin:'auto', textAlign:'left', width:'75vw'}}>
                 {renderAllMemberships}
             </Accordion>
         </div>
+        </>
     )
 }
 

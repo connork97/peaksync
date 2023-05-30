@@ -25,13 +25,15 @@ const ClassOfferings = () => {
     })
 
     return (
-        <div style={{margin:'auto', textAlign:'center'}}>
-            <h1>Classes</h1>
-            <Button onClick={() => history.push({pathname:'/calendar'})}>Go to Calendar</Button>
+        <>
+        <h1>Classes</h1>
+        <div className='offeringsDiv'>
+            <Button onClick={() => history.push({pathname:'/calendar'})} style={{marginTop:'20px', marginRight: '25px'}}>Go to Calendar</Button>
             <Accordion style={{margin:'auto', textAlign:'left', width:'75vw'}}>
                 {renderAllEvents}
             </Accordion>
         </div>
+        </>
     )
 }
 

@@ -79,24 +79,8 @@ const ProfileInfo = ({ selectedUser }) => {
     }
 
     const handleMembershipChange = (event) => {
-        displayProperMembership(event.target.name.id)
-        // setUserProfileInfo((prevState) => ({
-        //     ...prevState,
-        //     membership: [event.target.name]
-        // }))
-        // setUserProfileInfo((prevState) => ({
-        //     ...prevState,
-        //     membership: event.target.value
-        // }))
-    }
-
-
-    
-    
-    const displayProperMembership = (event) => {
         allMemberships.map((membership) => {
             if (membership.name === event.target.name) {
-                setMembershipName(event.target.name)
                 setUserProfileInfo((prevState) => ({
                     ...prevState,
                     membership_id: membership.id
@@ -108,13 +92,14 @@ const ProfileInfo = ({ selectedUser }) => {
     }
 
     useEffect(() => {
+        setMembershipName(selectedMembership.name)
         setMembershipType(selectedMembership.type)
         setMembershipSubtype(selectedMembership.subtype)
     }, [selectedMembership])
     
     const allMembershipNames = allMemberships.map((membership) => {
         return (
-            <Dropdown.Item name={membership.name} value={membership.id} onClick={(event) => displayProperMembership(event)}>{membership.name}</Dropdown.Item>
+            <Dropdown.Item name={membership.name} value={membership.id} onClick={(event) => handleMembershipChange(event)}>{membership.name}</Dropdown.Item>
         )
     })
 

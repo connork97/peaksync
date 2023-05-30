@@ -73,7 +73,7 @@ const EventData = ({ event }) => {
 
     return (
         <div>
-            <ListGroup.Item>
+            <ListGroup.Item className="listGroupItemWithEndButtons">
                 ID: {event.id}
                 <br></br>
                 Name: {editEventToggle ? <input name="name" value={editedEvent.name} onChange={handleEventDetailChange}></input> : editedEvent.name}
@@ -92,12 +92,12 @@ const EventData = ({ event }) => {
                 <br></br><br></br>
                 {editEventToggle ? null : <Button onClick={() => setEditEventToggle(!editEventToggle)}>Edit Event</Button>}
                 {editEventToggle ?
-                <Button onClick={() => handleEventChangeSubmit(event.id)}>Save Changes</Button>
+                <Button className='listGroupEndButton' onClick={() => handleEventChangeSubmit(event.id)}>Save Changes</Button>
                 : null}
                 {editEventToggle ?
-                <Button onClick={handleDiscardEventChanges}>Discard Changes</Button>
+                <Button className='listGroupEndButton' onClick={handleDiscardEventChanges}>Discard Changes</Button>
                 : null}
-                <Button onClick={() => handleEventDelete(event.id)} style={{background:"red"}}>Delete Event</Button>
+                <Button className='listGroupEndButton' onClick={() => handleEventDelete(event.id)} style={{background:"red"}}>Delete Event</Button>
                 <br></br>
             </ListGroup.Item>
         </div>

@@ -8,7 +8,7 @@ const Home = () => {
     return (
         <div className="mainDiv">
             <br></br><br></br><br></br><br></br><br></br>
-            <h1>Welcome to Crux Climbing Centers {currentUser.first_name}!</h1>
+            <h1>WELCOME TO CLIMB WISE {currentUser.first_name}!</h1>
         </div>
     )
 }

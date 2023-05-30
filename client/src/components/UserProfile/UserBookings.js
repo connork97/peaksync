@@ -43,7 +43,7 @@ const UserBookings = ({ selectedUser }) => {
         const formattedDateTime = datetime.toLocaleString('en-US', options)
 
         return (
-            <ListGroup.Item style={{display:"flex"}}>
+            <ListGroup.Item className='listGroupItemWithEndButtons' style={{display:"flex"}}>
                 {signup.session.event.name} - {formattedDateTime} - {signup.paid === true ? "Paid" : <Button style={{color:"white", backgroundColor:"red", borderRadius:"15px"}}>Payment Owed</Button>}
                 <Button onClick={() => history.push({pathname:'/edit/signup', state:signup})} style={{marginLeft:"auto"}}>Edit Booking</Button>
             </ListGroup.Item>

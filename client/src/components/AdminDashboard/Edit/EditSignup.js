@@ -58,12 +58,12 @@ const EditSignup = () => {
         const isFutureDate = eventStart > currentDate
         if (availableSession && sameEventName && isFutureDate) {
             return (
-                <ListGroup.Item>
+                <ListGroup.Item className='inlineListGroupItemWithEndButtons'>
                     {session.event.name} - 
                     {session.date} - 
                     {session.time} - 
                     Spaces Remaining: {availableSpaces} 
-                    <Button value={session.id} onClick={handleEditSignup}>
+                    <Button className='listGroupEndButton' value={session.id} onClick={handleEditSignup}>
                         Move Signup to this Event
                     </Button>
                 </ListGroup.Item>
