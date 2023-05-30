@@ -207,6 +207,7 @@ class Payment(db.Model, SerializerMixin):
     membership_id = db.Column(db.Integer, db.ForeignKey("memberships.id"))
 
     stripe_payment_id = db.Column(db.String)
+    successful = db.Column(db.Boolean, default=False)
     
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())

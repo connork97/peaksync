@@ -46,7 +46,7 @@ const SignUp = () => {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(newUser)
+                body: JSON.stringify(newUser),
             })
             .then((response) => response.json())
             .then((newUserData) => setCurrentUser(newUserData))

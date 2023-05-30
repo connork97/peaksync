@@ -8,6 +8,7 @@ import Dropdown from 'react-bootstrap/Dropdown'
 
 const ProfileInfo = ({ selectedUser }) => {
     
+    const { currentUser, setCurrentUser } = useContext(LoggedInUserContext)
     const { allUsers, setAllUsers } = useContext(AllUsersContext)
     const { allMemberships } = useContext(AllMembershipsContext)
     
@@ -117,6 +118,8 @@ const ProfileInfo = ({ selectedUser }) => {
                     <Card.Text>Waiver Status: {userProfileInfo.waiver ? "Active" : "Inactive"}</Card.Text>
                     <Card.Text>First Contact with Customer: {selectedUser.created_at}</Card.Text>
                     <Card.Text>Most Recent Change to Customer: {selectedUser.updated_at ? selectedUser.updated_at : "N/A"}</Card.Text>
+                    {currentUser.admin === true ?
+                    <>
                     <Dropdown>
                         <Dropdown.Toggle>{membershipName}</Dropdown.Toggle>
                         <Dropdown.Menu>
@@ -124,6 +127,8 @@ const ProfileInfo = ({ selectedUser }) => {
                         </Dropdown.Menu>
                     </Dropdown>
                     <br></br>
+                    </>
+                    : <Card.Text>Membership: {membershipName}</Card.Text>}
                     <Card.Text>Type: {membershipType}</Card.Text>
                     <Card.Text>Subtype: {membershipSubtype}</Card.Text>
                     <br></br>

@@ -43,7 +43,6 @@ def create_event_checkout_session(event_id, session_id, user_id):
             success_url=LOCAL_DOMAIN + '/signup/success',
             cancel_url=LOCAL_DOMAIN + '/signup/cancelled'
         )
-
         successful_transaction = True
     except Exception as e:
         return str(e)
@@ -55,6 +54,14 @@ def create_event_checkout_session(event_id, session_id, user_id):
             # paid ?
         )
         db.session.add(new_signup)
+        db.session.commit()
+        new_payment = Payment(
+            user_id=user_id,
+            signup_id=new_signup.id,
+            stripe_payment_id=checkout_session.id,
+            successful=True
+        )
+        db.session.add(new_payment)
         db.session.commit()
     return redirect(checkout_session.url, code=303)
 
@@ -101,13 +108,14 @@ def last_user_signup(id):
 
 @app.route('/last-user-membership-purchase/<int:user_id>', methods=['GET'])
 def last_user_membership_purchase(user_id):
-    last_membership_purchase = Payment.query.filter_by(user_id=user_id).order_by(Payment.id.desc()).first()
+    last_membership_payment = Payment.query.filter_by(user_id=user_id).order_by(Payment.id.desc()).first()
     user = User.query.filter(User.id == user_id).first()
-    if last_membership_purchase:
+    if last_membership_payment:
         if request.method == 'GET':
             try:
-                setattr(user, 'membership_id', last_membership_purchase.membership_id)
+                setattr(user, 'membership_id', last_membership_payment.membership_id)
                 db.session.add(user)
+                setattr(last_membership_payment, 'successful', True)
                 db.session.commit()
                 response = make_response({"success": f"user of id {user_id} membership status updated."}, 200)
             except:
@@ -173,21 +181,22 @@ def create_account():
                 last_name=form_data['lastName'],
                 email=form_data['email'],
                 password_hash=form_data['password'],
-                phone_number=int(form_data['phoneNumber']),
+                phone_number=form_data['phoneNumber'],
                 address=form_data['address'],
                 city=form_data['city'],
                 state=form_data['state'],
                 zipcode=int(form_data['zipcode']),
                 date_of_birth=form_data['dateOfBirth'],
                 emergency_contact_name=form_data['emergencyContactName'],
-                emergency_contact_phone_number=int(form_data['emergencyContactPhoneNumber']),
-                waiver=form_data['waiver'],
-                admin=form_data['admin']
+                emergency_contact_phone_number=form_data['emergencyContactPhoneNumber'],
+                waiver=form_data['waiver']
+                # admin=form_data['admin']
             )
             db.session.add(new_user)
             db.session.commit()
             response = make_response(new_user.to_dict(), 201)
-            response.set_cookie('user_email', new_user.email)
+            # response.set_cookie('user_email', new_user.email)
+            session['user_id'] = new_user.id
     
         except:
             response = make_response({"error": "Unsuccessful creation of new user"}, 404)

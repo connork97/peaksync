@@ -12,7 +12,6 @@ const SuccessfulMembershipPurchase = () => {
         fetch(`/last-user-membership-purchase/${currentUser.id}`)
         .then((response) => response.json())
         .then((updatedUserData) => {
-            // setCurrentUser(updatedUserData)
             console.log(updatedUserData)
             setGeneralToggle(!generalToggle)
             setFetchCompleted(true)
