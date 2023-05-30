@@ -138,7 +138,7 @@ def users():
     return response
 
 @app.route('/create-account', methods=['POST'])
-def signup():
+def create_account():
     if request.method == 'POST':
 
         print("Creating new user...")
@@ -312,6 +312,7 @@ def events():
                 hours=int(form_data['hours']),
                 minutes=int(form_data['minutes']),
                 description=form_data['description'],
+                free_for_members=bool(form_data['free_for_members']),
                 stripe_product_id=new_stripe_product.id,
                 stripe_price_id=new_stripe_product.default_price
             )

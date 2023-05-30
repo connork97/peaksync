@@ -20,13 +20,15 @@ const ConfirmClassSignupDetails = () => {
                 <p>Please take a moment to make sure this is the event you want to purchase before proceeding to checkout.</p>
             </div>
             <div>
-                <p>You are signup up for a {event.name} on  for ${event.price}{event.name.toLowerCase().includes("monthly") ? " per month" : null}.</p>
+                <p>You are signup up for a {event.name} on for ${event.price}{event.name.toLowerCase().includes("monthly") ? " per month" : null}.</p>
                 <p>This purchase includes:</p>
                 <p>{event.description}</p>
                 <p>If this sounds good to you, proceed to checkout!</p>
+                {currentUser.membership.type !== 'Member' ?
                 <form action={`/create-event-checkout-session/${event.id}`} method="POST">
                     <Button type="submit">Sounds good! Take me to Checkout.</Button>
                 </form>
+                : null}
             </div>
         </>
     )

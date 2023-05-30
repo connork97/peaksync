@@ -20,7 +20,7 @@ const Login = () => {
         .then((response) => response.json())
         .then((userData) => {
             setCurrentUser(userData)
-            fetchAllUsers(currentUser)
+            // fetchAllUsers(currentUser)
         })
     }
 
@@ -46,22 +46,22 @@ const Login = () => {
         .then((userData) => {
             setCurrentUser(userData)
             console.log(userData)
-            fetchAllUsers(userData)
+            // fetchAllUsers(userData)
         })
     }
 
     
-    const fetchAllUsers = (user) => {
-        if (user.admin === true) {
-            fetch("/users")
-            .then((response) => response.json())
-            .then((userData) => {
-                setAllUsers(userData)
-            })
-        } else {
-            console.log("No admin priveledges")
-        }
-    }
+    // const fetchAllUsers = (user) => {
+    //     if (user.admin === true) {
+    //         fetch("/users")
+    //         .then((response) => response.json())
+    //         .then((userData) => {
+    //             setAllUsers(userData)
+    //         })
+    //     } else {
+    //         console.log("No admin priveledges")
+    //     }
+    // }
 
     const handleLogout = () => {
         fetch('/logout', {

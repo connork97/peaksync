@@ -34,7 +34,27 @@ const EventDetailsModal = ({ clickedSession, setClickedSession, showGuestModal, 
     const handleConfirmSignup = (event) => {
         event.preventDefault()
         if (window.confirm(`Are you sure you want to signup for ${clickedSession.values.name} on ${clickedSession.values.day}, ${clickedSession.values.date} at ${clickedSession.values.time}?`) === true) {
-            event.target.submit()
+            if (currentUser.membership.type !== 'Member') {
+                event.target.submit()
+            } else if (currentUser.membership.type === 'Member' && clickedSession.values.free_for_members === true) {
+                fetch('/signups', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        user_id: currentUser.id,
+                        session_id: clickedSession.values.session_id,
+                    })
+                })
+                .then((response) => response.json())
+                .then((newSignupData) => {
+                    console.log(newSignupData)
+                    setGeneralToggle(!generalToggle)
+                    window.alert("Since you're a member this one is on the house! Thanks for signing up!")
+                    setShowGuestModal(false)
+                })
+            }
         } else {
             window.alert("Okay, signup cancelled.")
         }

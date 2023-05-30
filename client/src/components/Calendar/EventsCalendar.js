@@ -88,6 +88,7 @@ const EventsCalendar = () => {
           date: date,
           time: time,
           description: session.event.description,
+          free_for_members: session.event.free_for_members,
           spaces: session.event.capacity - session.signups.length,
           signups: session.signups
         },

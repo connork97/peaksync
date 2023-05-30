@@ -18,7 +18,7 @@ const CreateEvent = () => {
         "capacity": 0,
         "hours": 0,
         "minutes": 0,
-        "frequency": ""
+        "free_for_members": false
     })
 
     const handleDiscardEvent = () => {
@@ -32,7 +32,7 @@ const CreateEvent = () => {
             "capacity": 0,
             "hours": 0,
             "minutes": 0,
-            "frequency": ""
+            "free_for_members": false
         })
     }
 
@@ -42,6 +42,15 @@ const CreateEvent = () => {
             ...prevState,
             [name]: value
         }))
+    }
+
+    const handleFreeForMembersChange = (event) => {
+        console.log(event.target.value)
+        setNewEvent((prevState) => ({
+            ...prevState,
+            free_for_members: event.target.value
+        }))
+        console.log(newEvent.free_for_members)
     }
 
     const handleEventSubmit = (event) => {
@@ -88,6 +97,13 @@ const CreateEvent = () => {
             <Form.Label>Description:</Form.Label>
                 <Form.Control name="description" type="text" value={newEvent.description} onChange={handleNewEventChange}></Form.Control>
             <br></br>
+            <Form.Label>Free for Members?</Form.Label>
+                <span style={{display:'flex', justifyContent:'center'}}>Yes
+                    <Form.Check value={true} checked={newEvent.free_for_members == 'true'} type='radio' onChange={handleFreeForMembersChange}></Form.Check>
+                </span>
+                <span style={{display:'flex', justifyContent:'center'}}>No
+                    <Form.Check value={false} checked={newEvent.free_for_members == 'false'} type='radio' onChange={handleFreeForMembersChange}></Form.Check>
+                </span>
             <br></br>
             <Button type="submit">Create Event</Button>
             <Button onClick={handleDiscardEvent}>Discard Event</Button>

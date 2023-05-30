@@ -1,5 +1,7 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { useHistory } from 'react-router-dom'
+
+import { LoggedInUserContext } from '../App'
 
 import moment from 'moment'
 import ListGroup from 'react-bootstrap/ListGroup'
@@ -9,6 +11,7 @@ const UserBookings = ({ selectedUser }) => {
 
     const history = useHistory()
 
+    const { currentUser } = useContext(LoggedInUserContext)
     const [selectedUserBookings, setSelectedUserBookings] = useState(selectedUser.signups)
 
     const handleCancelBooking = (signup) => {
@@ -44,7 +47,7 @@ const UserBookings = ({ selectedUser }) => {
 
         return (
             <ListGroup.Item className='listGroupItemWithEndButtons' style={{display:"flex"}}>
-                {signup.session.event.name} - {formattedDateTime} - {signup.paid === true ? "Paid" : <Button style={{color:"white", backgroundColor:"red", borderRadius:"15px"}}>Payment Owed</Button>}
+                {signup.session.event.name} - {formattedDateTime} - {signup.session.event.free_for_members === true && selectedUser.membership.type === 'Member' ? "Paid" : <Button style={{color:"white", backgroundColor:"red", borderRadius:"15px"}}>Payment Owed</Button>}
                 <Button onClick={() => history.push({pathname:'/edit/signup', state:signup})} style={{marginLeft:"auto"}}>Edit Booking</Button>
             </ListGroup.Item>
         )
