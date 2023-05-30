@@ -1,13 +1,21 @@
-import { useState, useContext } from 'react'
-import { AllUsersContext, LoggedInUserContext } from '../App'
+import { useState, useContext, useEffect } from 'react'
+import { AllUsersContext, LoggedInUserContext, AllMembershipsContext } from '../App'
 
 import Card from 'react-bootstrap/Card'
 import myImage from '../../images/profile-placeholder-300x237.png'
 import Button from 'react-bootstrap/Button'
+import Dropdown from 'react-bootstrap/Dropdown'
 
 const ProfileInfo = ({ selectedUser }) => {
-
+    
     const { allUsers, setAllUsers } = useContext(AllUsersContext)
+    const { allMemberships } = useContext(AllMembershipsContext)
+    
+    const [selectedMembership, setSelectedMembership] = useState(selectedUser.membership)
+    const [membershipName, setMembershipName] = useState(selectedUser.membership.name)
+    const [membershipType, setMembershipType] = useState(selectedMembership.type)
+    const [membershipSubtype, setMembershipSubtype] = useState(selectedMembership.subtype)
+    // console.log(allMemberships)
 
     const [userProfileInfo, setUserProfileInfo] = useState({
         "first_name": selectedUser.first_name,
@@ -70,6 +78,46 @@ const ProfileInfo = ({ selectedUser }) => {
         })
     }
 
+    const handleMembershipChange = (event) => {
+        displayProperMembership(event.target.name.id)
+        // setUserProfileInfo((prevState) => ({
+        //     ...prevState,
+        //     membership: [event.target.name]
+        // }))
+        // setUserProfileInfo((prevState) => ({
+        //     ...prevState,
+        //     membership: event.target.value
+        // }))
+    }
+
+
+    
+    
+    const displayProperMembership = (event) => {
+        allMemberships.map((membership) => {
+            if (membership.name === event.target.name) {
+                setMembershipName(event.target.name)
+                setUserProfileInfo((prevState) => ({
+                    ...prevState,
+                    membership_id: membership.id
+                }))
+                setSelectedMembership(membership)
+            }
+            console.log(userProfileInfo.membership_id)
+        })
+    }
+
+    useEffect(() => {
+        setMembershipType(selectedMembership.type)
+        setMembershipSubtype(selectedMembership.subtype)
+    }, [selectedMembership])
+    
+    const allMembershipNames = allMemberships.map((membership) => {
+        return (
+            <Dropdown.Item name={membership.name} value={membership.id} onClick={(event) => displayProperMembership(event)}>{membership.name}</Dropdown.Item>
+        )
+    })
+
     return (
         <div id="userProfileInfoDiv" style={{display:"flex", marginLeft:"0",textAlign:"left"}}>
             <Card style={{position:"absolute", display:"flex", justifyContent:"start", marginLeft:"0", textAlign:"left"}}>
@@ -84,7 +132,16 @@ const ProfileInfo = ({ selectedUser }) => {
                     <Card.Text>Waiver Status: {userProfileInfo.waiver ? "Active" : "Inactive"}</Card.Text>
                     <Card.Text>First Contact with Customer: {selectedUser.created_at}</Card.Text>
                     <Card.Text>Most Recent Change to Customer: {selectedUser.updated_at ? selectedUser.updated_at : "N/A"}</Card.Text>
-                    <Card.Text>Membership ID: {userProfileInfo.membership_id}</Card.Text>
+                    <Dropdown>
+                        <Dropdown.Toggle>{membershipName}</Dropdown.Toggle>
+                        <Dropdown.Menu>
+                            {allMembershipNames}
+                        </Dropdown.Menu>
+                    </Dropdown>
+                    <br></br>
+                    <Card.Text>Type: {membershipType}</Card.Text>
+                    <Card.Text>Subtype: {membershipSubtype}</Card.Text>
+                    <br></br>
                     <Button onClick={handleProfileEdit}>Save Changes</Button> <Button onClick={handleDiscardChanges}>Discard Changes</Button>
                 </Card.Body>
             </Card>

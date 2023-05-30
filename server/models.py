@@ -15,7 +15,8 @@ class User(db.Model, SerializerMixin):
 
     serialize_rules=(
         '-signups.user',
-        '-payments.user'
+        '-payments.user',
+        '-membership.users'
     )
 
     id = db.Column(db.Integer, primary_key=True)
@@ -39,8 +40,9 @@ class User(db.Model, SerializerMixin):
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
     membership_id = db.Column(db.Integer, db.ForeignKey("memberships.id"), default=1)
-
-    signups = db.relationship('Signup', back_populates="user")
+    
+    membership = db.relationship('Membership', back_populates='users')
+    signups = db.relationship('Signup', back_populates='user')
     payments = db.relationship('Payment', back_populates='user')
 
     @hybrid_property
@@ -213,6 +215,10 @@ class Payment(db.Model, SerializerMixin):
 class Membership(db.Model, SerializerMixin):
     __tablename__ = "memberships"
 
+    serialize_rules=(
+        '-users.membership',
+    )
+
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
     description = db.Column(db.Text)
@@ -222,5 +228,6 @@ class Membership(db.Model, SerializerMixin):
     stripe_product_id = db.Column(db.String)
     stripe_price_id = db.Column(db.String)
 
+    users = db.relationship('User', back_populates='membership')
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
