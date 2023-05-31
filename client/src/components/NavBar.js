@@ -36,7 +36,7 @@ const NavBar = () => {
                     </Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
-            <Link to="/login" exact="true" className="navBarLink">Login</Link>
+            <Link to="/login" exact="true" className="navBarLink">Account</Link>
             {Object.keys(currentUser).length !== 0 ? renderDashboardNavLink() : null}
         </div>
     )

@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from "react"
 import { useHistory } from "react-router-dom"
 
-
+import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import { LoggedInUserContext, AllUsersContext } from "../App"
 
@@ -74,24 +74,38 @@ const Login = () => {
 
     return (
         <div className="mainDiv">
-            <div id="loginDiv">
-            <h1>Login Page</h1>
-                <form id="loginForm" onSubmit={handleUserLogin}>
-                    <input type="email" name="email" value={email} placeholder="address@email.com" onChange={(event) => setEmail(event.target.value)}></input>
+            {/* <h1>Account Page</h1> */}
+            {Object.keys(currentUser).length > 0 ?
+            <div id="loggedInDiv" style={{marginTop:'3rem'}}>
+                <h1>Hi {currentUser.first_name}, you are currently logged in.</h1>
+                <h3 style={{marginTop:'2rem', marginBottom:'3rem'}}>If you want to check out or edit your profile information, booking history, etc, head to your dashboard!</h3>
+                <Button onClick={() => handleLogout()} style={{width:'10rem', height:'3rem'}}>Logout</Button>
+            </div>
+            :
+            <>
+                <h1>Login Here:</h1>
+                <div id="loginDiv" 
+                style={{width: '42.5vw', margin:'auto', marginBottom:'2rem', border: '1px solid rgba(0, 0, 0, 0.5)', borderRadius:'25px'}}
+                // style={{width:'42.5vw', margin:'auto', marginBottom:'2rem', border:'solid', borderWidth:'1px', borderRadius:'25px', borderColor:'black, 0.1'}}
+                >
+                    <br></br>
+                    <Form id="loginForm" onSubmit={handleUserLogin}
+                    style={{width:'95%', height:'100%', margin:'auto'}}>
+                        <Form.Control type="email" name="email" value={email} placeholder="address@email.com" onChange={(event) => setEmail(event.target.value)}></Form.Control>
+                        <br></br><br></br>
+                        <Form.Control type="password" name="password" value={password} placeholder="Password" onChange={(event) => setPassword(event.target.value)}></Form.Control>
+                        <br></br><br></br>
+                        <Button type="submit" style={{marginBottom:'1rem'}}>Login!</Button>
+                    </Form>
+                </div>
+                <div>
+                    <h3>Don't have an account yet?  Sign up for one here!</h3>
+                    <br></br>
+                    <Button onClick={() => history.push({pathname: "/signup"})}>Create Account</Button>
                     <br></br><br></br>
-                    <input type="password" name="password" value={password} placeholder="Password" onChange={(event) => setPassword(event.target.value)}></input>
-                    <br></br><br></br>
-                    <Button type="submit">Login!</Button>
-                </form>
-            </div>
-            <div>
-                <h3>Don't have an account yet?  Sign up for one here!</h3>
-                <Button onClick={() => history.push({pathname: "/signup"})}>Create Account</Button>
-            </div>
-            <div id="logoutDiv">
-                <h3>Logout Here</h3>
-                <Button onClick={() => handleLogout()}>Logout</Button>
-            </div>
+                </div>
+            </>
+            }
         </div>
     )
 }

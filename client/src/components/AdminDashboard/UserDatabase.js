@@ -19,7 +19,11 @@ const UserDatabase = () => {
 
     const columnLabels = ["ID", "Last Name", "First Name", "Email", "Phone Number", "Waiver", "Address", "City", "State", "Zipcode", "Date of Birth", "Created At", "Admin"]
     const renderColumnLabels = columnLabels.map((label) => {
-        return <th>{label}</th>
+        if (label === 'Date of Birth') {
+            return <th>{"D.O.B"}</th>
+        } else {
+            return <th>{label}</th>
+        }
     })
 
     const renderDropdownItems = columnLabels.map((label) => {
@@ -83,10 +87,10 @@ const UserDatabase = () => {
     })
 
     return (
-        <>
-            <h1>Dashboard Page</h1>
+        <div>
+            <h1 style={{marginTop:'2rem', marginBottom:'1.5rem'}}>User Database</h1>
             <div id="adminSearchDiv" style={{display: "flex", justifyContent:"center", alignItems:"center"}}>
-            <input type="text" value={searchParams} onChange={(event) => setSearchParams(event.target.value)} style={{marginRight:"10px"}}></input>
+            <input type="text" value={searchParams} onChange={(event) => setSearchParams(event.target.value)} style={{marginRight:"10px", width:'25vw', paddingLeft:'10px', paddingRight:'10px', border:'1px solid', borderRadius:'10px'}}></input>
             <Dropdown style={{marginLeft:"10px"}}>
                 <Dropdown.Toggle>
                     {searchCategory}
@@ -97,7 +101,8 @@ const UserDatabase = () => {
                 </Dropdown.Menu>
             </Dropdown>
             </div>
-            <Table id="adminDashboardTable">
+            <div style={{width:'90vw', margin:'auto', marginTop:'2rem', marginBottom:'2.5rem', border:'1px solid rgba(0, 0, 0, 0.5)', borderRadius:'25px'}}>
+            <Table id="adminDashboardTable" style={{width:'95%', marginTop:'1rem', margin:'auto'}}>
                 <thead>
                     <tr>
                         {renderColumnLabels}
@@ -107,7 +112,8 @@ const UserDatabase = () => {
                     {searchCategory === "Filter By" || searchCategory === "All" ? renderAllUsers : filterUsers(convertedSearchCategory)}
                 </tbody>
             </Table>
-        </>
+            </div>
+        </div>
     )
 }
 

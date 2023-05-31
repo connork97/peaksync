@@ -104,12 +104,66 @@ const ProfileInfo = ({ selectedUser }) => {
         )
     })
 
+    // const [expiration, setExpiration] = useState({
+    //     "month": "Month",
+    //     "day": "Day",
+    //     "year": "Year"
+    // })
+
+    // const handleExpirationChange = (event) => {
+    //     const { name, id } = event.target
+    //     setExpiration((prevState) => ({
+    //         ...prevState,
+    //         [name]: id
+    //     }))
+    // }
+
+    // const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+    // const renderExpirationDays = () => {
+    //     let i = 1;
+    //     const days = [];
+
+    //     if (['January', 'March', 'May', 'July', 'August', 'October', 'December'].includes(expiration.month)) {
+    //       while (i <= 31) {
+    //         days.push(<Dropdown.Item name="day" id={i} key={i}>{i}</Dropdown.Item>);
+    //         i++;
+    //       }
+    //     } else if (['April', 'June', 'September', 'November'].includes(expiration.month)) {
+    //         while (i <= 30) {
+    //           days.push(<Dropdown.Item name="day" id={i} key={i}>{i}</Dropdown.Item>);
+    //           i++;
+    //         }
+    //     } else if (expiration.month === 'February') {
+    //         while (i <= 29) {
+    //           days.push(<Dropdown.Item name="day" id={i} key={i}>{i}</Dropdown.Item>);
+    //           i++;
+    //         }
+    //     }
+
+    //     return days;
+    //     // return null; // or any alternative JSX representation for non-matching condition
+    //   };
+    // const renderExpirationMonth = months.map((month) => {
+    //     return (
+    //         <Dropdown.Item name="month" id={month} onClick={(event) => handleExpirationChange(event)}>{month}</Dropdown.Item>
+    //     )
+    // })
+
+    // const renderExpirationYears = () => {
+    //     let i = 2023
+    //     let years = []
+    //     while (i <= 2033) {
+    //         years.push(<Dropdown.Item name="year" id={i}>{i}</Dropdown.Item>)
+    //     }
+    // }
+
     return (
-        <div id="userProfileInfoDiv" style={{display:"flex", marginLeft:"0",textAlign:"left"}}>
-            <Card style={{position:"absolute", display:"flex", justifyContent:"start", marginLeft:"0", textAlign:"left"}}>
-                <Card.Img src={myImage} style={{width:"250px", display:"flex", justifyContent:"center"}}></Card.Img>
+        <div id="userProfileInfoDiv" style={{display:"flex", marginLeft:"0", marginBottom:'3rem', textAlign:"left", justifyContent:'center', marginTop:'2.5rem'}}>
+            <Card style={{position:"absolute", marginBottom:'3rem', display:"flex", justifyContent:"start", marginLeft:"0", textAlign:"left"}}>
+                {/* <Card.Img src={myImage} style={{width:"250px", display:"flex", justifyContent:"center"}}></Card.Img> */}
                 <Card.Body>
-                    <Card.Title><input name="first_name" value={userProfileInfo.first_name} onChange={handleProfileInfoChange}></input> <input name="last_name" value={userProfileInfo.last_name} onChange={handleProfileInfoChange}></input> - User ID: {selectedUser.id}</Card.Title>
+                    <Card.Title>First Name: <input name="first_name" value={userProfileInfo.first_name} onChange={handleProfileInfoChange}></input></Card.Title>
+                    <Card.Title>Last Name: <input name="last_name" value={userProfileInfo.last_name} onChange={handleProfileInfoChange}></input></Card.Title>
                     <Card.Text>Contact Information: <input name="email" value={userProfileInfo.email} onChange={handleProfileInfoChange}></input> - <input name="phone_number" value={userProfileInfo.phone_number} onChange={handleProfileInfoChange}></input></Card.Text>
                     <Card.Text>Address: <input name="address" value={userProfileInfo.address} onChange={handleProfileInfoChange}></input></Card.Text>
                     <Card.Text>City: <input name="city" value={userProfileInfo.city} onChange={handleProfileInfoChange}></input> State: <input name="state" value={userProfileInfo.state} onChange={handleProfileInfoChange}></input> Zipcode: <input name="zipcode" value={userProfileInfo.zipcode} onChange={handleProfileInfoChange}></input></Card.Text>
@@ -119,15 +173,34 @@ const ProfileInfo = ({ selectedUser }) => {
                     <Card.Text>First Contact with Customer: {selectedUser.created_at}</Card.Text>
                     <Card.Text>Most Recent Change to Customer: {selectedUser.updated_at ? selectedUser.updated_at : "N/A"}</Card.Text>
                     {currentUser.admin === true ?
-                    <>
-                    <Dropdown>
+                    <div style={{display:'flex'}}>
+                    <Dropdown style={{marginRight:'2rem'}}>
                         <Dropdown.Toggle>{membershipName}</Dropdown.Toggle>
                         <Dropdown.Menu>
                             {allMembershipNames}
                         </Dropdown.Menu>
                     </Dropdown>
-                    <br></br>
-                    </>
+                    {/* <span style={{display:'flex', alignItems:'center', marginRight:'1rem'}}>Expires:</span>
+                    <Dropdown>
+                        <Dropdown.Toggle>{expiration.month}</Dropdown.Toggle>
+                        <Dropdown.Menu>
+                            {renderExpirationMonth}
+                        </Dropdown.Menu>
+                    </Dropdown>
+                    <Dropdown>
+                        <Dropdown.Toggle>{expiration.day}</Dropdown.Toggle>
+                        <Dropdown.Menu>
+                            {renderExpirationDays()}
+                        </Dropdown.Menu>
+                    </Dropdown>
+                    <Dropdown>
+                        <Dropdown.Toggle>{expiration.year}</Dropdown.Toggle>
+                        <Dropdown.Menu>
+                            {renderExpirationYears()}
+                        </Dropdown.Menu>
+                    </Dropdown> */}
+                    <br></br><br></br><br></br>
+                    </div>
                     : <Card.Text>Membership: {membershipName}</Card.Text>}
                     <Card.Text>Type: {membershipType}</Card.Text>
                     <Card.Text>Subtype: {membershipSubtype}</Card.Text>

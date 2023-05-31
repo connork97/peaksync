@@ -93,7 +93,7 @@ class Event(db.Model, SerializerMixin):
 
     serialize_rules=(
         '-signups.user',
-        '-sessions'
+        '-sessions.event',
     )
 
     id = db.Column(db.Integer, primary_key=True)
@@ -242,6 +242,7 @@ class Membership(db.Model, SerializerMixin):
     price = db.Column(db.Integer)
     stripe_product_id = db.Column(db.String)
     stripe_price_id = db.Column(db.String)
+    # duration = db.Column(db.String) # Set to days, recurring, or null?
 
     users = db.relationship('User', back_populates='membership')
     payments = db.relationship('Payment', back_populates='membership')
