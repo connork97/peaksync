@@ -24,6 +24,7 @@ const UserProfile = () => {
     }
 
     return (
+        // {selectedUser &&
         <Tabs
             defaultActiveKey="profile"
             id="justify-tab-example"
@@ -31,15 +32,16 @@ const UserProfile = () => {
             justify
         >
             <Tab eventKey="profile" title="Profile">
-                <ProfileInfo selectedUser={selectedUser} />
+                {Object.keys(selectedUser).length > 0 && <ProfileInfo selectedUser={selectedUser} />}
             </Tab>
             <Tab eventKey="bookings" title="Bookings">
-                <UserBookings selectedUser={selectedUser} />
+                {Object.keys(selectedUser).length > 0 && <UserBookings selectedUser={selectedUser} />}
             </Tab>
             <Tab eventKey="payments" title="Payments">
-                <UserPayments selectedUser={selectedUser} />
+                {Object.keys(selectedUser).length > 0 && <UserPayments selectedUser={selectedUser} />}
             </Tab>
         </Tabs>
+        // }
     )
 }
 

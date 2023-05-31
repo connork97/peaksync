@@ -6,6 +6,7 @@ const SuccessfulMembershipPurchase = () => {
     const { currentUser, setCurrentUser } = useContext(LoggedInUserContext)
     const { currentTransaction, setCurrentTransaction } = useContext(CurrentTransactionContext)
     const { generalToggle, setGeneralToggle } = useContext(GeneralToggleContext)
+    
     const [fetchCompleted, setFetchCompleted] = useState(false)
 
     if (!fetchCompleted && Object.keys(currentUser).length > 0) {

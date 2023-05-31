@@ -26,6 +26,33 @@ LOCAL_DOMAIN = 'http://localhost:4000'
 def home():
     return ''
 
+@app.route('/update_stripe_product_price', methods=['POST'])
+def update_stripe_product_price():
+    form_data = request.get_json()
+    product_id = form_data['stripe_product_id']
+    price_id = form_data['stripe_price_id']
+    new_price = form_data['price']
+
+    membership = Membership.query.filter(Membership.stripe_price_id == price_id).one_or_none()
+    if membership:
+        try:
+            new_stripe_price = stripe.Price.create(
+                unit_amount=new_price,
+                currency='usd',
+                product=product_id
+            )
+            print(new_stripe_price, new_stripe_price.id)
+            # membership.stripe_price_id = new_stripe_price.id
+            setattr(membership, 'stripe_price_id', new_stripe_price.id)
+            db.session.commit()
+            response = make_response({"success": f"stripe price with id {price_id} price updated to new id of {new_stripe_price.id}"}, 200)
+        except:
+            response = make_response({"error": f"404: could not update stripe product of id {product_id}"}, 404)
+    else:
+        response = make_response({"error": "404: could not find membership of id {membership.id}"}, 404)
+
+    return response
+
 @app.route('/create-event-checkout-session/<int:event_id>/<int:session_id>/<int:user_id>', methods=['POST'])
 def create_event_checkout_session(event_id, session_id, user_id):
     event = Event.query.filter(Event.id == event_id).one_or_none()
@@ -108,6 +135,7 @@ def last_user_signup(id):
 
 @app.route('/last-user-membership-purchase/<int:user_id>', methods=['GET'])
 def last_user_membership_purchase(user_id):
+    # user = User.query.filter(User.id == session['user_id']).one_or_none() ==> Using session cookies to search instead us waiting on state
     last_membership_payment = Payment.query.filter_by(user_id=user_id).order_by(Payment.id.desc()).first()
     user = User.query.filter(User.id == user_id).first()
     if last_membership_payment:
@@ -117,7 +145,7 @@ def last_user_membership_purchase(user_id):
                 db.session.add(user)
                 setattr(last_membership_payment, 'successful', True)
                 db.session.commit()
-                response = make_response({"success": f"user of id {user_id} membership status updated."}, 200)
+                response = make_response(user.to_dict(), 200)
             except:
                 response = make_response({"error": f"could not find last membership purchase with user ID of {user_id}"}, 404)
 

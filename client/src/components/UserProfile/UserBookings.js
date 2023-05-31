@@ -14,6 +14,9 @@ const UserBookings = ({ selectedUser }) => {
     const { currentUser } = useContext(LoggedInUserContext)
     const [selectedUserBookings, setSelectedUserBookings] = useState(selectedUser.signups)
 
+    console.log("UserBookings", selectedUserBookings)
+
+
     const handleCancelBooking = (signup) => {
         if (window.confirm("Are you sure you want to cancel this booking?") == true) {
             fetch(`/signups/${signup.id}`, {
@@ -28,7 +31,13 @@ const UserBookings = ({ selectedUser }) => {
         }
     }
 
-    const renderBookings = selectedUserBookings.reverse().map((signup) => {
+    const renderBookings = () => {
+        if (selectedUserBookings === undefined) {
+            setSelectedUserBookings(currentUser.signups)
+        }
+        console.log("User Bookings part two", selectedUserBookings)
+        if (selectedUserBookings.length > 0) {
+            selectedUserBookings.reverse().map((signup) => {
         console.log(signup.session)
         const datetimeString = `${signup.session.date}T${signup.session.time}:00`
 
@@ -42,7 +51,7 @@ const UserBookings = ({ selectedUser }) => {
             minute: 'numeric',
             hour12: true
         }
-
+        
         const formattedDateTime = datetime.toLocaleString('en-US', options)
 
         return (
@@ -51,11 +60,17 @@ const UserBookings = ({ selectedUser }) => {
                 <Button onClick={() => history.push({pathname:'/edit/signup', state:signup})} style={{marginLeft:"auto"}}>Edit Booking</Button>
             </ListGroup.Item>
         )
-    })
+        })
+        }
+    }
     return (
-        <ListGroup>
-            {renderBookings}
-        </ListGroup>
+        <>
+            <h1>{selectedUser.first_name} {selectedUser.last_name}'s Booking History</h1>
+            <ListGroup>
+                {/* {Object.keys(currentUser)?.length > 0 ? renderBookings() : null} */}
+                {renderBookings()}
+            </ListGroup>
+        </>
     )
 }
 

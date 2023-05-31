@@ -16,7 +16,9 @@ const MembershipData = ({ membership }) => {
         "price": membership.price,
         "type": membership.type,
         "subtype": membership.subtype,
-        "description": membership.description
+        "description": membership.description,
+        "stripe_product_id": membership.stripe_product_id,
+        "stripe_price_id": membership.stripe_price_id
     })
 
     const handleDiscardMembershipChanges = (event) => {
@@ -26,7 +28,9 @@ const MembershipData = ({ membership }) => {
             "price": membership.price,
             "type": membership.type,
             "subtype": membership.subtype,
-            "description": membership.description
+            "description": membership.description,
+            "stripe_product_id": membership.stripe_product_id,
+            "stripe_price_id": membership.stripe_price_id
           });
         setEditMembershipToggle(false)
     }
@@ -51,13 +55,35 @@ const MembershipData = ({ membership }) => {
             console.log(editedMembershipData)
             setEditMembershipToggle(!editMembershipToggle)
         })
+        console.log(editedMembership.price, membership.price)
+        if (editedMembership.price != membership.price) {
+            console.log("Editing Stripe product price...")
+            fetch('/update_stripe_product_price', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    stripe_product_id: membership.stripe_product_id,
+                    stripe_price_id: membership.stripe_price_id,
+                    price: Number(editedMembership.price) * 100
+                })
+            })
+            .then((response) => response.json())
+            .then((updatedStripeProductPriceData) => console.log(updatedStripeProductPriceData))
+        }
     }
     const handleMembershipDelete = (membership_id) => {
-        fetch(`/memberships/${membership_id}`, {
-            method: 'DELETE'
-        })
-        const updatedMemberships = allMemberships.filter((memb) => memb.id != membership_id)
-        setAllMemberships(updatedMemberships)
+        if (window.confirm("Are you sure you want to delete this membership?  This action cannot be undone.") === true) {
+
+            fetch(`/memberships/${membership_id}`, {
+                method: 'DELETE'
+            })
+            const updatedMemberships = allMemberships.filter((memb) => memb.id != membership_id)
+            setAllMemberships(updatedMemberships)
+        } else {
+            window.alert("Okay, the membership has not been deleted.")
+        }
     }
     return (
         <ListGroup.Item className="listGroupItemWithEndButtons">

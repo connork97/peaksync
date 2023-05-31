@@ -191,14 +191,21 @@ class Signup(db.Model, SerializerMixin):
 
     session_id = db.Column(db.Integer, db.ForeignKey("sessions.id"))
     session = db.relationship('Session', back_populates="signups")
+    payment = db.relationship('Payment', back_populates='signup')
 
 class Payment(db.Model, SerializerMixin):
     __tablename__ = "payments"
 
     serialize_rules=(
         '-user.payments',
+        '-user.membership',
+        '-user.signups',
         '-user._password_hash',
-        '-user_id'
+        '-user_id',
+        '-membership.users',
+        '-membership.payments',
+        '-signup.session.payment',
+        '-signup.session.event.name'
     )
 
     id = db.Column(db.Integer, primary_key=True)
@@ -212,6 +219,8 @@ class Payment(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
+    signup = db.relationship('Signup', back_populates='payment')
+    membership = db.relationship('Membership', back_populates='payments')
     user = db.relationship('User', back_populates="payments")
 
 class Membership(db.Model, SerializerMixin):
@@ -219,6 +228,10 @@ class Membership(db.Model, SerializerMixin):
 
     serialize_rules=(
         '-users.membership',
+        '-users.payments',
+        '-payments.user',
+        '-payments.signup',
+        '-payment.membership'
     )
 
     id = db.Column(db.Integer, primary_key=True)
@@ -231,5 +244,7 @@ class Membership(db.Model, SerializerMixin):
     stripe_price_id = db.Column(db.String)
 
     users = db.relationship('User', back_populates='membership')
+    payments = db.relationship('Payment', back_populates='membership')
+
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
