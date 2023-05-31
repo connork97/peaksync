@@ -54,13 +54,14 @@ const EventDetailsModal = ({ clickedSession, setClickedSession, showGuestModal, 
                     window.alert("Since you're a member this one is on the house! Thanks for signing up!")
                     setShowGuestModal(false)
                 })
+                
             }
         } else {
             window.alert("Okay, signup cancelled.")
         }
     }
 
-    const formAction = `/create-event-checkout-session/${clickedSession.values.event_id}/${currentUser.id}/${clickedSession.values.session_id}`
+    const formAction = `/create-event-checkout-session/${clickedSession.values.event_id}/${clickedSession.values.session_id}/${currentUser.id}`
 
     const handleShowAdminModal = () => {
         handleCloseGuestModal()

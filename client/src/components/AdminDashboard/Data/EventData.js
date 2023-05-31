@@ -61,6 +61,24 @@ const EventData = ({ event }) => {
             })
             setAllEvents(updatedAllEvents)
         })
+        if (editedEvent.price != event.price) {
+            console.log("Editing Stripe product price...")
+            fetch('/update_stripe_event_product', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    // name: editedEvent.name,
+                    // description: editedEvent.description,
+                    stripe_product_id: event.stripe_product_id,
+                    stripe_price_id: event.stripe_price_id,
+                    price: Number(editedEvent.price) * 100
+                })
+            })
+            .then((response) => response.json())
+            .then((stripeData) => console.log(stripeData))
+        }
     }
 
     const handleEventDelete = (event_id) => {

@@ -61,6 +61,37 @@ def update_stripe_product_price():
 
     return response
 
+@app.route('/update_stripe_event_product', methods=['POST'])
+def update_stripe_event_product_price():
+    form_data = request.get_json()
+    product_id = form_data['stripe_product_id']
+    price_id = form_data['stripe_price_id']
+
+    # new_name = form_data['name']
+    # new_description = form_data['description']
+    new_price = form_data['price']
+
+    event = Event.query.filter(Event.stripe_price_id == price_id).one_or_none()
+    if event:
+        try:
+            new_stripe_price = stripe.Price.create(
+                unit_amount=new_price,
+                currency='usd',
+                product=product_id
+            )
+            print(new_stripe_price, new_stripe_price.id)
+            event.stripe_price_id = new_stripe_price.id
+            setattr(event, 'stripe_price_id', new_stripe_price.id)
+            db.session.commit()
+            response = make_response({"success": f"stripe price with id {price_id} price updated with new id of {new_stripe_price.id}"}, 200)
+
+        except:
+            response = make_response({"error": f"404: could not update stripe product of id {product_id}"}, 404)
+    else:
+        response = make_response({"error": "404: could not find event of id {membership.id}"}, 404)
+
+    return response
+
 @app.route('/create-event-checkout-session/<int:event_id>/<int:session_id>/<int:user_id>', methods=['POST'])
 def create_event_checkout_session(event_id, session_id, user_id):
     event = Event.query.filter(Event.id == event_id).one_or_none()
