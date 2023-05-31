@@ -26,11 +26,14 @@ LOCAL_DOMAIN = 'http://localhost:4000'
 def home():
     return ''
 
-@app.route('/update_stripe_product_price', methods=['POST'])
+@app.route('/update_stripe_membership_product', methods=['POST'])
 def update_stripe_product_price():
     form_data = request.get_json()
     product_id = form_data['stripe_product_id']
     price_id = form_data['stripe_price_id']
+
+    new_name = form_data['name']
+    new_description = form_data['description']
     new_price = form_data['price']
 
     membership = Membership.query.filter(Membership.stripe_price_id == price_id).one_or_none()
@@ -42,10 +45,15 @@ def update_stripe_product_price():
                 product=product_id
             )
             print(new_stripe_price, new_stripe_price.id)
+            updated_stripe_product = stripe.Product.retrieve(product_id)
+            updated_stripe_product.name = new_name
+            updated_stripe_product.description = new_description
+            updated_stripe_product.save()
             # membership.stripe_price_id = new_stripe_price.id
             setattr(membership, 'stripe_price_id', new_stripe_price.id)
             db.session.commit()
             response = make_response({"success": f"stripe price with id {price_id} price updated to new id of {new_stripe_price.id}"}, 200)
+
         except:
             response = make_response({"error": f"404: could not update stripe product of id {product_id}"}, 404)
     else:

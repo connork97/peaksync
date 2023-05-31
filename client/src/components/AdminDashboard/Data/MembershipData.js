@@ -56,14 +56,16 @@ const MembershipData = ({ membership }) => {
             setEditMembershipToggle(!editMembershipToggle)
         })
         console.log(editedMembership.price, membership.price)
-        if (editedMembership.price != membership.price) {
+        if (editedMembership.price != membership.price || editedMembership.name != membership.name || editedMembership.description != membership.description) {
             console.log("Editing Stripe product price...")
-            fetch('/update_stripe_product_price', {
+            fetch('/update_stripe_membership_product', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
+                    name: editedMembership.name,
+                    description: editedMembership.description,
                     stripe_product_id: membership.stripe_product_id,
                     stripe_price_id: membership.stripe_price_id,
                     price: Number(editedMembership.price) * 100
