@@ -6,6 +6,7 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button'
 import ListGroup from 'react-bootstrap/ListGroup'
 import SignupData from '../AdminDashboard/Data/SignupData';
+import { CurrentUserToggleContext } from '../App';
 
 const EventDetailsModal = ({ clickedSession, setClickedSession, showGuestModal, setShowGuestModal, showAdminModal, setShowAdminModal }) => {
 
@@ -14,6 +15,7 @@ const EventDetailsModal = ({ clickedSession, setClickedSession, showGuestModal, 
     const { setAllSessions } = useContext(AllSessionsContext)
     const { signupsToggle, setSignupsToggle } = useContext(SignupsToggleContext)
     const { sessionsToggle, setSessionsToggle } = useContext(SessionsToggleContext)
+    const { currentUserToggle, setCurrentUserToggle } = useContext(CurrentUserToggleContext)
 
     const currentDate = new Date()
 
@@ -51,6 +53,7 @@ const EventDetailsModal = ({ clickedSession, setClickedSession, showGuestModal, 
                     console.log(newSignupData)
                     setSignupsToggle(!signupsToggle)
                     setSessionsToggle(!sessionsToggle)
+                    setCurrentUserToggle(!currentUserToggle)
                     window.alert("Since you're a member this one is on the house! Thanks for signing up!")
                     setShowGuestModal(false)
                 })

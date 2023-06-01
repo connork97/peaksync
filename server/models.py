@@ -14,7 +14,9 @@ class User(db.Model, SerializerMixin):
     __tablename__ = "users"
 
     serialize_rules=(
-        '-signups.user',
+        '-signups.user.membership',
+        '-signups.user.signups',
+        '-signups.user.payments',
         '-payments.user',
         # '-payments.signups',
         '-membership.users'
@@ -94,6 +96,7 @@ class Event(db.Model, SerializerMixin):
 
     serialize_rules=(
         '-signups.user',
+        # '-sessions.event.name'
         '-sessions.event',
     )
 
@@ -217,7 +220,9 @@ class Payment(db.Model, SerializerMixin):
         '-membership.users',
         '-membership.payments',
         '-signup.session.payment',
-        '-signup.session.event.name'
+        '-signup.session.event.name',
+        # '-signup.user.payments',
+        # '-signup.payment'
     )
 
     id = db.Column(db.Integer, primary_key=True)

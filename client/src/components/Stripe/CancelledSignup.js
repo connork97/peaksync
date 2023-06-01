@@ -1,11 +1,12 @@
 import { useContext, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
-import { LoggedInUserContext } from '../App'
+import { LoggedInUserContext, SignupsToggleContext } from '../App'
 
 const CancelledSignup = () => {
 
     const history = useHistory()
     const { currentUser } = useContext(LoggedInUserContext)
+    const { signupsToggle, setSignupsToggle } = useContext(SignupsToggleContext)
 
     if (currentUser.id !== undefined) {
         fetch(`/last_user_signup/${currentUser.id}`)
@@ -25,7 +26,10 @@ const CancelledSignup = () => {
             }
         })
         .then((response) => response.json())
-        .then((deletedSignupData) => console.log(deletedSignupData))
+        .then((deletedSignupData) => {
+            console.log(deletedSignupData)
+            setSignupsToggle(!signupsToggle)
+        })
     }
 
     return (
