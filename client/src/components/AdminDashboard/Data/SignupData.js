@@ -1,13 +1,11 @@
-import { useContext } from 'react'
 import { useHistory } from 'react-router-dom'
 
 import ListGroup from 'react-bootstrap/ListGroup'
 import Button from 'react-bootstrap/Button'
 
 const SignupData = ({ signup }) => {
-    // console.log(signup)
-    const history = useHistory()
 
+    const history = useHistory()
 
     const handleEditSignup = (signup) => {
         history.push({pathname:"/edit/signup", state:signup})

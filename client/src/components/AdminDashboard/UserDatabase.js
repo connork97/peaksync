@@ -20,7 +20,7 @@ const UserDatabase = () => {
     const [selectedUserProfile, setSelectedUserProfile] = useState(null)
 
     const columnLabels = ["ID", "Customer", "Email", "Phone Number", "Waiver", "Address", "City", "State", "Zipcode", "Date of Birth", "Created At", "Admin"]
-    // console.log(searchCategory.toLowerCase().split(" ").join("_"))
+
     const renderColumnLabels = columnLabels.map((label) => {
         if (label === 'Date of Birth') {
             return <th>{"D.O.B"}</th>
@@ -36,7 +36,6 @@ const UserDatabase = () => {
     })
 
     let convertedSearchCategory = searchCategory.split(" ").join("_").toLowerCase()
-    // console.log(convertedSearchCategory)
     const handleUserClick = (user) => {
         setActiveLi(user.id)
         setSelectedUserProfile(user)

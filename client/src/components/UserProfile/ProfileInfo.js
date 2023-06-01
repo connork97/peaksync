@@ -16,7 +16,6 @@ const ProfileInfo = ({ selectedUser }) => {
     const [membershipName, setMembershipName] = useState(selectedUser.membership.name)
     const [membershipType, setMembershipType] = useState(selectedMembership.type)
     const [membershipSubtype, setMembershipSubtype] = useState(selectedMembership.subtype)
-    // console.log(allMemberships)
 
     const [userProfileInfo, setUserProfileInfo] = useState({
         "first_name": selectedUser.first_name,

@@ -80,7 +80,7 @@ const EventData = ({ event }) => {
             .then((stripeData) => console.log(stripeData))
         }
     }
-    // console.log(event.sessions)
+
     const handleEventDelete = (event_id) => {
         if (window.confirm("Are you sure you want to delete this event?  This action cannot be undone.") === true) {
             if (event.sessions.length === 0) {

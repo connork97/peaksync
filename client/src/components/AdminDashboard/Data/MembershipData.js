@@ -79,13 +79,12 @@ const MembershipData = ({ membership }) => {
     const handleMembershipDelete = (membership_id) => {
         if (window.confirm("Are you sure you want to delete this membership?  This action cannot be undone.") === true) {
             if (membership.users.length === 0) {
-
                 console.log(membership.users.length)
-                // fetch(`/memberships/${membership_id}`, {
-                    //     method: 'DELETE'
-                    // })
-                    // const updatedMemberships = allMemberships.filter((memb) => memb.id != membership_id)
-            // setAllMemberships(updatedMemberships)
+                fetch(`/memberships/${membership_id}`, {
+                        method: 'DELETE'
+                    })
+                    const updatedMemberships = allMemberships.filter((memb) => memb.id != membership_id)
+            setAllMemberships(updatedMemberships)
             } else {
                 window.alert(`Sorry, but there are ${membership.users.length} users with this type of membership or offering. Make sure their profiles are adjusted to a new membership type before deleting this offering.`)
             }

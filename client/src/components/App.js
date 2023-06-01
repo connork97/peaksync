@@ -105,9 +105,6 @@ function App() {
     membershipsToggle,
     setMembershipsToggle
   }
-  // useEffect(() => {
-  //   setCurrentUserToggle(!currentUserToggle)
-  // }, [])
         
   const fetchLoggedInUser = (sessionData) => {
     fetch(`/users/${sessionData}`)
@@ -132,7 +129,7 @@ function App() {
     .then((eventData) => {
       setAllEvents(eventData)
     })
-  }, [sessionsToggle, currentUserToggle])
+  }, [sessionsToggle])
   
   useEffect(() => {
     fetch("/memberships")
@@ -140,7 +137,7 @@ function App() {
     .then((membershipData) => {
       setAllMemberships(membershipData)
     })
-  }, [membershipsToggle, currentUserToggle])
+  }, [membershipsToggle])
 
   useEffect(() => {
     fetch('/sessions')
