@@ -50,7 +50,7 @@ const CreateSession = () => {
     }
     const renderEventDropdownItems = allEvents.map((event) => {
         return (
-            <Dropdown.Item name={event.name} id={event.id} onClick={(event) => handleSelectDropdownEvent(event)}>{event.name}</Dropdown.Item>
+            <Dropdown.Item name={event.name} id={event.id} key={event.id} onClick={(event) => handleSelectDropdownEvent(event)}>{event.name}</Dropdown.Item>
         )
     })
 
@@ -66,7 +66,7 @@ const CreateSession = () => {
     const frequencyOptions = ['Once', 'Daily', 'Weekly', 'Biweekly', 'Monthly']
 
     const renderFrequencyDropdownItems = frequencyOptions.map((option) => {
-        return <Dropdown.Item name={option} onClick={(event) => handleSelectFrequency(event)}>{option}</Dropdown.Item>
+        return <Dropdown.Item name={option} key={option} onClick={(event) => handleSelectFrequency(event)}>{option}</Dropdown.Item>
     })
 
     const handleSessionSubmit = (event) => {

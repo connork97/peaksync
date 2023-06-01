@@ -20,8 +20,8 @@ const SuccessfulMembershipPurchase = () => {
 
     return (
         <>
-            <h1>Successful Membership Purchase Page</h1>
-            <h2>Hi {currentUser.first_name}. Thanks for making your purchase!</h2>
+            <h1 style={{marginTop:'3rem', marginBottom:'2rem'}}>Success!</h1>
+            <h2 style={{textAlign:'center'}}>Hi {currentUser.first_name}. Thanks for making your purchase!</h2>
         </>
     )
 }

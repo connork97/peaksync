@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react'
 import { useLocation, useHistory } from 'react-router-dom'
-import { AllSessionsContext, AllSignupsContext } from '../../App'
+import { AllSessionsContext, AllSignupsContext, SessionsToggleContext, SignupsToggleContext } from '../../App'
 
 import moment from 'moment'
 
@@ -13,9 +13,11 @@ const EditSignup = () => {
     const location = useLocation()
     const history = useHistory()
     const signupToEdit = location.state
-    console.log(signupToEdit)
+    console.log("SIGNUP TO EDIT", signupToEdit)
     const { allSessions, setAllSessions } = useContext(AllSessionsContext)
     const { allSignups, setAllSignups } = useContext(AllSignupsContext)
+    const { sessionsToggle, setSessionsToggle } = useContext(SessionsToggleContext)
+    const { signupsToggle, setSignupsToggle } = useContext(SignupsToggleContext)
 
     const eventStart = moment(signupToEdit.session.date + " " + signupToEdit.session.time, "YYYY-MM-DD HH:mm").toDate()
     const currentDate = new Date()
@@ -31,7 +33,9 @@ const EditSignup = () => {
             })
             .then((response) => response.json())
             .then((editedSignupData) => console.log(editedSignupData))
-            history.push({pathname:'/admin-dashboard'})
+            setSessionsToggle(!sessionsToggle)
+            setSignupsToggle(!signupsToggle)
+            history.push({pathname:'/'})
         } else {
             window.alert("Okay, your signup will remain unchanged.")
         }
@@ -39,12 +43,14 @@ const EditSignup = () => {
 
     const handleDeleteSignup = () => {
         if (window.confirm("Are you sure you want to cancel this signup?  This cannot be undone!") === true) {
-
             fetch(`/signups/${signupToEdit.id}`, {
                 method: 'DELETE',
             })
             .then((response) => response.json())
             .then((deletedSignupData) => console.log(deletedSignupData))
+            setSessionsToggle(!sessionsToggle)
+            setSignupsToggle(!signupsToggle)
+            history.push({pathname:'/'})
         } else {
             window.alert("Okay, the signup will not be deleted.")
         }
@@ -79,7 +85,6 @@ const EditSignup = () => {
         }
     }, [])
     
-    console.log(eventStart, currentDate, eventStart < currentDate)
     return (
         <div>
             <Modal show={showWarning}>

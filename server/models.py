@@ -16,6 +16,7 @@ class User(db.Model, SerializerMixin):
     serialize_rules=(
         '-signups.user',
         '-payments.user',
+        # '-payments.signups',
         '-membership.users'
     )
 
@@ -114,6 +115,17 @@ class Event(db.Model, SerializerMixin):
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
     sessions = db.relationship('Session', back_populates="event")
+
+    @validates('price')
+    def validate_event(self, key, value):
+        if key == 'price':
+            if type(value) == str:
+                print("String")
+            if type(value) == int:
+                print("Integer")
+            if type(value) == float:
+                print("Float")
+            return (type(value))
 
     # frequency = db.Column(db.String)
     # day = db.Column(db.String)

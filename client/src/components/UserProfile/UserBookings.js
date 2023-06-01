@@ -35,32 +35,28 @@ const UserBookings = ({ selectedUser }) => {
         if (selectedUserBookings === undefined) {
             setSelectedUserBookings(currentUser.signups)
         }
-        console.log("User Bookings part two", selectedUserBookings)
         if (selectedUserBookings.length > 0) {
             selectedUserBookings.reverse().map((signup) => {
-        console.log(signup.session)
-        const datetimeString = `${signup.session.date}T${signup.session.time}:00`
-
-        const datetime = new Date(datetimeString)
-
-        const options = {
-            weekday: 'long',
-            month: 'long',
-            day: 'numeric',
-            hour: 'numeric',
-            minute: 'numeric',
-            hour12: true
-        }
+                const datetimeString = `${signup.session.date}T${signup.session.time}:00`
+                const datetime = new Date(datetimeString)
+                const options = {
+                    weekday: 'long',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    hour12: true
+                }
         
-        const formattedDateTime = datetime.toLocaleString('en-US', options)
+                const formattedDateTime = datetime.toLocaleString('en-US', options)
 
-        return (
-            <ListGroup.Item className='listGroupItemWithEndButtons' style={{display:"flex"}}>
-                {signup.session.event.name} - {formattedDateTime} - {signup.session.event.free_for_members === true && selectedUser.membership.type === 'Member' ? "Paid" : <Button style={{color:"white", backgroundColor:"red", borderRadius:"15px"}}>Payment Owed</Button>}
-                <Button onClick={() => history.push({pathname:'/edit/signup', state:signup})} style={{marginLeft:"auto"}}>Edit Booking</Button>
-            </ListGroup.Item>
-        )
-        })
+                return (
+                    <ListGroup.Item className='listGroupItemWithEndButtons' style={{display:"flex"}}>
+                        {signup.session.event.name} - {formattedDateTime} - {signup.session.event.free_for_members === true && selectedUser.membership.type === 'Member' ? "Paid" : <Button style={{color:"white", backgroundColor:"red", borderRadius:"15px"}}>Payment Owed</Button>}
+                        <Button onClick={() => history.push({pathname:'/edit/signup', state:signup})} style={{marginLeft:"auto"}}>Edit Booking</Button>
+                    </ListGroup.Item>
+                )
+            })
         }
     }
     return (

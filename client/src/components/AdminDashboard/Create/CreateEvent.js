@@ -44,14 +44,21 @@ const CreateEvent = () => {
         }))
     }
 
-    const handleFreeForMembersChange = (event) => {
-        console.log(event.target.value)
+    const handleMakeFreeForMembers = () => {
         setNewEvent((prevState) => ({
             ...prevState,
-            free_for_members: event.target.value
+            free_for_members: true
         }))
         console.log(newEvent.free_for_members)
     }
+
+    const handleMakePaidForMembers = () => {
+        setNewEvent((prevState) => ({
+            ...prevState,
+            free_for_members: false
+        }))
+    }
+    console.log(newEvent.price)
 
     const handleEventSubmit = (event) => {
         event.preventDefault()
@@ -102,10 +109,10 @@ const CreateEvent = () => {
                 <Form.Label>Free for Members?</Form.Label>
                     <span style={{display:'flex', justifyContent:'space-evenly'}}>
                         <span style={{marginRight:'-22.5rem', width:'2rem'}}>Yes
-                            <Form.Check value={true} checked={newEvent.free_for_members == 'true'} type='radio' onChange={handleFreeForMembersChange}></Form.Check>
+                            <Form.Check value={true} checked={newEvent.free_for_members == true ? true : false} type='radio' onChange={handleMakeFreeForMembers}></Form.Check>
                         </span>
                         <span style={{marginLeft:'-22.5rem', width:'2rem'}}> No
-                            <Form.Check value={false} checked={newEvent.free_for_members == 'false'} type='radio' onChange={handleFreeForMembersChange}></Form.Check>
+                            <Form.Check value={false} checked={newEvent.free_for_members == false ? true : false} type='radio' onChange={handleMakePaidForMembers}></Form.Check>
                         </span>
                     </span>
                 <br></br>

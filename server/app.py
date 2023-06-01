@@ -118,7 +118,6 @@ def update_stripe_event_product_price():
 @app.route('/create-event-checkout-session/<int:event_id>/<int:session_id>/<int:user_id>', methods=['POST'])
 def create_event_checkout_session(event_id, session_id, user_id):
     event = Event.query.filter(Event.id == event_id).one_or_none()
-    successful_transaction = False
 
     try:
         checkout_session = stripe.checkout.Session.create(
@@ -132,11 +131,6 @@ def create_event_checkout_session(event_id, session_id, user_id):
             success_url=LOCAL_DOMAIN + '/signup/success',
             cancel_url=LOCAL_DOMAIN + '/signup/cancelled'
         )
-        successful_transaction = True
-    except Exception as e:
-        return str(e)
-    
-    if successful_transaction:
         new_signup = Signup(
             user_id=user_id,
             session_id=session_id
@@ -152,6 +146,9 @@ def create_event_checkout_session(event_id, session_id, user_id):
         )
         db.session.add(new_payment)
         db.session.commit()
+    except Exception as e:
+        return str(e)
+    
     return redirect(checkout_session.url, code=303)
 
 @app.route('/create-membership-checkout-session/<int:membership_id>/<int:user_id>', methods=['POST'])
@@ -247,7 +244,7 @@ def users():
                 emergency_contact_name=form_data['emergency_contact_name'],
                 emergency_contact_phone_number=form_data['emergency_contact_phone_number'],
                 waiver=form_data['waiver'],
-                admin=form_data['admin']
+                admin=bool(form_data['admin'])
             )
             db.session.add(new_user)
             db.session.commit()
@@ -446,14 +443,15 @@ def memberships():
         print("Creating new memberhip...")
         try:
             form_data = request.get_json()
-            new_stripe_product = stripe.Product.create(
-                name=form_data['name'],
-                default_price_data={
-                    'currency': 'usd',
-                    'unit_amount_decimal': float(int(form_data['price']) * 100)
-                },
-                # description=form_data['description']
-            )
+            if form_data['price'] != 0 and form_data['price'] != '0':
+                new_stripe_product = stripe.Product.create(
+                    name=form_data['name'],
+                    default_price_data={
+                        'currency': 'usd',
+                        'unit_amount_decimal': float(int(form_data['price']) * 100)
+                    },
+                    # description=form_data['description']
+                )
             new_membership = Membership(
                 name=form_data['name'],
                 price=form_data['price'],
@@ -521,16 +519,18 @@ def events():
         print("Creating new events...")
         try:
             form_data = request.get_json()
-            new_stripe_product = stripe.Product.create(
-                name=form_data['name'],
-                default_price_data={
-                    'currency': 'usd',
-                    'unit_amount_decimal': float(int(form_data['price']) * 100)
-                },
-            )
+            if form_data['price'] != 0 and form_data['price'] != '0':
+                new_stripe_product = stripe.Product.create(
+                    name=form_data['name'],
+                    default_price_data={
+                        'currency': 'usd',
+                        'unit_amount_decimal': float(int(form_data['price']) * 100)
+                    },
+                )
+            print(form_data['price'], type(form_data['price']))
             new_event = Event(
                 name=form_data['name'],
-                price=form_data['price'],
+                price=float(form_data['price']),
                 category=form_data['category'],
                 capacity=int(form_data['capacity']),
                 hours=int(form_data['hours']),
@@ -708,11 +708,11 @@ def sessions():
                         current_date += timedelta(weeks=2)
                     elif frequency == 'Monthly':
                         if date_string.split('-')[1] in add_30_days:
-                            current_date += timedelta(days=30)
+                            current_date += timedelta(weeks=4)
                         elif date_string.split('-')[1] in add_31_days:
-                            current_date += timedelta(days=31)
+                            current_date += timedelta(weeks=4)
                         elif date_string.split('-')[1] == '02':
-                            current_date += timedelta(days=28)
+                            current_date += timedelta(weeks=4)
 
                 db.session.commit()
 

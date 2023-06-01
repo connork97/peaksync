@@ -12,7 +12,7 @@ const AdminEventDetailsModal = ({ clickedSession, setClickedSession, showGuestMo
 
     console.log(clickedSession)
 
-    const { sessionsContext, setSessionsContext } = useContext(SessionsToggleContext)
+    const { sessionsToggle, setSessionsToggle } = useContext(SessionsToggleContext)
 
     const handleEditSignupClick = (event) => {
         console.log(clickedSession.values.id)
@@ -37,7 +37,7 @@ const AdminEventDetailsModal = ({ clickedSession, setClickedSession, showGuestMo
             .then((response) => response.json())
             .then((deletedSessionData) => {
                 console.log(deletedSessionData)
-                setSessionsContext(!sessionsContext)
+                setSessionsToggle(!sessionsToggle)
                 // history.push({pathname: '/calendar'})
                 setShowAdminModal(false)
             })
@@ -63,7 +63,7 @@ const AdminEventDetailsModal = ({ clickedSession, setClickedSession, showGuestMo
                 </div>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={handleDeleteSession}>Delete Session</Button>
+                    <Button onClick={handleDeleteSession} style={{background:'grey'}}>Delete Session</Button>
                 </Modal.Footer>
             </Modal>
     )

@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react'
 import { useHistory } from 'react-router-dom'
-import { LoggedInUserContext, AllSessionsContext, SignupsToggleContext } from '../App';
+import { LoggedInUserContext, AllSessionsContext, SessionsToggleContext, SignupsToggleContext } from '../App';
 
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button'
@@ -13,12 +13,11 @@ const EventDetailsModal = ({ clickedSession, setClickedSession, showGuestModal, 
     const { currentUser } = useContext(LoggedInUserContext)
     const { setAllSessions } = useContext(AllSessionsContext)
     const { signupsToggle, setSignupsToggle } = useContext(SignupsToggleContext)
+    const { sessionsToggle, setSessionsToggle } = useContext(SessionsToggleContext)
 
     const currentDate = new Date()
-    console.log("Start Date", clickedSession.start)
-    console.log("Current Date", currentDate)
-    console.log(currentDate > clickedSession.start)
 
+    console.log(clickedSession.values)
     const handleCloseGuestModal = () => setShowGuestModal(false);
 
     const renderSpacesOrAvailability = () => {
@@ -51,17 +50,25 @@ const EventDetailsModal = ({ clickedSession, setClickedSession, showGuestModal, 
                 .then((newSignupData) => {
                     console.log(newSignupData)
                     setSignupsToggle(!signupsToggle)
+                    setSessionsToggle(!sessionsToggle)
                     window.alert("Since you're a member this one is on the house! Thanks for signing up!")
                     setShowGuestModal(false)
                 })
-                
+            } else if (currentUser.membership.type === 'Member' && clickedSession.values.free_for_members === false) {
+                event.target.submit()
             }
         } else {
             window.alert("Okay, signup cancelled.")
         }
     }
 
-    const formAction = `/create-event-checkout-session/${clickedSession.values.event_id}/${clickedSession.values.session_id}/${currentUser.id}`
+    // console.log(clickedSession.values.event_id, clickedSession.values.session_id, currentUser.id)
+    // const formAction = () => {
+    //     fetch(`/create-event-checkout-session/${clickedSession.values.event_id}/${clickedSession.values.session_id}/${currentUser.id}`, {
+    //         method: 'POST'
+    //     })
+    // }
+    // const formAction = `/create-event-checkout-session/${clickedSession.values.event_id}/${clickedSession.values.session_id}/${currentUser.id}`
 
     const handleShowAdminModal = () => {
         handleCloseGuestModal()
@@ -83,7 +90,7 @@ const EventDetailsModal = ({ clickedSession, setClickedSession, showGuestModal, 
                         Close
                     </Button>
                     {clickedSession.values.spaces > 0 && Object.keys(currentUser).length > 0 && currentDate < clickedSession.start ?
-                    <form onSubmit={handleConfirmSignup} action={formAction} method='POST'>
+                    <form onSubmit={handleConfirmSignup} action={`/create-event-checkout-session/${clickedSession.values.event_id}/${clickedSession.values.session_id}/${currentUser.id}`} method='POST'>
                         <Button type="submit">Sign Up!</Button>
                     </form>
                     : null}

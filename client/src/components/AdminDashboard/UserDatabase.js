@@ -23,15 +23,15 @@ const UserDatabase = () => {
 
     const renderColumnLabels = columnLabels.map((label) => {
         if (label === 'Date of Birth') {
-            return <th>{"D.O.B"}</th>
+            return <th key={label}>{"D.O.B"}</th>
         } else {
-            return <th>{label}</th>
+            return <th key={label}>{label}</th>
         }
     })
 
     const renderDropdownItems = columnLabels.map((label) => {
         return (
-            <Dropdown.Item name={label} onClick={(event) => setSearchCategory(event.target.name)}>{label}</Dropdown.Item>
+            <Dropdown.Item name={label} key={label} onClick={(event) => setSearchCategory(event.target.name)}>{label}</Dropdown.Item>
         )
     })
 

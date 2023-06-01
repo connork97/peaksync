@@ -2,6 +2,7 @@ import { useState, useContext, useEffect } from 'react'
 import { AllUsersContext, LoggedInUserContext, AllMembershipsContext } from '../App'
 
 import Card from 'react-bootstrap/Card'
+import Form from 'react-bootstrap/Form'
 // import myImage from '../../images/profile-placeholder-300x237.png'
 import Button from 'react-bootstrap/Button'
 import Dropdown from 'react-bootstrap/Dropdown'
@@ -16,7 +17,8 @@ const ProfileInfo = ({ selectedUser }) => {
     const [membershipName, setMembershipName] = useState(selectedUser.membership.name)
     const [membershipType, setMembershipType] = useState(selectedMembership.type)
     const [membershipSubtype, setMembershipSubtype] = useState(selectedMembership.subtype)
-
+    
+    const [isAdmin, setIsAdmin] = useState(selectedUser.admin)
     const [userProfileInfo, setUserProfileInfo] = useState({
         "first_name": selectedUser.first_name,
         "last_name": selectedUser.last_name,
@@ -29,7 +31,8 @@ const ProfileInfo = ({ selectedUser }) => {
         "date_of_birth": selectedUser.date_of_birth,
         "emergency_contact_name": selectedUser.emergency_contact_name,
         "emergency_contact_phone_number": selectedUser.emergency_contact_phone_number,
-        "membership_id": selectedUser.membership_id
+        "membership_id": selectedUser.membership_id,
+        "admin": selectedUser.admin
     })
 
     const handleProfileInfoChange = (event) => {
@@ -53,7 +56,8 @@ const ProfileInfo = ({ selectedUser }) => {
             "date_of_birth": selectedUser.date_of_birth,
             "emergency_contact_name": selectedUser.emergency_contact_name,
             "emergency_contact_phone_number": selectedUser.emergency_contact_phone_number,
-            "membership_id": selectedUser.membership_id
+            "membership_id": selectedUser.membership_id,
+            "admin": selectedUser.admin
         })
     }
 
@@ -87,7 +91,6 @@ const ProfileInfo = ({ selectedUser }) => {
                 }))
                 setSelectedMembership(membership)
             }
-            console.log(userProfileInfo.membership_id)
         })
     }
 
@@ -99,7 +102,7 @@ const ProfileInfo = ({ selectedUser }) => {
     
     const allMembershipNames = allMemberships.map((membership) => {
         return (
-            <Dropdown.Item name={membership.name} value={membership.id} onClick={(event) => handleMembershipChange(event)}>{membership.name}</Dropdown.Item>
+            <Dropdown.Item name={membership.name} value={membership.id} key={membership.id} onClick={(event) => handleMembershipChange(event)}>{membership.name}</Dropdown.Item>
         )
     })
 
@@ -124,30 +127,25 @@ const ProfileInfo = ({ selectedUser }) => {
 
         if (['January', 'March', 'May', 'July', 'August', 'October', 'December'].includes(String(expiration.month))) {
           while (i <= 31) {
-            //  console.log(i)
             days.push(<Dropdown.Item name="day" id={i} key={i} onClick={(event) => handleExpirationChange(event)}>{i}</Dropdown.Item>);
             i++;
           }
         } else if (['April', 'June', 'September', 'November'].includes(String(expiration.month))) {
             while (i <= 30) {
-            //  console.log(i)
               days.push(<Dropdown.Item name="day" id={i} key={i} onClick={(event) => handleExpirationChange(event)}>{i}</Dropdown.Item>);
               i++;
             }
         } else if (String(expiration.month) === 'February') {
             while (i <= 29) {
-            //  console.log(i)
               days.push(<Dropdown.Item name="day" id={i} key={i} onClick={(event) => handleExpirationChange(event)}>{i}</Dropdown.Item>);
               i++;
             }
         }
-
         return days;
-        // return null; // or any alternative JSX representation for non-matching condition
       };
     const renderExpirationMonth = months.map((month) => {
         return (
-            <Dropdown.Item name="month" id={month} onClick={(event) => handleExpirationChange(event)}>{month}</Dropdown.Item>
+            <Dropdown.Item name="month" id={month} key={month} onClick={(event) => handleExpirationChange(event)}>{month}</Dropdown.Item>
         )
     })
 
@@ -155,11 +153,17 @@ const ProfileInfo = ({ selectedUser }) => {
         let i = 2023
         let years = []
         while (i <= 2033) {
-            // console.log(i)
-            years.push(<Dropdown.Item name="year" id={i} onClick={(event) => handleExpirationChange(event)}>{i}</Dropdown.Item>)
+            years.push(<Dropdown.Item name="year" id={i} key={i} onClick={(event) => handleExpirationChange(event)}>{i}</Dropdown.Item>)
             i++
         }
         return years
+    }
+
+    const setAdminStatus = (event) => {
+        setUserProfileInfo((prevState) => ({
+            ...prevState,
+            admin: !prevState.admin
+        }))
     }
 
     return (
@@ -194,8 +198,8 @@ const ProfileInfo = ({ selectedUser }) => {
                             {allMembershipNames}
                         </Dropdown.Menu>
                     </Dropdown>
-                    <Card.Text style={{display:'flex', alignContent:'center', marginRight:'1rem', marginTop:'0.35rem'}}>Expires:</Card.Text>
-                    <Dropdown>
+                    {/* <Card.Text style={{display:'flex', alignContent:'center', marginRight:'1rem', marginTop:'0.35rem'}}>Expires:</Card.Text> */}
+                    {/* <Dropdown>
                     <Dropdown.Toggle style={{marginRight:'0.5rem'}}>{expiration.month}</Dropdown.Toggle>
                     <Dropdown.Menu>
                     {renderExpirationMonth}
@@ -212,12 +216,15 @@ const ProfileInfo = ({ selectedUser }) => {
                         <Dropdown.Menu>
                                 {renderExpirationYears()}
                             </Dropdown.Menu>
-                    </Dropdown>
+                    </Dropdown> */}
                     <br></br><br></br><br></br>
                     </div>
                     : <Card.Text>Membership: {membershipName}</Card.Text>}
                     <Card.Text>Type: {membershipType}</Card.Text>
                     <Card.Text>Subtype: {membershipSubtype}</Card.Text>
+                    <br></br>
+                    <Form.Label>Admin?</Form.Label>
+                    <Form.Check value={isAdmin} checked={userProfileInfo.admin} onClick={setAdminStatus}></Form.Check>
                     <br></br>
                     <Button onClick={handleProfileEdit} style={{marginRight:'1rem'}}>Save Changes</Button>
                     <Button onClick={handleDiscardChanges} style={{background:'grey', marginLeft:'1rem'}}>Discard Changes</Button>

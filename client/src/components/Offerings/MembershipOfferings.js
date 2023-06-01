@@ -14,7 +14,7 @@ const MembershipOfferings = () => {
 
     const renderAllMemberships = allMemberships.map((membership) => {
         return (
-            <Accordion.Item eventKey={membership.id} style={{marginTop:'20px', borderTop:'1px solid rgba(0, 0, 0, 0.1)'}}>
+            <Accordion.Item eventKey={membership.id} key={membership.id} style={{marginTop:'20px', borderTop:'1px solid rgba(0, 0, 0, 0.1)'}}>
                 <Accordion.Header>{membership.name}</Accordion.Header>
                 <Accordion.Body>
                     Price: ${membership.price}

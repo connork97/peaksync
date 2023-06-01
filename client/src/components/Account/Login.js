@@ -61,7 +61,7 @@ const Login = () => {
         <div className="mainDiv">
             {Object.keys(currentUser).length > 0 ?
             <div id="loggedInDiv" style={{marginTop:'3rem'}}>
-                <h1>Hi {currentUser.first_name}, you are currently logged in.</h1>
+                <h1>Hi {currentUser.first_name}, thanks for logging in!</h1>
                 <h3 style={{marginTop:'2rem', marginBottom:'3rem'}}>If you want to check out or edit your profile information, booking history, etc, head to your dashboard!</h3>
                 <Button onClick={() => handleLogout()} style={{width:'10rem', height:'3rem'}}>Logout</Button>
             </div>

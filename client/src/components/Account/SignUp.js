@@ -1,10 +1,13 @@
 import { useState, useContext } from "react"
+import { useHistory } from 'react-router-dom'
 import { LoggedInUserContext } from "../App"
 
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 
 const SignUp = () => {
+
+    const history = useHistory()
 
     const { setCurrentUser } = useContext(LoggedInUserContext)
 
@@ -52,7 +55,11 @@ const SignUp = () => {
                 body: JSON.stringify(newUser),
             })
             .then((response) => response.json())
-            .then((newUserData) => setCurrentUser(newUserData))
+            .then((newUserData) => {
+                setCurrentUser(newUserData)
+            })
+            history.push({pathname:'/login'})
+            
         } else {
             window.alert("Please make sure your passwords match.")
         }

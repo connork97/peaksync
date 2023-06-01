@@ -29,7 +29,7 @@ const AdminDashboard = () => {
     const renderAllMemberships = (type) => allMemberships.map((membership) => {
         if (membership.type === type) {
             return (
-                <MembershipData membership={membership} />
+                <MembershipData membership={membership} key={membership.id} />
             )
         }
     })
@@ -37,7 +37,7 @@ const AdminDashboard = () => {
     const renderEvents = (category) => allEvents.map((event) => {
         if (event.category === (category)) {
             return (
-                <EventData event={event} />
+                <EventData event={event} key={event.id} />
             )
         }
     })
@@ -47,32 +47,32 @@ const AdminDashboard = () => {
     const [signupFilter, setSignupFilter] = useState("Filter By")
 
     const renderSignupDropdownMenu = signupFilterCategories.map((category) => {
-        return <Dropdown.Item onClick={() => setSignupFilter(category)}>{category}</Dropdown.Item>
+        return <Dropdown.Item key={category} onClick={() => setSignupFilter(category)}>{category}</Dropdown.Item>
     })
 
     const renderSignupsByCategory = allSignups.map((signup) => {
-        console.log(signup)
+        // console.log(signup)
         if (signupFilter === 'All' || signupFilter === 'Filter By') {
-            return <SignupData signup={signup} />
+            return <SignupData signup={signup} key={signup.id} />
         } else if (signupFilter === 'Event') {
             if (signup.session.event.name.toLowerCase().includes(signupSearch.toLowerCase())) {
-                return <SignupData signup={signup} />
+                return <SignupData signup={signup} key={signup.id} />
             }
         } else if (signupFilter === 'Customer') {
             if (signup.user.first_name.toLowerCase().includes(signupSearch.toLowerCase()) || signup.user.last_name.toLowerCase().includes(signupSearch.toLowerCase())) {
-                return <SignupData signup={signup} />
+                return <SignupData signup={signup} key={signup.id} />
             }
         } else if (signupFilter === 'Date') {
             if (signup.session.date.includes(signupSearch)) {
-                return <SignupData signup={signup} />
+                return <SignupData signup={signup} key={signup.id} />
             }
         } else if (signupFilter === 'Time') {
             if (signup.session.time.includes(signupSearch)) {
-                return <SignupData signup={signup} />
+                return <SignupData signup={signup} key={signup.id} />
             }
         } else if (signupFilter === 'Created At') {
             if (signup.created_at.includes(signupSearch)) {
-                return <SignupData signup={signup} />
+                return <SignupData signup={signup} key={signup.id} />
             }
         }
     })

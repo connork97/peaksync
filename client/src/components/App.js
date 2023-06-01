@@ -153,7 +153,7 @@ function App() {
       .then((response) => response.json())
       .then((signupData) => setAllSignups(signupData))
     }
-  }, [sessionsToggle, signupsToggle, currentUser])
+  }, [signupsToggle, currentUser])
 
   return (
     <>

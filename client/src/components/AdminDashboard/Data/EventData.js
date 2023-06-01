@@ -84,14 +84,13 @@ const EventData = ({ event }) => {
     const handleEventDelete = (event_id) => {
         if (window.confirm("Are you sure you want to delete this event?  This action cannot be undone.") === true) {
             if (event.sessions.length === 0) {
-                console.log("deleting event")
                 fetch(`/events/${event_id}`, {
                     method: 'DELETE'
                 })
                 const updatedEvents = allEvents.filter((event) => event.id != event_id)
                 setAllEvents(updatedEvents)
             } else {
-                window.alert("There are sessions attatched to this event. Unless you delete all calendar items associated with this event, you cannot delete this event.")
+                window.alert(`There are ${event.sessions.length} sessions attatched to this event. Unless you delete all calendar items associated with this event, you cannot delete this event.`)
             }
         } else {
             window.alert("Okay, the event will remain untouched.")

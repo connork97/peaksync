@@ -1,7 +1,7 @@
 
 const SuccessfulSignup = () => {
     return (
-        <h1>Hi again Salmon, thanks for successfully completing your transaction!!!!!!!!!!!!!!!!!</h1>
+        <h1>Thanks for your purchase!</h1>
     )
 }
 

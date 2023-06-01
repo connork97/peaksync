@@ -13,7 +13,7 @@ const ClassOfferings = () => {
 
     const renderAllEvents = allEvents.map((event) => {
         return (
-            <Accordion.Item eventKey={event.id} style={{marginTop:'20px', borderTop:'1px solid rgba(0, 0, 0, 0.1)'}}>
+            <Accordion.Item eventKey={event.id} key={event.id} style={{marginTop:'20px', borderTop:'1px solid rgba(0, 0, 0, 0.1)'}}>
                 <Accordion.Header>{event.name}</Accordion.Header>
                 <Accordion.Body>
                     Price: ${event.price}
