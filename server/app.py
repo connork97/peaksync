@@ -7,7 +7,7 @@ from flask import request, jsonify
 from flask_restful import Resource
 from flask import request, make_response, session, redirect
 from flask_cors import CORS
-from sqlalchemy import desc
+from sqlalchemy import desc, or_
 # Local imports
 from config import app, db, api
 from models import User, Membership, Event, Signup, Payment, Session
@@ -25,6 +25,29 @@ LOCAL_DOMAIN = 'http://localhost:4000'
 @app.route('/')
 def home():
     return ''
+
+@app.route('/create_new_stripe_product', methods=['POST'])
+def create_new_stripe_product():
+    if request.method == 'POST':
+        try:
+            form_data = request.get_json()
+            name = form_data['name']
+            price = form_data['price']
+
+            new_stripe_product = stripe.Product.create(
+                name=name,
+                default_price_data={
+                    'currency': 'usd',
+                    'unit_amount_decimal': price
+                },
+            )
+
+            response = make_response({"success": f"new stripe product of id {new_stripe_product.id} created and posted to database"})
+
+        except:
+            response = make_response({"error": "could not create new product or offering"}, 404)
+    
+    return response
 
 @app.route('/update_stripe_membership_product', methods=['POST'])
 def update_stripe_product_price():
@@ -235,6 +258,96 @@ def users():
 
     return response
 
+# @app.route('/users/filter', methods=['GET'])
+# def filter_users():
+#     if request.method == 'GET':
+#         form_data = request.get_json()
+#         id = int(form_data['id'])
+#         first_name = form_data['first_name']
+#         last_name = form_data['last_name']
+#         email = form_data['email']
+#         phone_number = form_data['phone_number']
+#         address = form_data['address']
+#         city=form_data['city'],
+#         state=form_data['state'],
+#         zipcode=int(form_data['zipcode']),
+#         date_of_birth=form_data['date_of_birth'],
+#         emergency_contact_name=form_data['emergency_contact_name'],
+#         emergency_contact_phone_number=form_data['emergency_contact_phone_number'],
+#         waiver=form_data['waiver']
+# @app.route('/users/filter', methods=['POST'])
+# def filter_users():
+#     if request.method == 'POST':
+#         try:
+#             form_data = request.get_json()
+#             search_term = form_data['search_term']
+
+#             user_query = User.query.filter(
+#                 or_(
+#                     User.id == int(search_term),
+#                     User.first_name.ilike(f"%{search_term}%"),
+#                     User.last_name.ilike(f"%{search_term}%"),
+#                     User.email.ilike(f"%{search_term}%"),
+#                     User.phone_number.ilike(f"%{search_term}%"),
+#                     User.address.ilike(f"%{search_term}%"),
+#                     User.city.ilike(f"%{search_term}%"),
+#                     User.state.ilike(f"%{search_term}%"),
+#                     User.zipcode == int(search_term),
+#                     User.date_of_birth.ilike(f"%{search_term}%"),
+#                     User.emergency_contact_name.ilike(f"%{search_term}%"),
+#                     User.emergency_contact_phone_number.ilike(f"%{search_term}%"),
+#                     User.waiver.ilike(f"%{search_term}%")
+#                 )
+#             )
+
+#             results = [user.to_dict() for user in user_query.all()]
+#             response = make_response(jsonify(results), 200)
+#         except Exception as e:
+#             response = make_response({"error": f"404: could not complete query for users. {str(e)}"}, 404)
+#         return response
+@app.route('/users/filter', methods=['POST'])
+def filter_users():
+    if request.method == 'POST':
+        try:
+            form_data = request.get_json()
+            search_term = form_data['search_term']
+            column_to_search = form_data['column_to_search']
+
+            if column_to_search == 'id':
+                user_query = User.query.filter(User.id == int(search_term))
+            elif column_to_search == 'first_name':
+                user_query = User.query.filter(User.first_name.ilike(f"%{search_term}%"))
+            elif column_to_search == 'last_name':
+                user_query = User.query.filter(User.last_name.ilike(f"%{search_term}%"))
+            elif column_to_search == 'email':
+                user_query = User.query.filter(User.email.ilike(f"%{search_term}%"))
+            elif column_to_search == 'phone_number':
+                user_query = User.query.filter(User.phone_number.ilike(f"%{search_term}%"))
+            elif column_to_search == 'address':
+                user_query = User.query.filter(User.address.ilike(f"%{search_term}%"))
+            elif column_to_search == 'city':
+                user_query = User.query.filter(User.city.ilike(f"%{search_term}%"))
+            elif column_to_search == 'state':
+                user_query = User.query.filter(User.state.ilike(f"%{search_term}%"))
+            elif column_to_search == 'zipcode':
+                user_query = User.query.filter(User.zipcode == int(search_term))
+            elif column_to_search == 'date_of_birth':
+                user_query = User.query.filter(User.date_of_birth.ilike(f"%{search_term}%"))
+            elif column_to_search == 'emergency_contact_name':
+                user_query = User.query.filter(User.emergency_contact_name.ilike(f"%{search_term}%"))
+            elif column_to_search == 'emergency_contact_phone_number':
+                user_query = User.query.filter(User.emergency_contact_phone_number.ilike(f"%{search_term}%"))
+            elif column_to_search == 'waiver':
+                user_query = User.query.filter(User.waiver.ilike(f"%{search_term}%"))
+            else:
+                return make_response({"error": "Invalid column_to_search value"}, 400)
+
+            results = [user.to_dict() for user in user_query.all()]
+            response = make_response(jsonify(results), 200)
+        except Exception as e:
+            response = make_response({"error": f"404: could not complete query for users. {str(e)}"}, 404)
+        return response
+
 @app.route('/create-account', methods=['POST'])
 def create_account():
     if request.method == 'POST':
@@ -401,7 +514,6 @@ def events():
                     'currency': 'usd',
                     'unit_amount_decimal': float(int(form_data['price']) * 100)
                 },
-                description=form_data['description']
             )
             new_event = Event(
                 name=form_data['name'],
@@ -566,6 +678,8 @@ def sessions():
                         current_date += timedelta(days=31)
                     elif date_string.split('-')[1] == '02':
                         current_date += timedelta(days=28)
+                elif frequency == 'Once':
+                    pass
 
             db.session.commit()
 

@@ -63,7 +63,7 @@ const CreateSession = () => {
         }))
     }
 
-    const frequencyOptions = ['Once', 'Daily', 'Weekly', 'Monthly', 'Biweekly', 'Monthly']
+    const frequencyOptions = ['Once', 'Daily', 'Weekly', 'Biweekly', 'Monthly']
 
     const renderFrequencyDropdownItems = frequencyOptions.map((option) => {
         return <Dropdown.Item name={option} onClick={(event) => handleSelectFrequency(event)}>{option}</Dropdown.Item>

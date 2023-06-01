@@ -10,7 +10,7 @@ const NavBar = () => {
     const { allUsers } = useContext(AllUsersContext)
 
     const renderDashboardNavLink = () => {
-        if (currentUser.admin && allUsers.length !== 0) {
+        if (currentUser.admin) {
             return (
                 <Link to="/admin-dashboard" exact="true" className="navBarLink">Dashboard</Link>
                 )

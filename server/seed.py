@@ -170,14 +170,13 @@ if __name__ == '__main__':
         #     description="Pricing for general yoga classes, regardless of level."
         # )
 
-        # stripe_fitness_class = stripe.Product.create(
-        #     name="General Fitness Classes",
-        #     default_price_data={
-        #         'currency': 'usd',
-        #         'unit_amount_decimal': 1000
-        #     },
-        #     description="Pricing for general fitness classes."
-        # )
+        core_stripe = stripe.Product.create(
+            name="General Fitness Classes",
+            default_price_data={
+                'currency': 'usd',
+                'unit_amount_decimal': 1000
+            },
+        )
 
         "Entry level yoga class for beginners or more experienced yogis who want a more mellow session.  Free for members."
         belay_lesson = Event(name="Top Rope Belay Lesson", price=15, capacity=4, category="Climbing", hours=1, minutes=0, description="One hour class that teaches basic top rope belay safety skills. Without prior experience this class is required to climb in the roped section of the gym.  Free for members.", stripe_product_id="prod_Nxgnsr6bLEWzgD", stripe_price_id="price_1NBlPgBoM5Q6sMKnNKzR6CZf", free_for_members=True)

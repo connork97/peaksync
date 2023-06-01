@@ -81,7 +81,7 @@ const EditSignup = () => {
     
     console.log(eventStart, currentDate, eventStart < currentDate)
     return (
-        <>
+        <div>
             <Modal show={showWarning}>
                 <Modal.Header closeButton>
                     <Modal.Title>Warning!</Modal.Title>
@@ -96,9 +96,11 @@ const EditSignup = () => {
                 </Modal.Footer>
             </Modal>
             <h1>Edit Signup Page</h1>
-            <h4>Current Signup:</h4>
-            <p>{signupToEdit.session.event.name} - Date: {signupToEdit.session.date} Time: {signupToEdit.session.time}</p>
-            <h2>Available Classes/Events to Relocate Signup:</h2>
+            <div style={{textAlign:'center', marginTop:'2rem'}}>
+                <h4>Current Signup:</h4>
+                <p>{signupToEdit.session.event.name} - Date: {signupToEdit.session.date} Time: {signupToEdit.session.time}</p>
+                <h2 style={{marginTop:'2rem'}}>Available Classes/Events to Relocate Signup:</h2>
+            </div>
             <ListGroup>
                 {renderAllAvailableSessions}
             </ListGroup>
@@ -109,7 +111,7 @@ const EditSignup = () => {
                 <Button onClick={handleDeleteSignup} style={{background:'red'}}>Cancel Booking (not functional)</Button>
             </h2>
             : null}
-        </>
+        </div>
     )
 }
 

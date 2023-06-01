@@ -31,7 +31,7 @@ class User(db.Model, SerializerMixin):
     zipcode = db.Column(db.Integer)
     date_of_birth = db.Column(db.String)
     emergency_contact_name = db.Column(db.String)
-    emergency_contact_phone_number = db.Column(db.Integer)
+    emergency_contact_phone_number = db.Column(db.String)
 
     waiver = db.Column(db.Boolean, default=False)
     admin = db.Column(db.Boolean, default=False)

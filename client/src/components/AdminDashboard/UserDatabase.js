@@ -4,6 +4,8 @@ import { AllUsersContext, LoggedInUserContext } from "../App.js";
 
 import Table from 'react-bootstrap/Table'
 import Dropdown from "react-bootstrap/Dropdown"
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
 
 const UserDatabase = () => {
 
@@ -18,6 +20,7 @@ const UserDatabase = () => {
     const [selectedUserProfile, setSelectedUserProfile] = useState(null)
 
     const columnLabels = ["ID", "Last Name", "First Name", "Email", "Phone Number", "Waiver", "Address", "City", "State", "Zipcode", "Date of Birth", "Created At", "Admin"]
+    // console.log(searchCategory.toLowerCase().split(" ").join("_"))
     const renderColumnLabels = columnLabels.map((label) => {
         if (label === 'Date of Birth') {
             return <th>{"D.O.B"}</th>
@@ -53,7 +56,7 @@ const UserDatabase = () => {
     })
 
     let convertedSearchCategory = searchCategory.split(" ").join("_").toLowerCase()
-
+    // console.log(convertedSearchCategory)
     const handleUserClick = (user) => {
         setActiveLi(user.id)
         setSelectedUserProfile(user)
@@ -65,6 +68,7 @@ const UserDatabase = () => {
     }
 
     const filterUsers = (category) => allUsers.map((user) => {
+        
         if (String(user[category]).toLowerCase().includes(String(searchParams).toLowerCase())) {
             return (
                 <tr key={user.id} onClick={() => handleUserClick(user)} onDoubleClick={() => handleUserDoubleClick(user)} style={{background: activeLi === user.id ? "lightblue" : null}}>
@@ -86,11 +90,32 @@ const UserDatabase = () => {
         }
     })
 
+    const handleFetchUsers = (event) => {
+        event.preventDefault()
+        fetch('/users/filter', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                "search_term": searchParams,
+                "column_to_search": convertedSearchCategory
+            })
+        })
+        .then((response) => response.json())
+        .then((userData) => setAllUsers(userData))
+    }
+
     return (
         <div>
             <h1 style={{marginTop:'2rem', marginBottom:'1.5rem'}}>User Database</h1>
             <div id="adminSearchDiv" style={{display: "flex", justifyContent:"center", alignItems:"center"}}>
-            <input type="text" value={searchParams} onChange={(event) => setSearchParams(event.target.value)} style={{marginRight:"10px", width:'25vw', paddingLeft:'10px', paddingRight:'10px', border:'1px solid', borderRadius:'10px'}}></input>
+            <Form onSubmit={handleFetchUsers}>
+                <Form.Control type="text" value={searchParams} onChange={(event) => setSearchParams(event.target.value)} 
+                    style={{marginRight:"10px", width:'25vw', paddingLeft:'10px', paddingRight:'10px', border:'1px solid', borderRadius:'10px'}}>
+                </Form.Control>
+                <Button type="submit">Search</Button>
+            </Form>
             <Dropdown style={{marginLeft:"10px"}}>
                 <Dropdown.Toggle>
                     {searchCategory}

@@ -128,17 +128,17 @@ function App() {
     })
   }, [allEvents, generalToggle])
 
-  useEffect(() => {
-    if (currentUser.admin === true) {
-      fetch("/users")
-      .then((response) => response.json())
-      .then((userData) => {
-        setAllUsers(userData)
-      })
-    } else {
-      console.log("No admin priveledges")
-    }
-  }, [currentUser])
+  // useEffect(() => {
+  //   if (currentUser.admin === true) {
+  //     fetch("/users")
+  //     .then((response) => response.json())
+  //     .then((userData) => {
+  //       setAllUsers(userData)
+  //     })
+  //   } else {
+  //     console.log("No admin priveledges")
+  //   }
+  // }, [currentUser])
 
   useEffect(() => {
     if (currentUser.admin === true) {
