@@ -15,11 +15,11 @@ const UserDatabase = () => {
     const history = useHistory()
 
     const [searchParams, setSearchParams] = useState("")
-    const [searchCategory, setSearchCategory] = useState("Filter By")
+    const [searchCategory, setSearchCategory] = useState("Customer")
     const [activeLi, setActiveLi] = useState("")
     const [selectedUserProfile, setSelectedUserProfile] = useState(null)
 
-    const columnLabels = ["ID", "Last Name", "First Name", "Email", "Phone Number", "Waiver", "Address", "City", "State", "Zipcode", "Date of Birth", "Created At", "Admin"]
+    const columnLabels = ["ID", "Customer", "Email", "Phone Number", "Waiver", "Address", "City", "State", "Zipcode", "Date of Birth", "Created At", "Admin"]
     // console.log(searchCategory.toLowerCase().split(" ").join("_"))
     const renderColumnLabels = columnLabels.map((label) => {
         if (label === 'Date of Birth') {
@@ -35,26 +35,6 @@ const UserDatabase = () => {
         )
     })
 
-    const renderAllUsers = allUsers.map((user) => {
-            return (
-                <tr key={user.id} onClick={() => handleUserClick(user)} onDoubleClick={() => handleUserDoubleClick(user)} style={{background: activeLi === user.id ? "lightblue" : null}}>
-                    <td>{user.id}</td>
-                    <td>{user.last_name}</td>
-                    <td>{user.first_name}</td>
-                    <td>{user.email}</td>
-                    <td>{user.phone_number}</td>
-                    <td>{user.waiver ? "True" : "False"}</td>
-                    <td>{user.address}</td>
-                    <td>{user.city}</td>
-                    <td>{user.state}</td>
-                    <td>{user.zipcode}</td>
-                    <td>{user.date_of_birth}</td>
-                    <td>{user.created_at}</td>
-                    <td>{user.admin ? "True": "False"}</td>
-                </tr>
-        )
-    })
-
     let convertedSearchCategory = searchCategory.split(" ").join("_").toLowerCase()
     // console.log(convertedSearchCategory)
     const handleUserClick = (user) => {
@@ -67,14 +47,11 @@ const UserDatabase = () => {
         history.push({pathname:"/profile", state:selectedUserProfile})
     }
 
-    const filterUsers = (category) => allUsers.map((user) => {
-        
-        if (String(user[category]).toLowerCase().includes(String(searchParams).toLowerCase())) {
+    const filterUsers = allUsers.map((user) => {
             return (
                 <tr key={user.id} onClick={() => handleUserClick(user)} onDoubleClick={() => handleUserDoubleClick(user)} style={{background: activeLi === user.id ? "lightblue" : null}}>
                     <td>{user.id}</td>
-                    <td>{user.last_name}</td>
-                    <td>{user.first_name}</td>
+                    <td>{user.last_name}, {user.first_name}</td>
                     <td>{user.email}</td>
                     <td>{user.phone_number}</td>
                     <td>{user.waiver ? "True" : "False"}</td>
@@ -87,7 +64,6 @@ const UserDatabase = () => {
                     <td>{user.admin ? "True" : "False"}</td>
                 </tr>
             )
-        }
     })
 
     const handleFetchUsers = (event) => {
@@ -103,25 +79,28 @@ const UserDatabase = () => {
             })
         })
         .then((response) => response.json())
-        .then((userData) => setAllUsers(userData))
+        .then((userData) => {
+            setAllUsers(userData)
+            console.log(userData)
+        })
     }
 
     return (
         <div>
             <h1 style={{marginTop:'2rem', marginBottom:'1.5rem'}}>User Database</h1>
             <div id="adminSearchDiv" style={{display: "flex", justifyContent:"center", alignItems:"center"}}>
-            <Form onSubmit={handleFetchUsers}>
+            <Form onSubmit={handleFetchUsers} style={{display:'flex'}}>
                 <Form.Control type="text" value={searchParams} onChange={(event) => setSearchParams(event.target.value)} 
-                    style={{marginRight:"10px", width:'25vw', paddingLeft:'10px', paddingRight:'10px', border:'1px solid', borderRadius:'10px'}}>
+                    style={{marginRight:"10px", width:'25vw', paddingLeft:'10px', paddingRight:'10px', border:'1px solid rgba(0, 0, 0, 0.1)', borderRadius:'10px'}}>
                 </Form.Control>
                 <Button type="submit">Search</Button>
             </Form>
-            <Dropdown style={{marginLeft:"10px"}}>
+            <Dropdown style={{marginLeft:'2rem'}}>
+                <span style={{marginRight:'0.75rem'}}><b>Filter By:</b></span>
                 <Dropdown.Toggle>
                     {searchCategory}
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                    <Dropdown.Item name="All" onClick={(event) => setSearchCategory(event.target.name)}>All</Dropdown.Item>
                     {renderDropdownItems}
                 </Dropdown.Menu>
             </Dropdown>
@@ -134,7 +113,7 @@ const UserDatabase = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {searchCategory === "Filter By" || searchCategory === "All" ? renderAllUsers : filterUsers(convertedSearchCategory)}
+                    {filterUsers}
                 </tbody>
             </Table>
             </div>

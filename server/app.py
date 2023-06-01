@@ -315,10 +315,13 @@ def filter_users():
 
             if column_to_search == 'id':
                 user_query = User.query.filter(User.id == int(search_term))
-            elif column_to_search == 'first_name':
-                user_query = User.query.filter(User.first_name.ilike(f"%{search_term}%"))
-            elif column_to_search == 'last_name':
-                user_query = User.query.filter(User.last_name.ilike(f"%{search_term}%"))
+            elif column_to_search == 'customer':
+                user_query = User.query.filter(
+                    or_(
+                        User.first_name.ilike(f"%{search_term}%"),
+                        User.last_name.ilike(f"%{search_term}%")
+                    )
+                )
             elif column_to_search == 'email':
                 user_query = User.query.filter(User.email.ilike(f"%{search_term}%"))
             elif column_to_search == 'phone_number':
@@ -338,12 +341,22 @@ def filter_users():
             elif column_to_search == 'emergency_contact_phone_number':
                 user_query = User.query.filter(User.emergency_contact_phone_number.ilike(f"%{search_term}%"))
             elif column_to_search == 'waiver':
-                user_query = User.query.filter(User.waiver.ilike(f"%{search_term}%"))
+                if search_term.lower().startswith('t'):
+                    user_query = User.query.filter(User.waiver == True)
+                elif search_term.lower().startswith('f'):
+                    user_query = User.query.filter(User.waiver == False)
+            elif column_to_search == 'admin':
+                if search_term.lower().startswith('t'):
+                    user_query = User.query.filter(User.waiver == True)
+                elif search_term.lower().startswith('f'):
+                    user_query = User.query.filter(User.waiver == False)
             else:
-                return make_response({"error": "Invalid column_to_search value"}, 400)
+                user_query = {"error": "Invalid column_to_search value"}
+                return make_response(user_query, 400)
 
-            results = [user.to_dict() for user in user_query.all()]
-            response = make_response(jsonify(results), 200)
+            if user_query is not None:
+                results = [user.to_dict() for user in user_query.all()]
+                response = make_response(results, 200)
         except Exception as e:
             response = make_response({"error": f"404: could not complete query for users. {str(e)}"}, 404)
         return response
