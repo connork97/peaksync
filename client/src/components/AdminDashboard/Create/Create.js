@@ -15,19 +15,19 @@ const Create = () => {
                     <CreateUser />
                 </Accordion.Body>
             </Accordion.Item>
-            <Accordion.Item eventKey="1" style={{marginBottom:"20px"}}>
+            <Accordion.Item eventKey="1" style={{marginBottom:"20px", borderTop:'1px solid rgba(0, 0, 0, 0.1)'}}>
                 <Accordion.Header>Create a New Event or Class</Accordion.Header>
                 <Accordion.Body>
                     <CreateEvent />
                 </Accordion.Body>
             </Accordion.Item>
-            <Accordion.Item eventKey="2" style={{marginBottom:"20px"}}>
+            <Accordion.Item eventKey="2" style={{marginBottom:"20px", borderTop:'1px solid rgba(0, 0, 0, 0.1)'}}>
                 <Accordion.Header>Create New Calendar Item for Events and Classes</Accordion.Header>
                 <Accordion.Body>
                     <CreateSession/>
                 </Accordion.Body>
             </Accordion.Item>
-            <Accordion.Item eventKey="3" style={{marginBottom:"20px"}}>
+            <Accordion.Item eventKey="3" style={{marginBottom:"20px", borderTop:'1px solid rgba(0, 0, 0, 0.1)'}}>
                 <Accordion.Header>Create a New Membership or Offering</Accordion.Header>
                 <Accordion.Body>
                     <CreateMembership />

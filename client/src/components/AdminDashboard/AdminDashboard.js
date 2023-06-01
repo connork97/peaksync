@@ -79,7 +79,7 @@ const AdminDashboard = () => {
 
     return (
         <>
-            <h1>Admin Dashboard</h1>
+            <h1 style={{marginTop:'2rem', marginBottom:'2rem'}}>Admin Dashboard</h1>
             <Tabs
                 defaultActiveKey="profile"
                 id="justify-tab-profile"
@@ -97,19 +97,19 @@ const AdminDashboard = () => {
                                 {renderAllMemberships('Guest')}
                             </Accordion.Body>
                         </Accordion.Item>
-                        <Accordion.Item eventKey='1' style={{marginBottom:"2rem"}}>
+                        <Accordion.Item eventKey='1' style={{marginBottom:"2rem", borderTop:'1px solid rgba(0, 0, 0, 0.1)'}}>
                             <Accordion.Header>Memberships</Accordion.Header>
                             <Accordion.Body>
                                 {renderAllMemberships('Member')}
                             </Accordion.Body>
                         </Accordion.Item>
-                        <Accordion.Item eventKey='2' style={{marginBottom:"2rem"}}>
+                        <Accordion.Item eventKey='2' style={{marginBottom:"2rem", borderTop:'1px solid rgba(0, 0, 0, 0.1)'}}>
                             <Accordion.Header>Punch Cards</Accordion.Header>
                             <Accordion.Body>
                                 {renderAllMemberships('Punch Card')}
                             </Accordion.Body>
                         </Accordion.Item>
-                        <Accordion.Item eventKey='3' style={{marginBottom:"2rem"}}>
+                        <Accordion.Item eventKey='3' style={{marginBottom:"2rem", borderTop:'1px solid rgba(0, 0, 0, 0.1)'}}>
                             <Accordion.Header>Other</Accordion.Header>
                             <Accordion.Body>
                                 {renderAllMemberships('Misc')}
@@ -125,25 +125,25 @@ const AdminDashboard = () => {
                                 {renderEvents('Climbing')}
                             </Accordion.Body>
                         </Accordion.Item>
-                        <Accordion.Item eventKey='1' style={{marginBottom:"2rem"}}>
+                        <Accordion.Item eventKey='1' style={{marginBottom:"2rem", borderTop:'1px solid rgba(0, 0, 0, 0.1)'}}>
                             <Accordion.Header>Yoga Classes</Accordion.Header>
                             <Accordion.Body id="adminEventsListGroup">
                                 {renderEvents('Yoga')}
                             </Accordion.Body>
                         </Accordion.Item>
-                        <Accordion.Item eventKey='2' style={{marginBottom:"2rem"}}>
+                        <Accordion.Item eventKey='2' style={{marginBottom:"2rem", borderTop:'1px solid rgba(0, 0, 0, 0.1)'}}>
                             <Accordion.Header>Fitness Classes</Accordion.Header>
                             <Accordion.Body id="adminEventsListGroup">
                                 {renderEvents('Fitness')}
                             </Accordion.Body>
                         </Accordion.Item>
-                        <Accordion.Item eventKey='3' style={{marginBottom:"2rem"}}>
+                        <Accordion.Item eventKey='3' style={{marginBottom:"2rem", borderTop:'1px solid rgba(0, 0, 0, 0.1)'}}>
                             <Accordion.Header>Events</Accordion.Header>
                             <Accordion.Body id="adminEventsListGroup">
                                 {renderEvents('Event')}
                             </Accordion.Body>
                         </Accordion.Item>
-                        <Accordion.Item eventKey='4' style={{marginBottom:"2rem"}}>
+                        <Accordion.Item eventKey='4' style={{marginBottom:"2rem", borderTop:'1px solid rgba(0, 0, 0, 0.1)'}}>
                             <Accordion.Header>Other Classes and Events</Accordion.Header>
                             <Accordion.Body id="adminEventsListGroup">
                                 {renderEvents('Misc')}
@@ -161,24 +161,17 @@ const AdminDashboard = () => {
                             </Dropdown>
                         </Form>
                     </div>
-                    {/* <Accordion> */}
-                        {/* <Accordion.Item eventKey='0'style={{marginBottom:"20px"}}> */}
-                            {/* <Accordion.Header>Climbing Classes</Accordion.Header> */}
-                            {/* <Accordion.Body id="adminSignupsListGroup"> */}
                             <ListGroup>
                                 {renderSignupsByCategory}
                             </ListGroup>
-                            {/* </Accordion.Body> */}
-                        {/* </Accordion.Item> */}
-                    {/* </Accordion> */}
                 </Tab>
                 <Tab eventKey="create" title="Create" style={{textAlign:'center', width:'75vw', margin:'auto', marginTop:'2.5rem'}}>
                     <Create />
                 </Tab>
                 <Tab eventKey="userDatabase" title="User Database" style={{textAlign:"center"}}>
-                    <p>To view and manage the user database, a redirect is required.</p>
-                    <p>Click the button below to search and edit user profiles.</p>
-                    <Button onClick={() => history.push({pathname:"/database"})}>Go to User Database</Button>
+                    <h2 style={{marginTop:'10rem', marginBottom:'3rem'}}>To view and manage the user database, a redirect is required.</h2>
+                    <h3>Click the button below to search and edit user profiles.</h3>
+                    <Button onClick={() => history.push({pathname:"/database"})} style={{marginTop:'3rem', width:'17.5rem', height:'3.5rem'}}>Go to User Database</Button>
                 </Tab>
             </Tabs>
         </>

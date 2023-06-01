@@ -2,13 +2,13 @@ import { useState, useContext, useEffect } from 'react'
 import { AllUsersContext, LoggedInUserContext, AllMembershipsContext } from '../App'
 
 import Card from 'react-bootstrap/Card'
-import myImage from '../../images/profile-placeholder-300x237.png'
+// import myImage from '../../images/profile-placeholder-300x237.png'
 import Button from 'react-bootstrap/Button'
 import Dropdown from 'react-bootstrap/Dropdown'
 
 const ProfileInfo = ({ selectedUser }) => {
     
-    const { currentUser, setCurrentUser } = useContext(LoggedInUserContext)
+    const { currentUser } = useContext(LoggedInUserContext)
     const { allUsers, setAllUsers } = useContext(AllUsersContext)
     const { allMemberships } = useContext(AllMembershipsContext)
     
@@ -104,67 +104,82 @@ const ProfileInfo = ({ selectedUser }) => {
         )
     })
 
-    // const [expiration, setExpiration] = useState({
-    //     "month": "Month",
-    //     "day": "Day",
-    //     "year": "Year"
-    // })
+    const [expiration, setExpiration] = useState({
+        "month": "Month",
+        "day": "Day",
+        "year": "Year"
+    })
 
-    // const handleExpirationChange = (event) => {
-    //     const { name, id } = event.target
-    //     setExpiration((prevState) => ({
-    //         ...prevState,
-    //         [name]: id
-    //     }))
-    // }
+    const handleExpirationChange = (event) => {
+        const { name, id } = event.target
+        setExpiration((prevState) => ({
+            ...prevState,
+            [name]: id
+        }))
+    }
 
-    // const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-    // const renderExpirationDays = () => {
-    //     let i = 1;
-    //     const days = [];
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+    const renderExpirationDays = () => {
+        let i = 1;
+        const days = [];
 
-    //     if (['January', 'March', 'May', 'July', 'August', 'October', 'December'].includes(expiration.month)) {
-    //       while (i <= 31) {
-    //         days.push(<Dropdown.Item name="day" id={i} key={i}>{i}</Dropdown.Item>);
-    //         i++;
-    //       }
-    //     } else if (['April', 'June', 'September', 'November'].includes(expiration.month)) {
-    //         while (i <= 30) {
-    //           days.push(<Dropdown.Item name="day" id={i} key={i}>{i}</Dropdown.Item>);
-    //           i++;
-    //         }
-    //     } else if (expiration.month === 'February') {
-    //         while (i <= 29) {
-    //           days.push(<Dropdown.Item name="day" id={i} key={i}>{i}</Dropdown.Item>);
-    //           i++;
-    //         }
-    //     }
+        if (['January', 'March', 'May', 'July', 'August', 'October', 'December'].includes(String(expiration.month))) {
+          while (i <= 31) {
+            //  console.log(i)
+            days.push(<Dropdown.Item name="day" id={i} key={i} onClick={(event) => handleExpirationChange(event)}>{i}</Dropdown.Item>);
+            i++;
+          }
+        } else if (['April', 'June', 'September', 'November'].includes(String(expiration.month))) {
+            while (i <= 30) {
+            //  console.log(i)
+              days.push(<Dropdown.Item name="day" id={i} key={i} onClick={(event) => handleExpirationChange(event)}>{i}</Dropdown.Item>);
+              i++;
+            }
+        } else if (String(expiration.month) === 'February') {
+            while (i <= 29) {
+            //  console.log(i)
+              days.push(<Dropdown.Item name="day" id={i} key={i} onClick={(event) => handleExpirationChange(event)}>{i}</Dropdown.Item>);
+              i++;
+            }
+        }
 
-    //     return days;
-    //     // return null; // or any alternative JSX representation for non-matching condition
-    //   };
-    // const renderExpirationMonth = months.map((month) => {
-    //     return (
-    //         <Dropdown.Item name="month" id={month} onClick={(event) => handleExpirationChange(event)}>{month}</Dropdown.Item>
-    //     )
-    // })
+        return days;
+        // return null; // or any alternative JSX representation for non-matching condition
+      };
+    const renderExpirationMonth = months.map((month) => {
+        return (
+            <Dropdown.Item name="month" id={month} onClick={(event) => handleExpirationChange(event)}>{month}</Dropdown.Item>
+        )
+    })
 
-    // const renderExpirationYears = () => {
-    //     let i = 2023
-    //     let years = []
-    //     while (i <= 2033) {
-    //         years.push(<Dropdown.Item name="year" id={i}>{i}</Dropdown.Item>)
-    //     }
-    // }
+    const renderExpirationYears = () => {
+        let i = 2023
+        let years = []
+        while (i <= 2033) {
+            // console.log(i)
+            years.push(<Dropdown.Item name="year" id={i} onClick={(event) => handleExpirationChange(event)}>{i}</Dropdown.Item>)
+            i++
+        }
+        return years
+    }
 
     return (
-        <div id="userProfileInfoDiv" style={{display:"flex", marginLeft:"0", marginBottom:'3rem', textAlign:"left", justifyContent:'center', marginTop:'2.5rem'}}>
-            <Card style={{position:"absolute", marginBottom:'3rem', display:"flex", justifyContent:"start", marginLeft:"0", textAlign:"left"}}>
+        <>
+        {currentUser.admin && <h2 style={{textAlign:'center', marginTop:'2rem'}}>Use caution whenever editing user profile information.  There is no "undo" button once you save them!</h2>}
+        <h1 style={{marginTop:'2rem'}}>{selectedUser.first_name} {selectedUser.last_name}'s Profile</h1>
+        <div id="userProfileInfoDiv" style={{display:"flex", marginLeft:"0", marginBottom:'3rem', textAlign:"left", justifyContent:'center', marginTop:'2rem'}}>
+            <Card style={{position:"absolute", marginBottom:'3rem', display:"flex", justifyContent:"start", marginLeft:"0", textAlign:"left", width:'50vw'}}>
                 {/* <Card.Img src={myImage} style={{width:"250px", display:"flex", justifyContent:"center"}}></Card.Img> */}
                 <Card.Body>
-                    <Card.Title>First Name: <input name="first_name" value={userProfileInfo.first_name} onChange={handleProfileInfoChange}></input></Card.Title>
-                    <Card.Title>Last Name: <input name="last_name" value={userProfileInfo.last_name} onChange={handleProfileInfoChange}></input></Card.Title>
-                    <Card.Text>Contact Information: <input name="email" value={userProfileInfo.email} onChange={handleProfileInfoChange}></input> - <input name="phone_number" value={userProfileInfo.phone_number} onChange={handleProfileInfoChange}></input></Card.Text>
+                    <span style={{display:'flex'}}>
+                    <Card.Title style={{marginRight:'1.5rem'}}>First Name: <input name="first_name" value={userProfileInfo.first_name} onChange={handleProfileInfoChange}></input></Card.Title>
+                    <Card.Title style={{marginLeft:'1.5rem'}}>Last Name: <input name="last_name" value={userProfileInfo.last_name} onChange={handleProfileInfoChange}></input></Card.Title>
+                    </span>
+                    <br></br>
+                    <Card.Title>Contact Information:</Card.Title>
+                    <br></br>
+                        <Card.Text>Email: <input name="email" value={userProfileInfo.email} onChange={handleProfileInfoChange}></input></Card.Text>
+                        <Card.Text>Phone Number: <input name="phone_number" value={userProfileInfo.phone_number} onChange={handleProfileInfoChange}></input></Card.Text>
                     <Card.Text>Address: <input name="address" value={userProfileInfo.address} onChange={handleProfileInfoChange}></input></Card.Text>
                     <Card.Text>City: <input name="city" value={userProfileInfo.city} onChange={handleProfileInfoChange}></input> State: <input name="state" value={userProfileInfo.state} onChange={handleProfileInfoChange}></input> Zipcode: <input name="zipcode" value={userProfileInfo.zipcode} onChange={handleProfileInfoChange}></input></Card.Text>
                     <Card.Text>Date of Birth: <input name="date_of_birth" value={userProfileInfo.date_of_birth} onChange={handleProfileInfoChange}></input></Card.Text>
@@ -180,15 +195,15 @@ const ProfileInfo = ({ selectedUser }) => {
                             {allMembershipNames}
                         </Dropdown.Menu>
                     </Dropdown>
-                    {/* <span style={{display:'flex', alignItems:'center', marginRight:'1rem'}}>Expires:</span>
+                    <Card.Text style={{display:'flex', alignContent:'center', marginRight:'1rem', marginTop:'0.35rem'}}>Expires:</Card.Text>
                     <Dropdown>
-                        <Dropdown.Toggle>{expiration.month}</Dropdown.Toggle>
-                        <Dropdown.Menu>
-                            {renderExpirationMonth}
-                        </Dropdown.Menu>
+                    <Dropdown.Toggle style={{marginRight:'0.5rem'}}>{expiration.month}</Dropdown.Toggle>
+                    <Dropdown.Menu>
+                    {renderExpirationMonth}
+                    </Dropdown.Menu>
                     </Dropdown>
                     <Dropdown>
-                        <Dropdown.Toggle>{expiration.day}</Dropdown.Toggle>
+                        <Dropdown.Toggle style={{marginRight:'0.5rem'}}>{expiration.day}</Dropdown.Toggle>
                         <Dropdown.Menu>
                             {renderExpirationDays()}
                         </Dropdown.Menu>
@@ -196,19 +211,21 @@ const ProfileInfo = ({ selectedUser }) => {
                     <Dropdown>
                         <Dropdown.Toggle>{expiration.year}</Dropdown.Toggle>
                         <Dropdown.Menu>
-                            {renderExpirationYears()}
-                        </Dropdown.Menu>
-                    </Dropdown> */}
+                                {renderExpirationYears()}
+                            </Dropdown.Menu>
+                    </Dropdown>
                     <br></br><br></br><br></br>
                     </div>
                     : <Card.Text>Membership: {membershipName}</Card.Text>}
                     <Card.Text>Type: {membershipType}</Card.Text>
                     <Card.Text>Subtype: {membershipSubtype}</Card.Text>
                     <br></br>
-                    <Button onClick={handleProfileEdit}>Save Changes</Button> <Button onClick={handleDiscardChanges}>Discard Changes</Button>
+                    <Button onClick={handleProfileEdit} style={{marginRight:'1rem'}}>Save Changes</Button>
+                    <Button onClick={handleDiscardChanges} style={{background:'grey', marginLeft:'1rem'}}>Discard Changes</Button>
                 </Card.Body>
             </Card>
         </div>
+        </>
     )
 }
 

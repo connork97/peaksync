@@ -93,7 +93,7 @@ const CreateSession = () => {
             <h4>This is for adding existing options to the calendar.</h4>
             <h4>Please navigate to the "Create an Event/Class" section to create a brand new offering.</h4>
             <br></br>
-            Choose a Class or Event to Add to the Calendar:
+            <b>Choose a Class or Event to Add to the Calendar:</b>
             <Dropdown>
                 <br></br>
                 <Dropdown.Toggle>{selectedDropdownEvent}</Dropdown.Toggle>
@@ -103,26 +103,28 @@ const CreateSession = () => {
                 </Dropdown.Menu>
             </Dropdown>
             <br></br>
-            <Form.Label>Start Date:</Form.Label>
-                <Form.Control name="date" value={newSession.date} onChange={handleNewSessionChange}></Form.Control>
-                <Form.Text>Date must be in format of YYYY-MM-DD</Form.Text>
-            <br></br><br></br>
-            <Form.Label>Start Time:</Form.Label>
-                <Form.Control name="time" value={newSession.time} onChange={handleNewSessionChange}></Form.Control>
-                <Form.Text>Time must be in the format of HH:MM</Form.Text>
-            <br></br><br></br>
-            <Form.Label>Frequency:</Form.Label>
+            <div style={{width:'50%', margin:'auto'}}>
+                <Form.Label style={{marginBottom:'1rem'}}><b>Start Date:</b></Form.Label>
+                    <Form.Control name="date" value={newSession.date} onChange={handleNewSessionChange}></Form.Control>
+                    <Form.Text>Date must be in format of YYYY-MM-DD</Form.Text>
+                <br></br><br></br><br></br>
+                <Form.Label><b>Start Time:</b></Form.Label>
+                    <Form.Control name="time" value={newSession.time} onChange={handleNewSessionChange}></Form.Control>
+                    <Form.Text>Time must be in the format of HH:MM</Form.Text>
+                <br></br><br></br><br></br>
+                <Form.Label><b>Frequency:</b></Form.Label>
+            </div>
                 <Dropdown>
                     <br></br>
-                    <Dropdown.Toggle>{selectedFrequency}</Dropdown.Toggle>
-                    <Dropdown.Menu>
+                    <Dropdown.Toggle style={{width:'10rem'}}>{selectedFrequency}</Dropdown.Toggle>
+                    <Dropdown.Menu style={{textAlign:'center'}}>
                         <Dropdown.Item name="Classes and Events" onClick={handleSelectFrequency}></Dropdown.Item>
                         {renderFrequencyDropdownItems}
                     </Dropdown.Menu>
                 </Dropdown>
-            <br></br><br></br>
-            <Button type="submit">Create New Calendar Item</Button>
-            <Button onClick={handleDiscardSession}>Discard Calendar Item</Button>
+            <br></br><br></br><br></br>
+            <Button type="submit" style={{marginRight:'1.5rem', width:'15rem'}}>Create New Calendar Item</Button>
+            <Button onClick={handleDiscardSession} style={{marginLeft:'1.5rem', background:'grey', width:'15rem'}}>Discard Calendar Item</Button>
             <br></br><br></br>
         </Form>
     )

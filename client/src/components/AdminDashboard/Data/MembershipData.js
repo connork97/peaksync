@@ -55,8 +55,9 @@ const MembershipData = ({ membership }) => {
             console.log(editedMembershipData)
             setEditMembershipToggle(!editMembershipToggle)
         })
-        console.log(editedMembership.price, membership.price)
-        if (editedMembership.price != membership.price || editedMembership.name != membership.name || editedMembership.description != membership.description) {
+        console.log(editedMembership.price, typeof editedMembership.price)
+        console.log(membership.price, typeof membership.price)
+        if (Number(editedMembership.price) !== Number(membership.price) || editedMembership.name !== membership.name || editedMembership.description !== membership.description) {
             console.log("Editing Stripe product price...")
             fetch('/update_stripe_membership_product', {
                 method: 'POST',
@@ -77,20 +78,24 @@ const MembershipData = ({ membership }) => {
     }
     const handleMembershipDelete = (membership_id) => {
         if (window.confirm("Are you sure you want to delete this membership?  This action cannot be undone.") === true) {
+            if (membership.users.length === 0) {
 
-            fetch(`/memberships/${membership_id}`, {
-                method: 'DELETE'
-            })
-            const updatedMemberships = allMemberships.filter((memb) => memb.id != membership_id)
-            setAllMemberships(updatedMemberships)
+                console.log(membership.users.length)
+                // fetch(`/memberships/${membership_id}`, {
+                    //     method: 'DELETE'
+                    // })
+                    // const updatedMemberships = allMemberships.filter((memb) => memb.id != membership_id)
+            // setAllMemberships(updatedMemberships)
+            } else {
+                window.alert(`Sorry, but there are ${membership.users.length} users with this type of membership or offering. Make sure their profiles are adjusted to a new membership type before deleting this offering.`)
+            }
         } else {
             window.alert("Okay, the membership has not been deleted.")
         }
     }
+
     return (
-        <ListGroup.Item className="listGroupItemWithEndButtons">
-            ID: {membership.id} 
-            <br></br>
+        <ListGroup.Item className="listGroupItemWithEndButtons" style={{marginBottom:'2rem'}}>
             Name: {editMembershipToggle ? <input name="name" value={editedMembership.name} onChange={handleMembershipDetailChange}></input> : <span>{editedMembership.name}</span>} 
             <br></br>
             Price: ${editMembershipToggle ? <input name="price" value={editedMembership.price} onChange={handleMembershipDetailChange}></input> : <span>{editedMembership.price}</span>} 
@@ -101,14 +106,14 @@ const MembershipData = ({ membership }) => {
             <br></br>
             Description: {editMembershipToggle ? <input name="description" value={editedMembership.description} style={{width:"75%"}} onChange={handleMembershipDetailChange}></input> : <span>{editedMembership.description}</span>}
             <br></br>
-            {editMembershipToggle ? null : <Button onClick={() => setEditMembershipToggle(!editMembershipToggle)}>Edit Membership</Button>}
+            {editMembershipToggle ? null : <><br></br><Button onClick={() => setEditMembershipToggle(!editMembershipToggle)}>Edit Membership</Button></>}
             {editMembershipToggle ?
             <Button className='listGroupEndButton' onClick={() => handleMembershipChangeSubmit(membership.id)}>Save Changes</Button>
             : null}
             {editMembershipToggle ?
             <Button className='listGroupEndButton' onClick={handleDiscardMembershipChanges}>Discard Changes</Button>
             : null}
-            <Button className='listGroupEndButton' onClick={() => handleMembershipDelete(membership.id)} style={{background:"red"}}>Delete Membership</Button>
+            <Button className='listGroupEndButton' onClick={() => handleMembershipDelete(membership.id)} style={{background:"red", marginLeft:'1rem'}}>Delete Membership</Button>
 
         </ListGroup.Item>
     )

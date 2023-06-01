@@ -101,21 +101,19 @@ const EventData = ({ event }) => {
     return (
         <div>
             <ListGroup.Item className="listGroupItemWithEndButtons" style={{marginBottom:'2rem'}}>
-                ID: {event.id}
+                <b>Name:</b> {editEventToggle ? <input name="name" value={editedEvent.name} onChange={handleEventDetailChange}></input> : editedEvent.name}
                 <br></br>
-                Name: {editEventToggle ? <input name="name" value={editedEvent.name} onChange={handleEventDetailChange}></input> : editedEvent.name}
+                <b>Price:</b> ${editEventToggle ? <input name="price" value={editedEvent.price} onChange={handleEventDetailChange}></input> : editedEvent.price}
                 <br></br>
-                Price: ${editEventToggle ? <input name="price" value={editedEvent.price} onChange={handleEventDetailChange}></input> : editedEvent.price}
+                <b>Category:</b> {editEventToggle ? <input name="category" value={editedEvent.category} onChange={handleEventDetailChange}></input> : editedEvent.category}
                 <br></br>
-                Category: {editEventToggle ? <input name="category" value={editedEvent.category} onChange={handleEventDetailChange}></input> : editedEvent.category}
+                <b>Capacity:</b> {editEventToggle ? <input name="capacity" value={editedEvent.capacity} onChange={handleEventDetailChange}></input> : editedEvent.capacity}
                 <br></br>
-                Capacity: {editEventToggle ? <input name="capacity" value={editedEvent.capacity} onChange={handleEventDetailChange}></input> : editedEvent.capacity}
+                <b>Hours:</b> {editEventToggle ? <input name="hours" value={editedEvent.hours} onChange={handleEventDetailChange}></input> : editedEvent.hours} 
                 <br></br>
-                Hours: {editEventToggle ? <input name="hours" value={editedEvent.hours} onChange={handleEventDetailChange}></input> : editedEvent.hours} 
+                <b>Minutes:</b> {editEventToggle ? <input name="minutes" value={editedEvent.minutes} onChange={handleEventDetailChange}></input> : editedEvent.minutes}
                 <br></br>
-                Minutes: {editEventToggle ? <input name="minutes" value={editedEvent.minutes} onChange={handleEventDetailChange}></input> : editedEvent.minutes}
-                <br></br>
-                Description: {editEventToggle ? <input name="description" value={editedEvent.description} onChange={handleEventDetailChange}></input> : <span>{editedEvent.description}</span>}
+                <b>Description:</b> {editEventToggle ? <input name="description" value={editedEvent.description} onChange={handleEventDetailChange}></input> : <span>{editedEvent.description}</span>}
                 <br></br><br></br>
                 {editEventToggle ? null : <Button onClick={() => setEditEventToggle(!editEventToggle)}>Edit Event</Button>}
                 {editEventToggle ?
