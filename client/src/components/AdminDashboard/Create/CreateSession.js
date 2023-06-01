@@ -70,6 +70,7 @@ const CreateSession = () => {
     })
 
     const handleSessionSubmit = (event) => {
+        console.log("test")
         event.preventDefault()
         fetch('/sessions', {
             method: 'POST',

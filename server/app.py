@@ -655,53 +655,142 @@ def sessions():
             response = make_response({"error": "404: Sessions not found."})
 
     if request.method == 'POST':
-        try:
-            form_data = request.get_json()
 
-            date_string = form_data['date']
-            time_string = form_data['time']
-            start_date_obj = datetime.strptime(date_string, "%Y-%m-%d")
-            start_time_obj = datetime.strptime(time_string, "%H:%M").time()
-            frequency = form_data['frequency']
-            event_id = form_data['event_id']
-            current_date = start_date_obj
-            end_date = start_date_obj + timedelta(days=365)
-            current_date = start_date_obj
-            add_30_days = ['04', '06', '09', '11']
-            add_31_days = ['01', '03', '05', '07', '08', '10', '10']
 
-            while current_date <= end_date:
+        form_data = request.get_json()
+        frequency = form_data['frequency']
+        if frequency == 'Once':
+            try:
+
+                date_string = form_data['date']
+                time_string = form_data['time']
+                event_id = form_data['event_id']
+                start_date_obj = datetime.strptime(date_string, "%Y-%m-%d")
+                start_time_obj = datetime.strptime(time_string, "%H:%M").time()
                 new_session = Session(
-                    date=current_date,
+                    date=start_date_obj,
                     time=start_time_obj,
                     event_id=event_id
                 )
                 db.session.add(new_session)
+                db.session.commit()
+                response = make_response({"success": f"200: You have created events on a {frequency} basis starting on {date_string} at {time_string}"}, 200)
 
-                if frequency == 'Daily':
-                    current_date += timedelta(days=1)
-                elif frequency == 'Weekly':
-                    current_date += timedelta(weeks=1)
-                elif frequency == 'Biweekly':
-                    current_date += timedelta(weeks=2)
-                elif frequency == 'Monthly':
-                    if date_string.split('-')[1] in add_30_days:
-                        current_date += timedelta(days=30)
-                    elif date_string.split('-')[1] in add_31_days:
-                        current_date += timedelta(days=31)
-                    elif date_string.split('-')[1] == '02':
-                        current_date += timedelta(days=28)
-                elif frequency == 'Once':
-                    pass
+            except:
+                response = make_response({"error": "404: Could not create new session"})
 
-            db.session.commit()
+        else:
+            try:
+                date_string = form_data['date']
+                time_string = form_data['time']
+                event_id = form_data['event_id']
+                start_date_obj = datetime.strptime(date_string, "%Y-%m-%d")
+                start_time_obj = datetime.strptime(time_string, "%H:%M").time()
+                current_date = start_date_obj
+                end_date = start_date_obj + timedelta(days=365)
+                current_date = start_date_obj
+                add_30_days = ['04', '06', '09', '11']
+                add_31_days = ['01', '03', '05', '07', '08', '10', '10']
 
-            response = make_response({"success": f"200: You have created events on a {frequency} basis starting on {date_string} at {time_string}"}, 200)
+                while current_date <= end_date:
+                    new_session = Session(
+                        date=current_date,
+                        time=start_time_obj,
+                        event_id=event_id
+                    )
+                    db.session.add(new_session)
 
-        except:
-            response = make_response({"error": "404: Could not create new session"})
+                    if frequency == 'Daily':
+                        current_date += timedelta(days=1)
+                    elif frequency == 'Weekly':
+                        current_date += timedelta(weeks=1)
+                    elif frequency == 'Biweekly':
+                        current_date += timedelta(weeks=2)
+                    elif frequency == 'Monthly':
+                        if date_string.split('-')[1] in add_30_days:
+                            current_date += timedelta(days=30)
+                        elif date_string.split('-')[1] in add_31_days:
+                            current_date += timedelta(days=31)
+                        elif date_string.split('-')[1] == '02':
+                            current_date += timedelta(days=28)
+
+                db.session.commit()
+
+                response = make_response({"success": f"200: You have created events on a {frequency} basis starting on {date_string} at {time_string}"}, 200)
+
+            except:
+                response = make_response({"error": "404: Could not create new session"})
 
     return response
+
+# @app.route('/sessions', methods=['GET', 'POST'])
+# def sessions():
+    
+#     if request.method == 'GET':
+#         all_sessions_dict = [session.to_dict() for session in Session.query.all()]
+    
+#         if all_sessions_dict:
+#             response = make_response(all_sessions_dict, 200)
+#         else:
+#             response = make_response({"error": "404: Sessions not found."})
+
+#     if request.method == 'POST':
+#         try:
+#             form_data = request.get_json()
+
+#             date_string = form_data['date']
+#             time_string = form_data['time']
+#             frequency = form_data['frequency']
+#             event_id = form_data['event_id']
+#             start_date_obj = datetime.strptime(date_string, "%Y-%m-%d")
+#             start_time_obj = datetime.strptime(time_string, "%H:%M").time()
+#             current_date = start_date_obj
+#             end_date = start_date_obj + timedelta(days=365)
+#             current_date = start_date_obj
+#             add_30_days = ['04', '06', '09', '11']
+#             add_31_days = ['01', '03', '05', '07', '08', '10', '10']
+
+
+#             if frequency == 'Daily' or 'Weekly' or 'Biweekly' or 'Monthly':
+#                 while current_date <= end_date:
+#                     new_session = Session(
+#                         date=current_date,
+#                         time=start_time_obj,
+#                         event_id=event_id
+#                     )
+#                     db.session.add(new_session)
+
+#                     if frequency == 'Daily':
+#                         current_date += timedelta(days=1)
+#                     elif frequency == 'Weekly':
+#                         current_date += timedelta(weeks=1)
+#                     elif frequency == 'Biweekly':
+#                         current_date += timedelta(weeks=2)
+#                     elif frequency == 'Monthly':
+#                         if date_string.split('-')[1] in add_30_days:
+#                             current_date += timedelta(days=30)
+#                         elif date_string.split('-')[1] in add_31_days:
+#                             current_date += timedelta(days=31)
+#                         elif date_string.split('-')[1] == '02':
+#                             current_date += timedelta(days=28)
+
+#                     db.session.commit()
+                    
+#             else:
+#                 new_session = Session(
+#                     date=current_date,
+#                     time=start_time_obj,
+#                     event_id=event_id
+#                 )
+#                 db.session.add(new_session)
+#                 db.session.commit()
+
+#             response = make_response({"success": f"200: You have created events on a {frequency} basis starting on {date_string} at {time_string}"}, 200)
+
+#         except:
+#             response = make_response({"error": "404: Could not create new session"})
+
+#     return response
 
 @app.route('/sessions/<int:id>', methods=['GET', 'DELETE'])
 def session_by_id(id):
