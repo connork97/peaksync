@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react'
-import { AllSessionsContext, AllEventsContext, GeneralToggleContext } from '../../App'
+import { AllSessionsContext, AllEventsContext, SessionsToggleContext } from '../../App'
 
 import Dropdown from 'react-bootstrap/Dropdown'
 import Form from 'react-bootstrap/Form'
@@ -9,7 +9,7 @@ const CreateSession = () => {
 
     const { allSessions, setAllSessions } = useContext(AllSessionsContext)
     const { allEvents } = useContext(AllEventsContext)
-    const { generalToggle, setGeneralToggle } = useContext(GeneralToggleContext)
+    const { sessionsToggle, setSessionsToggle } = useContext(SessionsToggleContext)
 
     const [selectedDropdownEvent, setSelectedDropdownEvent] = useState("Classes and Events")
     const [selectedFrequency, setSelectedFrequency] = useState("Once")
@@ -84,7 +84,7 @@ const CreateSession = () => {
             console.log(newSessionData)
             const updatedAllSessions = [...allSessions, newSessionData]
             setAllSessions(updatedAllSessions)
-            setGeneralToggle(!generalToggle)
+            setSessionsToggle(!sessionsToggle)
         })
     }
 

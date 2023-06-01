@@ -1,11 +1,10 @@
 import { useContext, useState } from 'react'
-import { LoggedInUserContext, CurrentTransactionContext, GeneralToggleContext } from '../App'
+import { LoggedInUserContext, CurrentUserToggleContext } from '../App'
 
 const SuccessfulMembershipPurchase = () => {
 
     const { currentUser, setCurrentUser } = useContext(LoggedInUserContext)
-    const { currentTransaction, setCurrentTransaction } = useContext(CurrentTransactionContext)
-    const { generalToggle, setGeneralToggle } = useContext(GeneralToggleContext)
+    const { currentUserToggle, setCurrentUserToggle } = useContext(CurrentUserToggleContext)
     
     const [fetchCompleted, setFetchCompleted] = useState(false)
 
@@ -14,7 +13,7 @@ const SuccessfulMembershipPurchase = () => {
         .then((response) => response.json())
         .then((updatedUserData) => {
             console.log(updatedUserData)
-            setGeneralToggle(!generalToggle)
+            setCurrentUserToggle(!currentUserToggle)
             setFetchCompleted(true)
         })
     }

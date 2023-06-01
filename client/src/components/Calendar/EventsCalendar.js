@@ -3,7 +3,7 @@ import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
-import { AllSessionsContext, GeneralToggleContext } from "../App"
+import { AllSessionsContext, SessionsToggleContext, SignupsToggleContext } from "../App"
 
 import EventDetailsModal from "./EventDetailsModal";
 
@@ -21,7 +21,8 @@ const EventsCalendar = () => {
   const [clickedSession, setClickedSession] = useState({})
 
   const { allSessions } = useContext(AllSessionsContext)
-  const { generalToggle } = useContext(GeneralToggleContext)
+  const { sessionsToggle } = useContext(SessionsToggleContext)
+  const { signupsToggle } = useContext(SignupsToggleContext)
 
   const [events, setEvents] = useState([])
   
@@ -96,7 +97,7 @@ const EventsCalendar = () => {
     });
   
     setEvents(newEvents);
-  }, [allSessions, generalToggle]);
+  }, [allSessions, signupsToggle, sessionsToggle]);
 
   const handleClickedEvent = (event) => {
     console.log("clicked!")

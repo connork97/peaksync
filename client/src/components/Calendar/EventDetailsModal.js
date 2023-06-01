@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react'
 import { useHistory } from 'react-router-dom'
-import { LoggedInUserContext, AllSessionsContext, GeneralToggleContext } from '../App';
+import { LoggedInUserContext, AllSessionsContext, SignupsToggleContext } from '../App';
 
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button'
@@ -12,7 +12,7 @@ const EventDetailsModal = ({ clickedSession, setClickedSession, showGuestModal, 
     const history = useHistory()
     const { currentUser } = useContext(LoggedInUserContext)
     const { setAllSessions } = useContext(AllSessionsContext)
-    const { generalToggle, setGeneralToggle } = useContext(GeneralToggleContext)
+    const { signupsToggle, setSignupsToggle } = useContext(SignupsToggleContext)
 
     const currentDate = new Date()
     console.log("Start Date", clickedSession.start)
@@ -50,7 +50,7 @@ const EventDetailsModal = ({ clickedSession, setClickedSession, showGuestModal, 
                 .then((response) => response.json())
                 .then((newSignupData) => {
                     console.log(newSignupData)
-                    setGeneralToggle(!generalToggle)
+                    setSignupsToggle(!signupsToggle)
                     window.alert("Since you're a member this one is on the house! Thanks for signing up!")
                     setShowGuestModal(false)
                 })

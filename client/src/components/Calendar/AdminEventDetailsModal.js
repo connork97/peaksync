@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react'
 import { useHistory } from 'react-router-dom'
-import { LoggedInUserContext, AllSessionsContext, GeneralToggleContext } from '../App';
+import { LoggedInUserContext, AllSessionsContext, SessionsToggleContext } from '../App';
 
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button'
@@ -12,7 +12,7 @@ const AdminEventDetailsModal = ({ clickedSession, setClickedSession, showGuestMo
 
     console.log(clickedSession)
 
-    const { generalToggle, setGeneralToggle } = useContext(GeneralToggleContext)
+    const { sessionsContext, setSessionsContext } = useContext(SessionsToggleContext)
 
     const handleEditSignupClick = (event) => {
         console.log(clickedSession.values.id)
@@ -37,7 +37,7 @@ const AdminEventDetailsModal = ({ clickedSession, setClickedSession, showGuestMo
             .then((response) => response.json())
             .then((deletedSessionData) => {
                 console.log(deletedSessionData)
-                setGeneralToggle(!generalToggle)
+                setSessionsContext(!sessionsContext)
                 // history.push({pathname: '/calendar'})
                 setShowAdminModal(false)
             })

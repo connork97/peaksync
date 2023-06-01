@@ -56,7 +56,7 @@ def update_stripe_product_price():
     price_id = form_data['stripe_price_id']
 
     new_name = form_data['name']
-    new_description = form_data['description']
+    # new_description = form_data['description']
     new_price = form_data['price']
 
     membership = Membership.query.filter(Membership.stripe_price_id == price_id).one_or_none()
@@ -70,7 +70,7 @@ def update_stripe_product_price():
             print(new_stripe_price, new_stripe_price.id)
             updated_stripe_product = stripe.Product.retrieve(product_id)
             updated_stripe_product.name = new_name
-            updated_stripe_product.description = new_description
+            # updated_stripe_product.description = new_description
             updated_stripe_product.save()
             # membership.stripe_price_id = new_stripe_price.id
             setattr(membership, 'stripe_price_id', new_stripe_price.id)
@@ -452,7 +452,7 @@ def memberships():
                     'currency': 'usd',
                     'unit_amount_decimal': float(int(form_data['price']) * 100)
                 },
-                description=form_data['description']
+                # description=form_data['description']
             )
             new_membership = Membership(
                 name=form_data['name'],

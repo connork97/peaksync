@@ -28,9 +28,12 @@ export const AllEventsContext = React.createContext()
 export const AllSessionsContext = React.createContext()
 export const AllSignupsContext = React.createContext()
 export const AllMembershipsContext = React.createContext()
-export const GeneralToggleContext = React.createContext()
 export const LoggedInUserContext = React.createContext()
 export const CurrentTransactionContext = React.createContext()
+export const CurrentUserToggleContext = React.createContext()
+export const SessionsToggleContext = React.createContext()
+export const SignupsToggleContext = React.createContext()
+export const MembershipsToggleContext = React.createContext()
 
 function App() {
 
@@ -40,8 +43,12 @@ function App() {
   const [allSessions, setAllSessions] = useState([])
   const [allSignups, setAllSignups] = useState([])
   const [allMemberships, setAllMemberships] = useState([])
-  const [generalToggle, setGeneralToggle] = useState(false)
   const [currentTransaction, setCurrentTransaction] = useState({})
+
+  const [currentUserToggle, setCurrentUserToggle] = useState(false)
+  const [sessionsToggle, setSessionsToggle] = useState(false)
+  const [signupsToggle, setSignupsToggle] = useState(false)
+  const [membershipsToggle, setMembershipsToggle] = useState(false)
 
   const allUsersContextObject = {
     allUsers,
@@ -67,24 +74,39 @@ function App() {
     allMemberships,
     setAllMemberships
   }
-
-  const generalToggleContextObject = {
-    generalToggle,
-    setGeneralToggle
-  }
-
+  
   const loggedInUserContextObject = {
     currentUser,
     setCurrentUser
   }
-
+  
   const currentTransactionContextObject = {
     currentTransaction,
     setCurrentTransaction
   }
+  
+  
+  const currentUserToggleContextObject = {
+    currentUserToggle,
+    setCurrentUserToggle
+  }
 
+  const sessionsToggleContextObject = {
+    sessionsToggle,
+    setSessionsToggle
+  }
+
+  const signupsToggleContextObject = {
+    signupsToggle,
+    setSignupsToggle
+  }
+
+  const membershipsToggleContextObject = {
+    membershipsToggle,
+    setMembershipsToggle
+  }
   // useEffect(() => {
-  //   setGeneralToggle(!generalToggle)
+  //   setCurrentUserToggle(!currentUserToggle)
   // }, [])
         
   const fetchLoggedInUser = (sessionData) => {
@@ -102,7 +124,7 @@ function App() {
       console.log(sessionData)
       fetchLoggedInUser(sessionData)
     })
-  }, [generalToggle])
+  }, [currentUserToggle])
 
   useEffect(() => {
     fetch("/events")
@@ -110,7 +132,7 @@ function App() {
     .then((eventData) => {
       setAllEvents(eventData)
     })
-  }, [generalToggle])
+  }, [sessionsToggle, currentUserToggle])
   
   useEffect(() => {
     fetch("/memberships")
@@ -118,7 +140,7 @@ function App() {
     .then((membershipData) => {
       setAllMemberships(membershipData)
     })
-  }, [generalToggle])
+  }, [membershipsToggle, currentUserToggle])
 
   useEffect(() => {
     fetch('/sessions')
@@ -126,19 +148,7 @@ function App() {
     .then((allSessionsData) => {
       setAllSessions(allSessionsData)
     })
-  }, [allEvents, generalToggle])
-
-  // useEffect(() => {
-  //   if (currentUser.admin === true) {
-  //     fetch("/users")
-  //     .then((response) => response.json())
-  //     .then((userData) => {
-  //       setAllUsers(userData)
-  //     })
-  //   } else {
-  //     console.log("No admin priveledges")
-  //   }
-  // }, [currentUser])
+  }, [sessionsToggle])
 
   useEffect(() => {
     if (currentUser.admin === true) {
@@ -146,9 +156,7 @@ function App() {
       .then((response) => response.json())
       .then((signupData) => setAllSignups(signupData))
     }
-  }, [currentUser])
-
-
+  }, [sessionsToggle, signupsToggle, currentUser])
 
   return (
     <>
@@ -157,65 +165,71 @@ function App() {
         <AllSessionsContext.Provider value={allSessionsContextObject}>
           <AllMembershipsContext.Provider value={allMembershipsContextObject}>
             <AllSignupsContext.Provider value={allSignupsContextObject}>
-              <GeneralToggleContext.Provider value={generalToggleContextObject}>
+              <CurrentUserToggleContext.Provider value={currentUserToggleContextObject}>
                 <LoggedInUserContext.Provider value={loggedInUserContextObject}>
                   <CurrentTransactionContext.Provider value={currentTransactionContextObject}>
-                    <NavBar/>
-                    <Switch>
-                      <Route exact path='/'>
-                        <Home currentUser={currentUser} />
-                      </Route>
-                      <Route exact path='/calendar'>
-                        <EventsCalendar />
-                      </Route>
-                      <Route exact path='/login'>
-                        <Login />
-                      </Route>
-                      <Route exact path='/signup'>
-                        <SignUp />
-                      </Route>
-                      <Route exact path='/admin-dashboard'>
-                        {currentUser.admin ? 
-                        <AdminDashboard />
-                        : <Home />}
-                      </Route>
-                      <Route exact path='/database'>
-                        <UserDatabase />
-                      </Route>
-                      <Route exact path='/profile'>
-                        <UserProfile />
-                      </Route>
-                      <Route exact path='/offerings/memberships'>
-                        <MembershipOfferings />
-                      </Route>
-                      <Route exact path='/offerings/classes'>
-                        <ClassOfferings />
-                      </Route>
-                      <Route exact path='/edit/signup'>
-                        <EditSignup />
-                      </Route>
-                      <Route exact path='/confirm-membership-order'>
-                        <ConfirmMembershipOrderDetails />
-                      </Route>
-                      <Route exact path='/confirm-event-order'>
-                        <ConfirmClassSignupDetails />
-                      </Route>
-                      <Route exact path='/signup/cancelled'>
-                        <CancelledSignup />
-                      </Route>
-                      <Route exact path='/signup/success'>
-                        <SuccessfulSignup />
-                      </Route>
-                      <Route exact path='/purchase/membership/success'>
-                        <SuccessfulMembershipPurchase />
-                      </Route>
-                      <Route exact path='/purchase/membership/cancelled'>
-                        <CancelledMembershipPurchase />
-                      </Route>
-                    </Switch>
+                    <SessionsToggleContext.Provider value={sessionsToggleContextObject}>
+                      <SignupsToggleContext.Provider value={signupsToggleContextObject}>
+                        <MembershipsToggleContext.Provider value={membershipsToggleContextObject}>
+                          <NavBar/>
+                          <Switch>
+                            <Route exact path='/'>
+                              <Home currentUser={currentUser} />
+                            </Route>
+                            <Route exact path='/calendar'>
+                              <EventsCalendar />
+                            </Route>
+                            <Route exact path='/login'>
+                              <Login />
+                            </Route>
+                            <Route exact path='/signup'>
+                              <SignUp />
+                            </Route>
+                            <Route exact path='/admin-dashboard'>
+                              {currentUser.admin ? 
+                              <AdminDashboard />
+                              : <Home />}
+                            </Route>
+                            <Route exact path='/database'>
+                              <UserDatabase />
+                            </Route>
+                            <Route exact path='/profile'>
+                              <UserProfile />
+                            </Route>
+                            <Route exact path='/offerings/memberships'>
+                              <MembershipOfferings />
+                            </Route>
+                            <Route exact path='/offerings/classes'>
+                              <ClassOfferings />
+                            </Route>
+                            <Route exact path='/edit/signup'>
+                              <EditSignup />
+                            </Route>
+                            <Route exact path='/confirm-membership-order'>
+                              <ConfirmMembershipOrderDetails />
+                            </Route>
+                            <Route exact path='/confirm-event-order'>
+                              <ConfirmClassSignupDetails />
+                            </Route>
+                            <Route exact path='/signup/cancelled'>
+                              <CancelledSignup />
+                            </Route>
+                            <Route exact path='/signup/success'>
+                              <SuccessfulSignup />
+                            </Route>
+                            <Route exact path='/purchase/membership/success'>
+                              <SuccessfulMembershipPurchase />
+                            </Route>
+                            <Route exact path='/purchase/membership/cancelled'>
+                              <CancelledMembershipPurchase />
+                            </Route>
+                          </Switch>
+                        </MembershipsToggleContext.Provider>
+                      </SignupsToggleContext.Provider>
+                    </SessionsToggleContext.Provider>
                   </CurrentTransactionContext.Provider>
                 </LoggedInUserContext.Provider>
-              </GeneralToggleContext.Provider>
+              </CurrentUserToggleContext.Provider>
             </AllSignupsContext.Provider>
           </AllMembershipsContext.Provider>
         </AllSessionsContext.Provider>
