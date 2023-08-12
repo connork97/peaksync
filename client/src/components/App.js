@@ -124,7 +124,7 @@ function App() {
   }, [currentUserToggle])
 
   useEffect(() => {
-    fetch("/events")
+    fetch("https://peaksync-back-end.onrender.com/events")
     .then((response) => response.json())
     .then((eventData) => {
       setAllEvents(eventData)
