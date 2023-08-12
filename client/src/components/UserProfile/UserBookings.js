@@ -21,7 +21,7 @@ const UserBookings = ({ selectedUser }) => {
 
     const handleCancelBooking = (signup) => {
         if (window.confirm("Are you sure you want to cancel this booking?") == true) {
-            fetch(`/signups/${signup.id}`, {
+            fetch(`https://peaksync-back-end.onrender.com/signups/${signup.id}`, {
                 method: 'DELETE',
             })
             .then((response) => response.json())

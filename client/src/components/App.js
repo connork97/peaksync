@@ -107,7 +107,7 @@ function App() {
   }
         
   const fetchLoggedInUser = (sessionData) => {
-    fetch(`/users/${sessionData}`)
+    fetch(`https://peaksync-back-end.onrender.com/users/${sessionData}`)
     .then((response) => response.json())
     .then((userData) => {
         setCurrentUser(userData)
@@ -115,7 +115,7 @@ function App() {
   }
 
   useEffect(() => {
-    fetch('/check-session')
+    fetch('https://peaksync-back-end.onrender.com/check-session')
     .then((response) => response.json())
     .then((sessionData) => {
       console.log(sessionData)
@@ -132,7 +132,7 @@ function App() {
   }, [sessionsToggle])
   
   useEffect(() => {
-    fetch("/memberships")
+    fetch("https://peaksync-back-end.onrender.com/memberships")
     .then((response) => response.json())
     .then((membershipData) => {
       setAllMemberships(membershipData)
@@ -140,7 +140,7 @@ function App() {
   }, [membershipsToggle])
 
   useEffect(() => {
-    fetch('/sessions')
+    fetch('https://peaksync-back-end.onrender.com/sessions')
     .then((response) => response.json())
     .then((allSessionsData) => {
       setAllSessions(allSessionsData)
@@ -149,7 +149,7 @@ function App() {
 
   useEffect(() => {
     if (currentUser.admin === true) {
-      fetch('/signups')
+      fetch('https://peaksync-back-end.onrender.com/signups')
       .then((response) => response.json())
       .then((signupData) => setAllSignups(signupData))
     }

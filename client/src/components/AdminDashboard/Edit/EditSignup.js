@@ -25,7 +25,7 @@ const EditSignup = () => {
     
     const handleEditSignup = (event) => {
         if (window.confirm("Are you sure you want to relocate this signup?") === true) {
-            fetch(`/signups/${signupToEdit.id}`, {
+            fetch(`https://peaksync-back-end.onrender.com/signups/${signupToEdit.id}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ const EditSignup = () => {
 
     const handleDeleteSignup = () => {
         if (window.confirm("Are you sure you want to cancel this signup?  This cannot be undone!") === true) {
-            fetch(`/signups/${signupToEdit.id}`, {
+            fetch(`https://peaksync-back-end.onrender.com/signups/${signupToEdit.id}`, {
                 method: 'DELETE',
             })
             .then((response) => response.json())

@@ -71,7 +71,7 @@ const CreateUser = () => {
     
     const handleCreateUser = () => {
         console.log(newUser)
-        fetch('/users', {
+        fetch('https://peaksync-back-end.onrender.com/users', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

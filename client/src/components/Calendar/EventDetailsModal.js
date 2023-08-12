@@ -38,7 +38,7 @@ const EventDetailsModal = ({ clickedSession, setClickedSession, showGuestModal, 
             if (currentUser.membership.type !== 'Member') {
                 event.target.submit()
             } else if (currentUser.membership.type === 'Member' && clickedSession.values.free_for_members === true) {
-                fetch('/signups', {
+                fetch('https://peaksync-back-end.onrender.com/signups', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

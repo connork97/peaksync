@@ -42,7 +42,7 @@ const EventData = ({ event }) => {
     }
 
     const handleEventChangeSubmit = (event_id) => {
-        fetch(`/events/${event_id}`, {
+        fetch(`https://peaksync-back-end.onrender.com/events/${event_id}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -63,7 +63,7 @@ const EventData = ({ event }) => {
         })
         if (editedEvent.price != event.price) {
             console.log("Editing Stripe product price...")
-            fetch('/update_stripe_event_product', {
+            fetch('https://peaksync-back-end.onrender.com/update_stripe_event_product', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -84,7 +84,7 @@ const EventData = ({ event }) => {
     const handleEventDelete = (event_id) => {
         if (window.confirm("Are you sure you want to delete this event?  This action cannot be undone.") === true) {
             if (event.sessions.length === 0) {
-                fetch(`/events/${event_id}`, {
+                fetch(`https://peaksync-back-end.onrender.com/events/${event_id}`, {
                     method: 'DELETE'
                 })
                 const updatedEvents = allEvents.filter((event) => event.id != event_id)

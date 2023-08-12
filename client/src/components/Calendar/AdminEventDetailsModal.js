@@ -17,7 +17,7 @@ const AdminEventDetailsModal = ({ clickedSession, setClickedSession, showGuestMo
     const handleEditSignupClick = (event) => {
         console.log(clickedSession.values.id)
         console.log(event.target.value)
-        fetch(`/signups/${event.target.value}`)
+        fetch(`https://peaksync-back-end.onrender.com/signups/${event.target.value}`)
         .then((response) => response.json())
         .then((signupData) => history.push({pathname:'/edit/signup', state:signupData}))
     }
@@ -31,7 +31,7 @@ const AdminEventDetailsModal = ({ clickedSession, setClickedSession, showGuestMo
 
     const handleDeleteSession = () => {
         if (clickedSession.values.signups.length === 0 && window.confirm("Are you sure you want to delete this session?  This cannot be undone.") === true) {
-            fetch(`/sessions/${clickedSession.values.session_id}`, {
+            fetch(`https://peaksync-back-end.onrender.com/sessions/${clickedSession.values.session_id}`, {
                 method: 'DELETE',
             })
             .then((response) => response.json())

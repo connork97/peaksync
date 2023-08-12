@@ -8,7 +8,7 @@ const SignupData = ({ signup }) => {
     const history = useHistory()
 
     const handleEditSignup = (signup) => {
-        history.push({pathname:"/edit/signup", state:signup})
+        history.push({pathname:"https://peaksync-back-end.onrender.com/edit/signup", state:signup})
     }
 
 

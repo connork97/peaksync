@@ -62,7 +62,7 @@ const ProfileInfo = ({ selectedUser }) => {
     }
 
     const handleProfileEdit = () => {
-        fetch(`/users/${selectedUser.id}`, {
+        fetch(`https://peaksync-back-end.onrender.com/users/${selectedUser.id}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',

@@ -47,7 +47,7 @@ const SignUp = () => {
     const handleCreateAccount = (event) => {
         event.preventDefault()
         if (newUser.password === confirmPassword) {
-            fetch("/create-account", {
+            fetch("https://peaksync-back-end.onrender.com/create-account", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

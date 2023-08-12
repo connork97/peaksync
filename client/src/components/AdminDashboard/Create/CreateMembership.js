@@ -36,7 +36,7 @@ const CreateMembership = () => {
 
     const handleMembershipSubmit = (event) => {
         event.preventDefault()
-        fetch('/memberships', {
+        fetch('https://peaksync-back-end.onrender.com/memberships', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

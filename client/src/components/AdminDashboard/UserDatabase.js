@@ -67,7 +67,7 @@ const UserDatabase = () => {
 
     const handleFetchUsers = (event) => {
         event.preventDefault()
-        fetch('/users/filter', {
+        fetch('https://peaksync-back-end.onrender.com/users/filter', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

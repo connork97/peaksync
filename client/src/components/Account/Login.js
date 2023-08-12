@@ -16,7 +16,7 @@ const Login = () => {
     const [password, setPassword] = useState("")
 
     const fetchUserBySessionData = (sessionData) => {
-        fetch(`/users/${sessionData}`)
+        fetch(`https://peaksync-back-end.onrender.com/users/${sessionData}`)
         .then((response) => response.json())
         .then((userData) => {
             setCurrentUser(userData)
@@ -25,14 +25,14 @@ const Login = () => {
     }
 
     useEffect(() => {
-        fetch('/check-session')
+        fetch('https://peaksync-back-end.onrender.com/check-session')
         .then((response) => response.json())
         .then((sessionData) => fetchUserBySessionData(sessionData))
     }, [])
     
     const handleUserLogin = (event) => {
         event.preventDefault()
-        fetch("/login", {
+        fetch("https://peaksync-back-end.onrender.com/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -49,7 +49,7 @@ const Login = () => {
     }
 
     const handleLogout = () => {
-        fetch('/logout', {
+        fetch('https://peaksync-back-end.onrender.com/logout', {
             method: 'DELETE'
         })
         setCurrentUser({})

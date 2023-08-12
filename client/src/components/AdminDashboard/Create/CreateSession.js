@@ -72,7 +72,7 @@ const CreateSession = () => {
     const handleSessionSubmit = (event) => {
         console.log("test")
         event.preventDefault()
-        fetch('/sessions', {
+        fetch('https://peaksync-back-end.onrender.com/sessions', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

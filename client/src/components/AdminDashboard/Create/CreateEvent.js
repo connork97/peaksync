@@ -62,7 +62,7 @@ const CreateEvent = () => {
 
     const handleEventSubmit = (event) => {
         event.preventDefault()
-        fetch('/events', {
+        fetch('https://peaksync-back-end.onrender.com/events', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

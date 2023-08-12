@@ -9,7 +9,7 @@ const SuccessfulMembershipPurchase = () => {
     const [fetchCompleted, setFetchCompleted] = useState(false)
 
     if (!fetchCompleted && Object.keys(currentUser).length > 0) {
-        fetch(`/last-user-membership-purchase/${currentUser.id}`)
+        fetch(`https://peaksync-back-end.onrender.com/last-user-membership-purchase/${currentUser.id}`)
         .then((response) => response.json())
         .then((updatedUserData) => {
             console.log(updatedUserData)

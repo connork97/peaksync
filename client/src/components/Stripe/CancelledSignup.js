@@ -9,7 +9,7 @@ const CancelledSignup = () => {
     const { signupsToggle, setSignupsToggle } = useContext(SignupsToggleContext)
 
     if (currentUser.id !== undefined) {
-        fetch(`/last_user_signup/${currentUser.id}`)
+        fetch(`https://peaksync-back-end.onrender.com/last_user_signup/${currentUser.id}`)
         .then((response) => response.json())
         .then((userData) => {
             const signup_id = userData.signups.reverse()[0].id
@@ -19,7 +19,7 @@ const CancelledSignup = () => {
     }
 
     const deleteUnpaidSignup = (signup_id) => {
-        fetch(`/signups/${signup_id}`, {
+        fetch(`https://peaksync-back-end.onrender.com/signups/${signup_id}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
