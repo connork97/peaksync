@@ -18,7 +18,7 @@ const ProfileInfo = ({ selectedUser }) => {
     const [membershipType, setMembershipType] = useState(selectedMembership.type)
     const [membershipSubtype, setMembershipSubtype] = useState(selectedMembership.subtype)
     
-    const [isAdmin, setIsAdmin] = useState(selectedUser.admin)
+    const [isAdmin] = useState(selectedUser.admin)
     const [userProfileInfo, setUserProfileInfo] = useState({
         "first_name": selectedUser.first_name,
         "last_name": selectedUser.last_name,
@@ -106,60 +106,60 @@ const ProfileInfo = ({ selectedUser }) => {
         )
     })
 
-    const [expiration, setExpiration] = useState({
-        "month": "Month",
-        "day": "Day",
-        "year": "Year"
-    })
+    // const [expiration, setExpiration] = useState({
+    //     "month": "Month",
+    //     "day": "Day",
+    //     "year": "Year"
+    // })
 
-    const handleExpirationChange = (event) => {
-        const { name, id } = event.target
-        setExpiration((prevState) => ({
-            ...prevState,
-            [name]: id
-        }))
-    }
+    // const handleExpirationChange = (event) => {
+    //     const { name, id } = event.target
+    //     setExpiration((prevState) => ({
+    //         ...prevState,
+    //         [name]: id
+    //     }))
+    // }
 
-    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-    const renderExpirationDays = () => {
-        let i = 1;
-        const days = [];
+    // const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+    // const renderExpirationDays = () => {
+    //     let i = 1;
+    //     const days = [];
 
-        if (['January', 'March', 'May', 'July', 'August', 'October', 'December'].includes(String(expiration.month))) {
-          while (i <= 31) {
-            days.push(<Dropdown.Item name="day" id={i} key={i} onClick={(event) => handleExpirationChange(event)}>{i}</Dropdown.Item>);
-            i++;
-          }
-        } else if (['April', 'June', 'September', 'November'].includes(String(expiration.month))) {
-            while (i <= 30) {
-              days.push(<Dropdown.Item name="day" id={i} key={i} onClick={(event) => handleExpirationChange(event)}>{i}</Dropdown.Item>);
-              i++;
-            }
-        } else if (String(expiration.month) === 'February') {
-            while (i <= 29) {
-              days.push(<Dropdown.Item name="day" id={i} key={i} onClick={(event) => handleExpirationChange(event)}>{i}</Dropdown.Item>);
-              i++;
-            }
-        }
-        return days;
-      };
-    const renderExpirationMonth = months.map((month) => {
-        return (
-            <Dropdown.Item name="month" id={month} key={month} onClick={(event) => handleExpirationChange(event)}>{month}</Dropdown.Item>
-        )
-    })
+    //     if (['January', 'March', 'May', 'July', 'August', 'October', 'December'].includes(String(expiration.month))) {
+    //       while (i <= 31) {
+    //         days.push(<Dropdown.Item name="day" id={i} key={i} onClick={(event) => handleExpirationChange(event)}>{i}</Dropdown.Item>);
+    //         i++;
+    //       }
+    //     } else if (['April', 'June', 'September', 'November'].includes(String(expiration.month))) {
+    //         while (i <= 30) {
+    //           days.push(<Dropdown.Item name="day" id={i} key={i} onClick={(event) => handleExpirationChange(event)}>{i}</Dropdown.Item>);
+    //           i++;
+    //         }
+    //     } else if (String(expiration.month) === 'February') {
+    //         while (i <= 29) {
+    //           days.push(<Dropdown.Item name="day" id={i} key={i} onClick={(event) => handleExpirationChange(event)}>{i}</Dropdown.Item>);
+    //           i++;
+    //         }
+    //     }
+    //     return days;
+    //   };
+    // const renderExpirationMonth = months.map((month) => {
+    //     return (
+    //         <Dropdown.Item name="month" id={month} key={month} onClick={(event) => handleExpirationChange(event)}>{month}</Dropdown.Item>
+    //     )
+    // })
 
-    const renderExpirationYears = () => {
-        let i = 2023
-        let years = []
-        while (i <= 2033) {
-            years.push(<Dropdown.Item name="year" id={i} key={i} onClick={(event) => handleExpirationChange(event)}>{i}</Dropdown.Item>)
-            i++
-        }
-        return years
-    }
+    // const renderExpirationYears = () => {
+    //     let i = 2023
+    //     let years = []
+    //     while (i <= 2033) {
+    //         years.push(<Dropdown.Item name="year" id={i} key={i} onClick={(event) => handleExpirationChange(event)}>{i}</Dropdown.Item>)
+    //         i++
+    //     }
+    //     return years
+    // }
 
-    const setAdminStatus = (event) => {
+    const setAdminStatus = () => {
         setUserProfileInfo((prevState) => ({
             ...prevState,
             admin: !prevState.admin

@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react'
 import { useLocation, useHistory } from 'react-router-dom'
-import { AllSessionsContext, AllSignupsContext, SessionsToggleContext, CurrentUserToggleContext, SignupsToggleContext } from '../../App'
+import { AllSessionsContext, SessionsToggleContext, CurrentUserToggleContext, SignupsToggleContext } from '../../App'
 
 import moment from 'moment'
 
@@ -14,8 +14,7 @@ const EditSignup = () => {
     const history = useHistory()
     const signupToEdit = location.state
     console.log("SIGNUP TO EDIT", signupToEdit)
-    const { allSessions, setAllSessions } = useContext(AllSessionsContext)
-    const { allSignups, setAllSignups } = useContext(AllSignupsContext)
+    const { allSessions } = useContext(AllSessionsContext)
     const { sessionsToggle, setSessionsToggle } = useContext(SessionsToggleContext)
     const { signupsToggle, setSignupsToggle } = useContext(SignupsToggleContext)
     const { currentUserToggle, setCurrentUserToggle} = useContext(CurrentUserToggleContext)

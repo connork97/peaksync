@@ -6,7 +6,7 @@ const SuccessfulSignup = () => {
     const { currentUser } = useContext(LoggedInUserContext)
 
     return (
-        <h1>Thanks for your purchase!</h1>
+        <h1>Thanks for your purchase, {currentUser}!</h1>
     )
 }
 

@@ -1,6 +1,6 @@
-import { useState, useContext, useEffect } from "react"
-import { useHistory } from 'react-router-dom'
-import { AllUsersContext, LoggedInUserContext } from "../App.js";
+import { useState, useContext } from "react";
+import { useHistory } from 'react-router-dom';
+import { AllUsersContext } from "../App.js";
 
 import Table from 'react-bootstrap/Table'
 import Dropdown from "react-bootstrap/Dropdown"
@@ -10,7 +10,6 @@ import Button from 'react-bootstrap/Button'
 const UserDatabase = () => {
 
     const { allUsers, setAllUsers } = useContext(AllUsersContext)
-    const { currentUser } = useContext(LoggedInUserContext)
 
     const history = useHistory()
 

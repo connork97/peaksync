@@ -25,9 +25,15 @@ const Login = () => {
     }
 
     useEffect(() => {
-        fetch('https://peaksync-back-end.onrender.com/check-session')
-        .then((response) => response.json())
-        .then((sessionData) => fetchUserBySessionData(sessionData))
+        // fetch('https://peaksync-back-end.onrender.com/check-session')
+        // .then((response) => response.json())
+        // .then((sessionData) => fetchUserBySessionData(sessionData))
+        const userId = localStorage.getItem("user_id")
+        if (userId) {
+            fetch(`https://peaksync-back-end.onrender.com/${userId}`)
+            .then((response) => response.json())
+            .then((loggedInUserData) => setCurrentUser(loggedInUserData))
+        }
     }, [])
     
     const handleUserLogin = (event) => {
@@ -45,6 +51,7 @@ const Login = () => {
         .then((response) => response.json())
         .then((userData) => {
             setCurrentUser(userData)
+            localStorage.setItem("user_id", userData.id)
         })
     }
 
@@ -52,6 +59,7 @@ const Login = () => {
         fetch('https://peaksync-back-end.onrender.com/logout', {
             method: 'DELETE'
         })
+        localStorage.removeItem("user_id")
         setCurrentUser({})
         setAllUsers([])
         history.push({pathname:"/"})

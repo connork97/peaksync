@@ -1,10 +1,8 @@
-import { useContext, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useContext } from 'react'
 import { LoggedInUserContext, SignupsToggleContext } from '../App'
 
 const CancelledSignup = () => {
 
-    const history = useHistory()
     const { currentUser } = useContext(LoggedInUserContext)
     const { signupsToggle, setSignupsToggle } = useContext(SignupsToggleContext)
 

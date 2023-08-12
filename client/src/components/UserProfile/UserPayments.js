@@ -1,11 +1,9 @@
 import ListGroup from 'react-bootstrap/ListGroup'
 
-import moment from 'moment'
 
 const UserPayments = ({ selectedUser }) => {
     const renderUserPayments = selectedUser.payments.map((payment) => {
-        const date = new Date(payment.created_at.split(" ")[0])
-        console.log(payment)
+
         if (payment.membership) {
 
             return (
@@ -21,6 +19,7 @@ const UserPayments = ({ selectedUser }) => {
             )
         }
     })
+    
     return (
         <>
         <h1>{selectedUser.first_name} {selectedUser.last_name}'s Payment History</h1>

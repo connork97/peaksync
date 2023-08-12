@@ -3,7 +3,7 @@ import { LoggedInUserContext, CurrentUserToggleContext } from '../App'
 
 const SuccessfulMembershipPurchase = () => {
 
-    const { currentUser, setCurrentUser } = useContext(LoggedInUserContext)
+    const { currentUser } = useContext(LoggedInUserContext)
     const { currentUserToggle, setCurrentUserToggle } = useContext(CurrentUserToggleContext)
     
     const [fetchCompleted, setFetchCompleted] = useState(false)

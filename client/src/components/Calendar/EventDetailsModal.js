@@ -1,18 +1,13 @@
-import { useState, useContext } from 'react'
-import { useHistory } from 'react-router-dom'
-import { LoggedInUserContext, AllSessionsContext, SessionsToggleContext, SignupsToggleContext } from '../App';
+import { useContext } from 'react'
+import { LoggedInUserContext, SessionsToggleContext, SignupsToggleContext } from '../App';
 
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button'
-import ListGroup from 'react-bootstrap/ListGroup'
-import SignupData from '../AdminDashboard/Data/SignupData';
 import { CurrentUserToggleContext } from '../App';
 
 const EventDetailsModal = ({ clickedSession, setClickedSession, showGuestModal, setShowGuestModal, showAdminModal, setShowAdminModal }) => {
 
-    const history = useHistory()
     const { currentUser } = useContext(LoggedInUserContext)
-    const { setAllSessions } = useContext(AllSessionsContext)
     const { signupsToggle, setSignupsToggle } = useContext(SignupsToggleContext)
     const { sessionsToggle, setSessionsToggle } = useContext(SessionsToggleContext)
     const { currentUserToggle, setCurrentUserToggle } = useContext(CurrentUserToggleContext)
@@ -23,7 +18,7 @@ const EventDetailsModal = ({ clickedSession, setClickedSession, showGuestModal, 
     const handleCloseGuestModal = () => setShowGuestModal(false);
 
     const renderSpacesOrAvailability = () => {
-        if (currentDate > clickedSession.start === true) {
+        if (currentDate > clickedSession.start) {
             return <span>This event's start date has already passed.  Please sign up for a future {clickedSession.values.name}.</span>
         } else if (currentDate <= clickedSession.start && clickedSession.values.spaces > 0) {
             return <span style={{marginRight:'auto'}}>{clickedSession.values.spaces} spaces remaining.</span>

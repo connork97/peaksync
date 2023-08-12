@@ -106,21 +106,27 @@ function App() {
     setMembershipsToggle
   }
         
-  const fetchLoggedInUser = (sessionData) => {
-    fetch(`https://peaksync-back-end.onrender.com/users/${sessionData}`)
-    .then((response) => response.json())
-    .then((userData) => {
-        setCurrentUser(userData)
-    })
-  }
+  // const fetchLoggedInUser = (sessionData) => {
+  //   fetch(`https://peaksync-back-end.onrender.com/users/${sessionData}`)
+  //   .then((response) => response.json())
+  //   .then((userData) => {
+  //       setCurrentUser(userData)
+  //   })
+  // }
 
   useEffect(() => {
-    fetch('https://peaksync-back-end.onrender.com/check-session')
-    .then((response) => response.json())
-    .then((sessionData) => {
-      console.log(sessionData)
-      fetchLoggedInUser(sessionData)
-    })
+    // fetch('https://peaksync-back-end.onrender.com/check-session')
+    // .then((response) => response.json())
+    // .then((sessionData) => {
+    //   console.log(sessionData)
+    //   fetchLoggedInUser(sessionData)
+    // })
+    const userId = localStorage.getItem("user_id")
+    if (userId) {
+        fetch(`https://peaksync-back-end.onrender.com/users/${userId}`)
+        .then((response) => response.json())
+        .then((loggedInUserData) => setCurrentUser(loggedInUserData))
+    }
   }, [currentUserToggle])
 
   useEffect(() => {
@@ -147,13 +153,13 @@ function App() {
     })
   }, [sessionsToggle])
 
-  useEffect(() => {
-    if (currentUser.admin === true) {
-      fetch('https://peaksync-back-end.onrender.com/signups')
-      .then((response) => response.json())
-      .then((signupData) => setAllSignups(signupData))
-    }
-  }, [signupsToggle, currentUser])
+  // useEffect(() => {
+  //   if (currentUser.admin === true) {
+  //     fetch('https://peaksync-back-end.onrender.com/signups')
+  //     .then((response) => response.json())
+  //     .then((signupData) => setAllSignups(signupData))
+  //   }
+  // }, [signupsToggle, currentUser])
 
   return (
     <>

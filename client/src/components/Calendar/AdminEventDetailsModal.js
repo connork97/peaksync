@@ -1,6 +1,6 @@
-import { useState, useContext } from 'react'
+import { useContext } from 'react'
 import { useHistory } from 'react-router-dom'
-import { LoggedInUserContext, AllSessionsContext, SessionsToggleContext } from '../App';
+import { SessionsToggleContext } from '../App';
 
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button'

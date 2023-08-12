@@ -1,5 +1,6 @@
 import { useHistory } from 'react-router-dom'
 
+
 import ListGroup from 'react-bootstrap/ListGroup'
 import Button from 'react-bootstrap/Button'
 
@@ -10,7 +11,6 @@ const SignupData = ({ signup }) => {
     const handleEditSignup = (signup) => {
         history.push({pathname:"https://peaksync-back-end.onrender.com/edit/signup", state:signup})
     }
-
 
     return (
         <ListGroup.Item className='inlineListGroupItemWithEndButtons' style={{alignItems:'center', marginBottom:'1rem', borderTop:'1px solid rgba(0, 0, 0, 0.1)'}}>

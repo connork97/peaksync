@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { LoggedInUserContext, AllUsersContext } from '../App'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 
 import ProfileInfo from "./ProfileInfo"
 import UserBookings from './UserBookings'
@@ -14,7 +14,6 @@ const UserProfile = () => {
     const location = useLocation()
     
     const { currentUser } = useContext(LoggedInUserContext)
-    const { allUsers, setAllUsers } = useContext(AllUsersContext)
 
     let selectedUser
     if (currentUser.admin === true) {

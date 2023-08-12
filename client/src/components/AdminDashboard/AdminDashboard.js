@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { LoggedInUserContext, AllEventsContext, AllMembershipsContext, AllSignupsContext } from '../App'
 
@@ -15,16 +15,21 @@ import ListGroup from 'react-bootstrap/esm/ListGroup'
 import Form from 'react-bootstrap/Form'
 import Dropdown from 'react-bootstrap/Dropdown'
 import Button from 'react-bootstrap/Button'
-import AccordionItem from 'react-bootstrap/esm/AccordionItem'
 
 const AdminDashboard = () => {
     
     const { currentUser } = useContext(LoggedInUserContext)
     const { allEvents } = useContext(AllEventsContext)
     const { allMemberships } = useContext(AllMembershipsContext)
-    const { allSignups } = useContext(AllSignupsContext)
+    const { allSignups, setAllSignups } = useContext(AllSignupsContext)
 
     const history = useHistory()
+
+    useEffect(() => {
+        fetch('https://peaksync-back-end.onrender.com/signups')
+        .then((response) => response.json())
+        .then((signupData) => setAllSignups(signupData))
+      }, [])
 
     const renderAllMemberships = (type) => allMemberships.map((membership) => {
         if (membership.type === type) {

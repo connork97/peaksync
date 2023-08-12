@@ -1,13 +1,12 @@
 import { Link } from "react-router-dom"
-import { useContext, useEffect } from 'react'
-import { LoggedInUserContext, AllUsersContext } from "./App"
+import { useContext } from 'react'
+import { LoggedInUserContext } from "./App"
 
 import Dropdown from 'react-bootstrap/Dropdown'
 
 const NavBar = () => {
 
     const { currentUser } = useContext(LoggedInUserContext)
-    const { allUsers } = useContext(AllUsersContext)
 
     const renderDashboardNavLink = () => {
         if (currentUser.admin) {

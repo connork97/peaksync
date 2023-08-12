@@ -7,16 +7,12 @@ import { AllSessionsContext, SessionsToggleContext, SignupsToggleContext } from 
 
 import EventDetailsModal from "./EventDetailsModal";
 
-import Modal from 'react-bootstrap/Modal'
-import Button from "react-bootstrap/Button";
 import AdminEventDetailsModal from "./AdminEventDetailsModal";
 const localizer = momentLocalizer(moment);
 
 const EventsCalendar = () => {
   const [showGuestModal, setShowGuestModal] = useState(false);
   const [showAdminModal, setShowAdminModal] = useState(false)
-
-  const handleClose = () => setShowGuestModal(false);
 
   const [clickedSession, setClickedSession] = useState({})
 
