@@ -2,8 +2,8 @@ import { useState, useContext, useEffect } from 'react'
 import { AllUsersContext, LoggedInUserContext, AllMembershipsContext } from '../App'
 
 import Card from 'react-bootstrap/Card'
+import ListGroup from 'react-bootstrap/ListGroup'
 import Form from 'react-bootstrap/Form'
-// import myImage from '../../images/profile-placeholder-300x237.png'
 import Button from 'react-bootstrap/Button'
 import Dropdown from 'react-bootstrap/Dropdown'
 
@@ -17,7 +17,8 @@ const ProfileInfo = ({ selectedUser }) => {
     const [membershipName, setMembershipName] = useState(selectedUser.membership.name)
     const [membershipType, setMembershipType] = useState(selectedMembership.type)
     const [membershipSubtype, setMembershipSubtype] = useState(selectedMembership.subtype)
-    
+    const [editProfile, setEditProfile] = useState(false)
+
     const [isAdmin] = useState(selectedUser.admin)
     const [userProfileInfo, setUserProfileInfo] = useState({
         "first_name": selectedUser.first_name,
@@ -59,6 +60,7 @@ const ProfileInfo = ({ selectedUser }) => {
             "membership_id": selectedUser.membership_id,
             "admin": selectedUser.admin
         })
+        setEditProfile(false)
     }
 
     const handleProfileEdit = () => {
@@ -79,6 +81,7 @@ const ProfileInfo = ({ selectedUser }) => {
                 }
             })
             setAllUsers(updatedAllUsersState)
+            setEditProfile(false)
         })
     }
 
@@ -106,59 +109,7 @@ const ProfileInfo = ({ selectedUser }) => {
         )
     })
 
-    // const [expiration, setExpiration] = useState({
-    //     "month": "Month",
-    //     "day": "Day",
-    //     "year": "Year"
-    // })
-
-    // const handleExpirationChange = (event) => {
-    //     const { name, id } = event.target
-    //     setExpiration((prevState) => ({
-    //         ...prevState,
-    //         [name]: id
-    //     }))
-    // }
-
-    // const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-    // const renderExpirationDays = () => {
-    //     let i = 1;
-    //     const days = [];
-
-    //     if (['January', 'March', 'May', 'July', 'August', 'October', 'December'].includes(String(expiration.month))) {
-    //       while (i <= 31) {
-    //         days.push(<Dropdown.Item name="day" id={i} key={i} onClick={(event) => handleExpirationChange(event)}>{i}</Dropdown.Item>);
-    //         i++;
-    //       }
-    //     } else if (['April', 'June', 'September', 'November'].includes(String(expiration.month))) {
-    //         while (i <= 30) {
-    //           days.push(<Dropdown.Item name="day" id={i} key={i} onClick={(event) => handleExpirationChange(event)}>{i}</Dropdown.Item>);
-    //           i++;
-    //         }
-    //     } else if (String(expiration.month) === 'February') {
-    //         while (i <= 29) {
-    //           days.push(<Dropdown.Item name="day" id={i} key={i} onClick={(event) => handleExpirationChange(event)}>{i}</Dropdown.Item>);
-    //           i++;
-    //         }
-    //     }
-    //     return days;
-    //   };
-    // const renderExpirationMonth = months.map((month) => {
-    //     return (
-    //         <Dropdown.Item name="month" id={month} key={month} onClick={(event) => handleExpirationChange(event)}>{month}</Dropdown.Item>
-    //     )
-    // })
-
-    // const renderExpirationYears = () => {
-    //     let i = 2023
-    //     let years = []
-    //     while (i <= 2033) {
-    //         years.push(<Dropdown.Item name="year" id={i} key={i} onClick={(event) => handleExpirationChange(event)}>{i}</Dropdown.Item>)
-    //         i++
-    //     }
-    //     return years
-    // }
-
+    
     const setAdminStatus = () => {
         setUserProfileInfo((prevState) => ({
             ...prevState,
@@ -171,68 +122,143 @@ const ProfileInfo = ({ selectedUser }) => {
         {currentUser.admin && <h2 style={{textAlign:'center', marginTop:'2rem'}}>Use caution whenever editing user profile information.  There is no "undo" button once you save them!</h2>}
         <h1 style={{marginTop:'2rem'}}>{selectedUser.first_name} {selectedUser.last_name}'s Profile</h1>
         <div id="userProfileInfoDiv" style={{display:"flex", marginLeft:"0", marginBottom:'3rem', textAlign:"left", justifyContent:'center', marginTop:'2rem'}}>
-            <Card style={{position:"absolute", marginBottom:'3rem', display:"flex", justifyContent:"start", marginLeft:"0", textAlign:"left", width:'50vw'}}>
+            <div style={{position:"absolute", maxWidth:'90vw', marginBottom:'3rem', display:"flex", justifyContent:"start", marginLeft:"0", textAlign:"left", border: '1px solid rgba(0, 0, 0, 0.5)', borderRadius:'25px'}}>
                 {/* <Card.Img src={myImage} style={{width:"250px", display:"flex", justifyContent:"center"}}></Card.Img> */}
-                <Card.Body>
-                    <span style={{display:'flex'}}>
-                    <Card.Title style={{marginRight:'1.5rem'}}>First Name: <input name="first_name" value={userProfileInfo.first_name} onChange={handleProfileInfoChange}></input></Card.Title>
-                    <Card.Title style={{marginLeft:'1.5rem'}}>Last Name: <input name="last_name" value={userProfileInfo.last_name} onChange={handleProfileInfoChange}></input></Card.Title>
-                    </span>
+                <div style={{fontSize:"1.25rem", margin:'4rem', width:'100%'}}>
+
+                    <h4><b>First Name:</b> {editProfile ? <input name="first_name" value={userProfileInfo.first_name} onChange={handleProfileInfoChange}></input> : userProfileInfo.first_name}
                     <br></br>
-                    <Card.Title>Contact Information:</Card.Title>
+                    <b>Last Name:</b> {editProfile ? <input name="last_name" value={userProfileInfo.last_name} onChange={handleProfileInfoChange}></input> : userProfileInfo.last_name}</h4>
                     <br></br>
-                        <Card.Text>Email: <input name="email" value={userProfileInfo.email} onChange={handleProfileInfoChange}></input></Card.Text>
-                        <Card.Text>Phone Number: <input name="phone_number" value={userProfileInfo.phone_number} onChange={handleProfileInfoChange}></input></Card.Text>
-                    <Card.Text>Address: <input name="address" value={userProfileInfo.address} onChange={handleProfileInfoChange}></input></Card.Text>
-                    <Card.Text>City: <input name="city" value={userProfileInfo.city} onChange={handleProfileInfoChange}></input> State: <input name="state" value={userProfileInfo.state} onChange={handleProfileInfoChange}></input> Zipcode: <input name="zipcode" value={userProfileInfo.zipcode} onChange={handleProfileInfoChange}></input></Card.Text>
-                    <Card.Text>Date of Birth: <input name="date_of_birth" value={userProfileInfo.date_of_birth} onChange={handleProfileInfoChange}></input></Card.Text>
-                    <Card.Text>Emergency Contact: <input name="emergency_contact_name" value={userProfileInfo.emergency_contact_name} onChange={handleProfileInfoChange}></input> - <input name="emergency_contact_phone_number" value={userProfileInfo.emergency_contact_phone_number} onChange={handleProfileInfoChange}></input></Card.Text>
-                    <Card.Text>Waiver Status: {userProfileInfo.waiver ? "Active" : "Inactive"}</Card.Text>
-                    <Card.Text>First Contact with Customer: {selectedUser.created_at}</Card.Text>
-                    <Card.Text>Most Recent Change to Customer: {selectedUser.updated_at ? selectedUser.updated_at : "N/A"}</Card.Text>
-                    {currentUser.admin === true ?
+                    <h3><b>Contact Information:</b></h3>
+                    <br></br>
+                    <span style={{maxWidth:'100%'}}><b>Email:</b> {editProfile ? <input name="email" value={userProfileInfo.email} onChange={handleProfileInfoChange} style={{marginRight:'1.5rem'}}></input> : userProfileInfo.email}</span>
+                    <br></br>
+                    <b>Phone Number:</b> {editProfile ? <input name="phone_number" value={userProfileInfo.phone_number} onChange={handleProfileInfoChange}></input> : userProfileInfo.phone_number}
+                    <br></br>
+                    <b>Address:</b> {editProfile ? <input name="address" value={userProfileInfo.address} onChange={handleProfileInfoChange}></input> : userProfileInfo.address}
+                    <br></br>
+                    <b>City:</b> {editProfile ? <input name="city" value={userProfileInfo.city} onChange={handleProfileInfoChange}></input> : userProfileInfo.city}
+                    <br></br>
+                    <b>State:</b> {editProfile ? <input name="state" value={userProfileInfo.state} onChange={handleProfileInfoChange}></input> : userProfileInfo.state}
+                    <br></br>
+                    <b>Zipcode:</b> {editProfile ? <input name="zipcode" value={userProfileInfo.zipcode} onChange={handleProfileInfoChange}></input> : userProfileInfo.zipcode}
+                    <br></br>
+                    <b>Date of Birth:</b> {editProfile ? <input name="date_of_birth" value={userProfileInfo.date_of_birth} onChange={handleProfileInfoChange}></input> : userProfileInfo.date_of_birth}
+                    <br></br>
+                    <b>Emergency Contact Name:</b> {editProfile ? <input name="emergency_contact_name" value={userProfileInfo.emergency_contact_name} onChange={handleProfileInfoChange}></input> : userProfileInfo.emergency_contact_name}
+                    <br></br>
+                    <b>Emergency Contact Phone Number:</b> {editProfile ? <input name="emergency_contact_phone_number" value={userProfileInfo.emergency_contact_phone_number} onChange={handleProfileInfoChange}></input> : userProfileInfo.emergency_contact_phone_number}
+                    <br></br>
+                    <b>Waiver Status:</b> {userProfileInfo.waiver ? "Active" : "Inactive"}
+                    <br></br>
+                    <b>First Contact with Customer:</b> {selectedUser.created_at}
+                    <br></br>
+                    <b>Most Recent Change to Customer:</b> {selectedUser.updated_at ? selectedUser.updated_at : "N/A"}
+                    <br></br>
+                    {currentUser.admin && editProfile ?
                     <div style={{display:'flex'}}>
-                    <Dropdown style={{marginRight:'2rem'}}>
-                        <Dropdown.Toggle>{membershipName}</Dropdown.Toggle>
-                        <Dropdown.Menu>
-                            {allMembershipNames}
-                        </Dropdown.Menu>
-                    </Dropdown>
-                    {/* <Card.Text style={{display:'flex', alignContent:'center', marginRight:'1rem', marginTop:'0.35rem'}}>Expires:</Card.Text> */}
-                    {/* <Dropdown>
-                    <Dropdown.Toggle style={{marginRight:'0.5rem'}}>{expiration.month}</Dropdown.Toggle>
-                    <Dropdown.Menu>
-                    {renderExpirationMonth}
-                    </Dropdown.Menu>
-                    </Dropdown>
-                    <Dropdown>
-                        <Dropdown.Toggle style={{marginRight:'0.5rem'}}>{expiration.day}</Dropdown.Toggle>
-                        <Dropdown.Menu>
-                            {renderExpirationDays()}
-                        </Dropdown.Menu>
-                    </Dropdown>
-                    <Dropdown>
-                        <Dropdown.Toggle>{expiration.year}</Dropdown.Toggle>
-                        <Dropdown.Menu>
-                                {renderExpirationYears()}
+                        <Dropdown style={{marginRight:'2rem'}}>
+                            <Dropdown.Toggle>{membershipName}</Dropdown.Toggle>
+                            <Dropdown.Menu>
+                                {allMembershipNames}
                             </Dropdown.Menu>
-                    </Dropdown> */}
-                    <br></br><br></br><br></br>
+                        </Dropdown>
+                        <br></br><br></br><br></br>
                     </div>
-                    : <Card.Text>Membership: {membershipName}</Card.Text>}
-                    <Card.Text>Type: {membershipType}</Card.Text>
-                    <Card.Text>Subtype: {membershipSubtype}</Card.Text>
+                    : <span><b>Membership:</b> {membershipName}</span>}
                     <br></br>
-                    <Form.Label>Admin?</Form.Label>
-                    <Form.Check value={isAdmin} checked={userProfileInfo.admin} onClick={setAdminStatus}></Form.Check>
+                    <b>Type:</b> {membershipType}
                     <br></br>
-                    <Button onClick={handleProfileEdit} style={{marginRight:'1rem'}}>Save Changes</Button>
-                    <Button onClick={handleDiscardChanges} style={{background:'grey', marginLeft:'1rem'}}>Discard Changes</Button>
-                </Card.Body>
-            </Card>
+                    <b>Subtype:</b> {membershipSubtype}
+                    <br></br>
+                    {currentUser.admin && <Form.Label>Admin?</Form.Label>}
+                    {currentUser.admin && <Form.Check value={isAdmin} checked={userProfileInfo.admin} onClick={setAdminStatus}></Form.Check>}
+                    <br></br>
+                    {editProfile && <Button onClick={handleProfileEdit} style={{marginRight:'1rem'}}>Save Changes</Button>}
+                    {editProfile && <Button onClick={handleDiscardChanges} style={{background:'grey', marginLeft:'1rem'}}>Discard Changes</Button>}
+                    {!editProfile ? <Button onClick={() => setEditProfile(true)}>Edit Profile</Button> : null}
+                </div>
+            </div>
         </div>
         </>
     )
 }
 
 export default ProfileInfo
+
+
+
+// const [expiration, setExpiration] = useState({
+    //     "month": "Month",
+    //     "day": "Day",
+    //     "year": "Year"
+    // })
+    
+    // const handleExpirationChange = (event) => {
+        //     const { name, id } = event.target
+        //     setExpiration((prevState) => ({
+            //         ...prevState,
+            //         [name]: id
+            //     }))
+            // }
+            
+            // const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+            // const renderExpirationDays = () => {
+                //     let i = 1;
+                //     const days = [];
+                
+                //     if (['January', 'March', 'May', 'July', 'August', 'October', 'December'].includes(String(expiration.month))) {
+                    //       while (i <= 31) {
+                        //         days.push(<Dropdown.Item name="day" id={i} key={i} onClick={(event) => handleExpirationChange(event)}>{i}</Dropdown.Item>);
+                        //         i++;
+                        //       }
+                        //     } else if (['April', 'June', 'September', 'November'].includes(String(expiration.month))) {
+//         while (i <= 30) {
+//           days.push(<Dropdown.Item name="day" id={i} key={i} onClick={(event) => handleExpirationChange(event)}>{i}</Dropdown.Item>);
+//           i++;
+//         }
+//     } else if (String(expiration.month) === 'February') {
+    //         while (i <= 29) {
+        //           days.push(<Dropdown.Item name="day" id={i} key={i} onClick={(event) => handleExpirationChange(event)}>{i}</Dropdown.Item>);
+        //           i++;
+        //         }
+        //     }
+        //     return days;
+        //   };
+        // const renderExpirationMonth = months.map((month) => {
+            //     return (
+                //         <Dropdown.Item name="month" id={month} key={month} onClick={(event) => handleExpirationChange(event)}>{month}</Dropdown.Item>
+                //     )
+                // })
+                
+                // const renderExpirationYears = () => {
+                    //     let i = 2023
+                    //     let years = []
+                    //     while (i <= 2033) {
+                        //         years.push(<Dropdown.Item name="year" id={i} key={i} onClick={(event) => handleExpirationChange(event)}>{i}</Dropdown.Item>)
+                        //         i++
+                        //     }
+                        //     return years
+                        // }
+
+
+                        // {/* <Card.Text style={{display:'flex', alignContent:'center', marginRight:'1rem', marginTop:'0.35rem'}}>Expires:</Card.Text> */}
+                        // {/* <Dropdown>
+                        // <Dropdown.Toggle style={{marginRight:'0.5rem'}}>{expiration.month}</Dropdown.Toggle>
+                        // <Dropdown.Menu>
+                        // {renderExpirationMonth}
+                        // </Dropdown.Menu>
+                        // </Dropdown>
+                        // <Dropdown>
+                        // <Dropdown.Toggle style={{marginRight:'0.5rem'}}>{expiration.day}</Dropdown.Toggle>
+                        // <Dropdown.Menu>
+                        // {renderExpirationDays()}
+                        // </Dropdown.Menu>
+                        // </Dropdown>
+                        // <Dropdown>
+                        // <Dropdown.Toggle>{expiration.year}</Dropdown.Toggle>
+                        // <Dropdown.Menu>
+                        // {renderExpirationYears()}
+                        // </Dropdown.Menu>
+                        // </Dropdown> */}

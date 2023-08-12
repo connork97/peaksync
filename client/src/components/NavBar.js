@@ -7,18 +7,6 @@ import Dropdown from 'react-bootstrap/Dropdown'
 const NavBar = () => {
 
     const { currentUser } = useContext(LoggedInUserContext)
-
-    const renderDashboardNavLink = () => {
-        if (currentUser.admin) {
-            return (
-                <Link to="/admin-dashboard" exact="true" className="navBarLink">Dashboard</Link>
-                )
-        } else if (!currentUser.admin) {
-            return (
-                <Link to="/profile" exact="true" className="navBarLink">Dashboard</Link>
-                )
-        }
-    }
       
     return (
         <div id="navBarDiv" style={{display:"flex", justifyContent:"space-evenly", textDecoration:"none"}}>
@@ -35,8 +23,8 @@ const NavBar = () => {
                     </Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
-            <Link to="/login" exact="true" className="navBarLink">Account</Link>
-            {Object.keys(currentUser).length !== 0 ? renderDashboardNavLink() : null}
+            <Link to="/account" exact="true" className="navBarLink">Account</Link>
+            {currentUser.admin && <Link to="/admin-dashboard" exact="true" className="navBarLink">Dashboard</Link>}
         </div>
     )
 }

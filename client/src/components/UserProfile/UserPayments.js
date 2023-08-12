@@ -27,7 +27,7 @@ const UserPayments = ({ selectedUser }) => {
             {/* <h1 id="userBalanceH1">Balance: <span id="userBalanceSpan"></span></h1> */}
             {/* <h1 id="userCreditH1">Credit: <span id="userCreditSpan"></span></h1> */}
         </div>
-            <ListGroup>
+            <ListGroup style={{margin:'auto', marginTop:'2rem', marginBottom:'3rem', width:'75%'}}>
                 {renderUserPayments}
             </ListGroup>
         </>

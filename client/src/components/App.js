@@ -182,7 +182,7 @@ function App() {
                             <Route exact path='/calendar'>
                               <EventsCalendar />
                             </Route>
-                            <Route exact path='/login'>
+                            <Route exact path='/account'>
                               <Login />
                             </Route>
                             <Route exact path='/signup'>

@@ -16,7 +16,7 @@ const UserProfile = () => {
     const { currentUser } = useContext(LoggedInUserContext)
 
     let selectedUser
-    if (currentUser.admin === true) {
+    if (currentUser.admin && location.state) {
         selectedUser = location.state
     } else {
         selectedUser = currentUser

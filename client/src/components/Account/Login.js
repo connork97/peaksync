@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom"
 
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
+import { Link } from 'react-router-dom'
 import { LoggedInUserContext, AllUsersContext } from "../App"
 
 const Login = () => {
@@ -70,7 +71,7 @@ const Login = () => {
             {Object.keys(currentUser).length > 0 ?
             <div id="loggedInDiv" style={{marginTop:'3rem'}}>
                 <h1>Hi {currentUser.first_name}, thanks for logging in!</h1>
-                <h3 style={{marginTop:'2rem', marginBottom:'3rem'}}>If you want to check out or edit your profile information, booking history, etc, head to your dashboard!</h3>
+                <h3 style={{marginTop:'2rem', marginBottom:'3rem'}}>To view or edit your profile information, <Link to="/profile">click here</Link>.</h3>
                 <Button onClick={() => handleLogout()} style={{width:'10rem', height:'3rem'}}>Logout</Button>
             </div>
             :

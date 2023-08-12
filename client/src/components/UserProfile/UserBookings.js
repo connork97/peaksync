@@ -66,6 +66,9 @@ const UserBookings = ({ selectedUser }) => {
             // selectedUserBookings.reverse().map((signup) => {
             const datetimeString = `${signup.session.date}T${signup.session.time}:00`
             const datetime = new Date(datetimeString)
+            console.log(datetimeString)
+            console.log(datetime)
+            console.log(datetime < new Date())
             const options = {
                 weekday: 'long',
                 month: 'long',
@@ -78,9 +81,9 @@ const UserBookings = ({ selectedUser }) => {
             const formattedDateTime = datetime.toLocaleString('en-US', options)
             console.log(signup)
             return (
-                <ListGroup.Item className='listGroupItemWithEndButtons' style={{display:"flex"}}>
+                <ListGroup.Item className='listGroupItemWithEndButtons' style={{display:"flex", width:'100%'}}>
                     {signup.session.event.name} - {formattedDateTime} - {signup.session.event.free_for_members === true && selectedUser.membership.type === 'Member' ? "Paid" : <Button style={{color:"white", backgroundColor:"red", borderRadius:"15px"}}>Payment Owed</Button>}
-                    <Button onClick={() => history.push({pathname:'/edit/signup', state:signup})} style={{marginLeft:"auto"}}>Edit Booking</Button>
+                    {(currentUser.admin || datetime > new Date()) ? <Button onClick={() => history.push({pathname:'/edit/signup', state:signup})} style={{marginLeft:"auto"}}>Edit Booking</Button> : <span style={{marginLeft:'auto', opacity:'0.5'}}>Event start date already passed.</span>}
                 </ListGroup.Item>
             )
         })
@@ -89,7 +92,7 @@ const UserBookings = ({ selectedUser }) => {
     return (
         <>
             <h1>{selectedUser.first_name} {selectedUser.last_name}'s Booking History</h1>
-            <ListGroup>
+            <ListGroup style={{margin:'auto', marginTop:'2rem', marginBottom:'3rem', width:'75%'}}>
                 {/* {Object.keys(currentUser)?.length > 0 ? renderBookings() : null} */}
                 {/* {renderBookings()} */}
                 {renderSignups}
