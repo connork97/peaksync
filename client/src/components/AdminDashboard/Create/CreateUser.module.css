@@ -1,0 +1,23 @@
+.userInfoDiv {
+    display: flex;
+    margin-left: 0;
+    text-align: left;
+}
+
+.userInfoCard {
+    margin: auto;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    /* margin-left: 0; */
+    text-align: left;
+}
+
+.submitUserButton {
+    margin-right: 0.5rem;
+}
+
+.discardUserButton {
+    margin-left: 0.5rem;
+    background: grey;
+}

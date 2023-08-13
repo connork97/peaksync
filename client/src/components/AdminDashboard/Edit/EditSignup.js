@@ -1,3 +1,5 @@
+import styles from './EditSignup.module.css'
+
 import { useState, useEffect, useContext } from 'react'
 import { useLocation, useHistory } from 'react-router-dom'
 import { AllSessionsContext, SessionsToggleContext, CurrentUserToggleContext, SignupsToggleContext } from '../../App'
@@ -97,15 +99,15 @@ const EditSignup = () => {
                     Unless you are making an intentional exception, do not move this signup from it's original booking.
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button style={{background:'grey'}} onClick={() => setShowWarning(false)}>I understand and wish to proceed.</Button>
-                    <Button onClick={() => history.push({pathname:'/admin-dashboard'})}>Whoops, take me back!</Button>
+                    <Button className={styles.proceedButton} onClick={() => setShowWarning(false)}>I understand and wish to proceed.</Button>
+                    <Button onClick={() => history.goBack()}>Whoops, take me back!</Button>
                 </Modal.Footer>
             </Modal>
             <h1>Edit Signup Page</h1>
-            <div style={{textAlign:'center', marginTop:'2rem'}}>
+            <div className={styles.editSignupDiv}>
                 <h4>Current Signup:</h4>
                 <p>{signupToEdit.session.event.name} - Date: {signupToEdit.session.date} Time: {signupToEdit.session.time}</p>
-                <h2 style={{marginTop:'2rem'}}>Available Classes/Events to Relocate Signup:</h2>
+                <h2 className={styles.editSignupDivH2}>Available Classes/Events to Relocate Signup:</h2>
             </div>
             <ListGroup>
                 {renderAllAvailableSessions}
@@ -114,7 +116,7 @@ const EditSignup = () => {
             {eventStart > currentDate ?
             <h2>Or you can cancel your booking (refunds/credits not functional):
                 <br></br><br></br>
-                <Button onClick={handleDeleteSignup} style={{background:'red'}}>Cancel Booking (not functional)</Button>
+                <Button className={styles.cancelBookingButton} onClick={handleDeleteSignup}>Cancel Booking (not functional)</Button>
             </h2>
             : null}
         </div>

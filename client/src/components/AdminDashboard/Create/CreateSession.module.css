@@ -1,0 +1,27 @@
+.formDiv {
+    margin: auto;
+    width: 50%;
+}
+
+.formLabel {
+    margin-bottom: 1rem;
+}
+
+.dropdownToggle {
+    width: 10rem;
+}
+
+.dropdownMenu {
+    text-align: center;
+}
+
+.submitSessionButton {
+    margin-right: 1.5rem;
+    width: 15rem;
+}
+
+.discardSessionButton {
+    margin-left: 1.5rem;
+    width: 15rem;
+    background: grey;
+}

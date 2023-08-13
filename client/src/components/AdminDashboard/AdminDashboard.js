@@ -1,3 +1,5 @@
+import styles from './AdminDashboard.module.css'
+
 import { useContext, useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { LoggedInUserContext, AllEventsContext, AllMembershipsContext, AllSignupsContext } from '../App'
@@ -84,7 +86,7 @@ const AdminDashboard = () => {
 
     return (
         <>
-            <h1 style={{marginTop:'2rem', marginBottom:'2rem'}}>Admin Dashboard</h1>
+            <h1 className={styles.adminDashboardH1}>Admin Dashboard</h1>
             <Tabs
                 defaultActiveKey="profile"
                 id="justify-tab-profile"
@@ -94,27 +96,27 @@ const AdminDashboard = () => {
                 <Tab eventKey="profile" title="Your Profile">
                     <ProfileInfo selectedUser={currentUser} />
                 </Tab>
-                <Tab eventKey="memberships" title="Memberships" style={{width:'75vw', margin:'auto', marginTop:'2.5rem'}}>
+                <Tab className={styles.dashboardTab} eventKey="memberships" title="Memberships">
                     <Accordion>
-                    <Accordion.Item eventKey='0' style={{marginBottom:"2rem"}}>
+                    <Accordion.Item eventKey='0' className={styles.topAccordionItem}>
                             <Accordion.Header>Guest</Accordion.Header>
                             <Accordion.Body>
                                 {renderAllMemberships('Guest')}
                             </Accordion.Body>
                         </Accordion.Item>
-                        <Accordion.Item eventKey='1' style={{marginBottom:"2rem", borderTop:'1px solid rgba(0, 0, 0, 0.1)'}}>
+                        <Accordion.Item eventKey='1' className={styles.accordionItem}>
                             <Accordion.Header>Memberships</Accordion.Header>
                             <Accordion.Body>
                                 {renderAllMemberships('Member')}
                             </Accordion.Body>
                         </Accordion.Item>
-                        <Accordion.Item eventKey='2' style={{marginBottom:"2rem", borderTop:'1px solid rgba(0, 0, 0, 0.1)'}}>
+                        <Accordion.Item eventKey='2' className={styles.accordionItem}>
                             <Accordion.Header>Punch Cards</Accordion.Header>
                             <Accordion.Body>
                                 {renderAllMemberships('Punch Card')}
                             </Accordion.Body>
                         </Accordion.Item>
-                        <Accordion.Item eventKey='3' style={{marginBottom:"2rem", borderTop:'1px solid rgba(0, 0, 0, 0.1)'}}>
+                        <Accordion.Item eventKey='3' className={styles.accordionItem}>
                             <Accordion.Header>Other</Accordion.Header>
                             <Accordion.Body>
                                 {renderAllMemberships('Misc')}
@@ -122,33 +124,33 @@ const AdminDashboard = () => {
                         </Accordion.Item>
                     </Accordion>
                 </Tab>
-                <Tab eventKey="events" title="Events" style={{width:'75vw', margin:'auto', marginTop:'2.5rem'}}>
+                <Tab className={styles.dashboardTab} eventKey="events" title="Events">
                     <Accordion>
-                        <Accordion.Item eventKey='0'style={{marginBottom:"2rem"}}>
+                        <Accordion.Item eventKey='0'className={styles.topAccordionItem}>
                             <Accordion.Header>Climbing Classes</Accordion.Header>
                             <Accordion.Body id="adminEventsListGroup">
                                 {renderEvents('Climbing')}
                             </Accordion.Body>
                         </Accordion.Item>
-                        <Accordion.Item eventKey='1' style={{marginBottom:"2rem", borderTop:'1px solid rgba(0, 0, 0, 0.1)'}}>
+                        <Accordion.Item eventKey='1' className={styles.accordionItem}>
                             <Accordion.Header>Yoga Classes</Accordion.Header>
                             <Accordion.Body id="adminEventsListGroup">
                                 {renderEvents('Yoga')}
                             </Accordion.Body>
                         </Accordion.Item>
-                        <Accordion.Item eventKey='2' style={{marginBottom:"2rem", borderTop:'1px solid rgba(0, 0, 0, 0.1)'}}>
+                        <Accordion.Item eventKey='2' className={styles.accordionItem}>
                             <Accordion.Header>Fitness Classes</Accordion.Header>
                             <Accordion.Body id="adminEventsListGroup">
                                 {renderEvents('Fitness')}
                             </Accordion.Body>
                         </Accordion.Item>
-                        <Accordion.Item eventKey='3' style={{marginBottom:"2rem", borderTop:'1px solid rgba(0, 0, 0, 0.1)'}}>
+                        <Accordion.Item eventKey='3' className={styles.accordionItem}>
                             <Accordion.Header>Events</Accordion.Header>
                             <Accordion.Body id="adminEventsListGroup">
                                 {renderEvents('Event')}
                             </Accordion.Body>
                         </Accordion.Item>
-                        <Accordion.Item eventKey='4' style={{marginBottom:"2rem", borderTop:'1px solid rgba(0, 0, 0, 0.1)'}}>
+                        <Accordion.Item eventKey='4' className={styles.accordionItem}>
                             <Accordion.Header>Other Classes and Events</Accordion.Header>
                             <Accordion.Body id="adminEventsListGroup">
                                 {renderEvents('Misc')}
@@ -156,11 +158,11 @@ const AdminDashboard = () => {
                         </Accordion.Item>
                     </Accordion>
                 </Tab>
-                <Tab eventKey="signups" title="Signups" style={{width:'75vw', margin:'auto', marginTop:'2.5rem'}}>
-                    <div style={{marginTop:'2rem', marginBottom:'2rem'}}>
-                        <Form style={{display:'flex', margin:'auto', justifyContent:'center', textAlign:'center'}}>
-                            <Form.Control value={signupSearch} style={{width:'50%', marginRight:'1.5rem'}} onChange={(event) => setSignupSearch(event.target.value)}></Form.Control>
-                            <Dropdown style={{marginLeft:'1.5rem'}}>
+                <Tab className={styles.dashboardTab} eventKey="signups" title="Signups">
+                    <div className={styles.signupTabDiv}>
+                        <Form className={styles.signupSearchForm} onSubmit={(event => event.preventDefault())}>
+                            <Form.Control className={styles.signupSearchFormControl} value={signupSearch} onChange={(event) => setSignupSearch(event.target.value)}></Form.Control>
+                            <Dropdown className={styles.signupSearchDropdown}>
                                 <Dropdown.Toggle>{signupFilter}</Dropdown.Toggle>
                                 <Dropdown.Menu>{renderSignupDropdownMenu}</Dropdown.Menu>
                             </Dropdown>
@@ -170,13 +172,13 @@ const AdminDashboard = () => {
                                 {renderSignupsByCategory}
                             </ListGroup>
                 </Tab>
-                <Tab eventKey="create" title="Create" style={{textAlign:'center', width:'75vw', margin:'auto', marginTop:'2.5rem'}}>
+                <Tab className={`${styles.dashboardTab} ${styles.dashboardTabCentered}`} eventKey="create" title="Create">
                     <Create />
                 </Tab>
-                <Tab eventKey="userDatabase" title="User Database" style={{textAlign:"center"}}>
-                    <h2 style={{marginTop:'10rem', marginBottom:'3rem'}}>To view and manage the user database, a redirect is required.</h2>
+                <Tab className={styles.dashboardTabCentered} eventKey="userDatabase" title="User Database">
+                    <h2 className={styles.userDatabaseH2}>To view and manage the user database, a redirect is required.</h2>
                     <h3>Click the button below to search and edit user profiles.</h3>
-                    <Button onClick={() => history.push({pathname:"/database"})} style={{marginTop:'3rem', width:'17.5rem', height:'3.5rem'}}>Go to User Database</Button>
+                    <Button className={styles.userDatabaseRedirectButton} onClick={() => history.push({pathname:"/database"})}>Go to User Database</Button>
                 </Tab>
             </Tabs>
         </>

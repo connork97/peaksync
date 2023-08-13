@@ -1,3 +1,5 @@
+import styles from './EventData.module.css'
+
 import { useState, useContext } from 'react'
 import { AllEventsContext } from '../../App'
 
@@ -99,7 +101,7 @@ const EventData = ({ event }) => {
 
     return (
         <div>
-            <ListGroup.Item className="listGroupItemWithEndButtons" style={{marginBottom:'2rem'}}>
+            <ListGroup.Item className={styles.listGroupItem}>
                 <b>Name:</b> {editEventToggle ? <input name="name" value={editedEvent.name} onChange={handleEventDetailChange}></input> : editedEvent.name}
                 <br></br>
                 <b>Price:</b> ${editEventToggle ? <input name="price" value={editedEvent.price} onChange={handleEventDetailChange}></input> : editedEvent.price}
@@ -118,10 +120,8 @@ const EventData = ({ event }) => {
                 {editEventToggle ?
                 <Button className='listGroupEndButton' onClick={() => handleEventChangeSubmit(event.id)}>Save Changes</Button>
                 : null}
-                {editEventToggle ?
-                <Button className='listGroupEndButton' onClick={handleDiscardEventChanges}>Discard Changes</Button>
-                : null}
-                <Button className='listGroupEndButton' onClick={() => handleEventDelete(event.id)} style={{background:"red"}}>Delete Event</Button>
+                {editEventToggle && <Button className='listGroupEndButton' onClick={handleDiscardEventChanges}>Discard Changes</Button> }
+                <Button className={styles.deleteEventButton} onClick={() => handleEventDelete(event.id)}>Delete Event</Button>
                 <br></br>
             </ListGroup.Item>
         </div>

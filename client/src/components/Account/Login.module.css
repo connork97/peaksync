@@ -1,0 +1,25 @@
+.loggedInDiv {
+    margin-top: 3rem;
+}
+
+.loggedInH3 {
+    margin: 2rem auto 3rem auto;
+}
+
+.logoutButton {
+    width: 10rem;
+    height: 3rem;
+}
+
+.loginDiv {
+    margin: auto auto 2rem auto;
+    width: 42.5vw;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 25px;
+}
+
+.loginForm {
+    margin: auto;
+    width: 95%;
+    height: 100%;
+}

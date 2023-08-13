@@ -1,3 +1,5 @@
+import styles from './CreateUser.module.css'
+
 import { useState, useContext } from 'react'
 import { AllUsersContext } from '../../App'
 
@@ -18,7 +20,7 @@ const CreateUser = () => {
         "address": "",
         "city": "",
         "state": "",
-        "zipcode": "null",
+        "zipcode": null,
         "date_of_birth": "",
         "emergency_contact_name": "",
         "emergency_contact_phone_number": "null",
@@ -84,10 +86,10 @@ const CreateUser = () => {
     }
 
     return (
-        <div id="userProfileInfoDiv" style={{display:"flex", marginLeft:"0",textAlign:"left"}}>
-            <Card style={{position:"relative", margin:'auto', display:"flex", justifyContent:"center", marginLeft:"0", textAlign:"left"}}>
+        <div className={styles.userInfoDiv}>
+            <Card className={styles.userInfoCard}>
                 {/* <Card.Img src={myImage} style={{width:"250px", display:"flex", justifyContent:"center"}}></Card.Img> */}
-                <Card.Body style={{margin:'auto'}}>
+                <Card.Body>
                     <Card.Text>First Name: <input name="first_name" value={newUser.first_name} onChange={handleProfileInfoChange}></input></Card.Text>
                     <Card.Text>Last Name: <input name="last_name" value={newUser.last_name} onChange={handleProfileInfoChange}></input></Card.Text>
                     <Card.Text>Email: <input name="email" value={newUser.email} onChange={handleProfileInfoChange}></input></Card.Text>
@@ -101,8 +103,8 @@ const CreateUser = () => {
                     <Card.Text>Waiver Status: <Form.Check name="waiver" value={newUser.waiver} onChange={handleWaiverChange}></Form.Check>{newUser.waiver ? "Active" : "Inactive"}</Card.Text>
                     <Card.Text>Membership ID: {newUser.membership_id}</Card.Text>
                     <Card.Text>Grant Admin Priveledges?<Form.Check name="admin" value={newUser.admin} onChange={handleAdminChange}></Form.Check></Card.Text>
-                    <Button onClick={handleCreateUser} style={{marginRight:'0.5rem'}}>Create User</Button>
-                    <Button onClick={handleDiscardChanges} style={{marginLeft:'0.5rem', background:'grey'}}>Discard User</Button>
+                    <Button className={styles.submitUserButton} onClick={handleCreateUser}>Create User</Button>
+                    <Button className={styles.discardUserButton} onClick={handleDiscardChanges}>Discard User</Button>
                 </Card.Body>
             </Card>
         </div>

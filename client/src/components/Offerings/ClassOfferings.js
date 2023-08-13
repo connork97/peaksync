@@ -1,3 +1,5 @@
+import styles from './Offerings.module.css'
+
 import { useContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import { AllEventsContext } from '../App'
@@ -13,7 +15,7 @@ const ClassOfferings = () => {
 
     const renderAllEvents = allEvents.map((event) => {
         return (
-            <Accordion.Item eventKey={event.id} key={event.id} style={{marginTop:'20px', borderTop:'1px solid rgba(0, 0, 0, 0.1)'}}>
+            <Accordion.Item className={styles.accordionItem} eventKey={event.id} key={event.id}>
                 <Accordion.Header>{event.name}</Accordion.Header>
                 <Accordion.Body>
                     Price: ${event.price}
@@ -26,10 +28,10 @@ const ClassOfferings = () => {
 
     return (
         <>
-        <h1>Classes</h1>
-        <div className='offeringsDiv'>
-            <Button onClick={() => history.push({pathname:'/calendar'})} style={{marginTop:'20px', marginRight: '25px'}}>Go to Calendar</Button>
-            <Accordion style={{margin:'auto', textAlign:'left', width:'75vw'}}>
+        <h1 className={styles.offeringsH1}>Classes</h1>
+        <div className={styles.classOfferingsDiv}>
+            <Button className={styles.calendarRedirectButton} onClick={() => history.push({pathname:'/calendar'})}>Go to Calendar</Button>
+            <Accordion className={styles.accordion}>
                 {renderAllEvents}
             </Accordion>
         </div>

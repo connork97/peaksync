@@ -1,0 +1,32 @@
+.navBarDiv {
+    display: flex;
+    justify-content: space-evenly;
+    text-decoration: none;
+}
+
+.dropdownToggle {
+    background: white !important;
+    color: black !important;
+    border: none;
+    text-decoration: underline;
+    font-size: 1.9rem;
+}
+
+.dropdownToggle:hover {
+    background: white !important;
+    color: black !important;
+    border: none;
+    text-decoration: underline;
+    font-size: 1.9rem;
+}
+
+.dropdownMenu {
+    color: black;
+    width: 100%;
+    text-align: right;
+}
+
+.dropdownLink {
+    color: black;
+    text-decoration: none;
+}

@@ -1,3 +1,5 @@
+import styles from './CreateMembership.module.css'
+
 import { useState, useContext } from 'react'
 import { AllMembershipsContext } from '../../App'
 
@@ -53,26 +55,56 @@ const CreateMembership = () => {
     }
 
     return (
-        <Form id="createMembershipForm" onSubmit={handleMembershipSubmit} style={{marginTop:'2rem', width:'50%', marginLeft:'auto', marginRight:'auto'}}>
+        <Form className={styles.createMembershipForm} onSubmit={handleMembershipSubmit}>
             <Form.Label><b>Name:</b></Form.Label>
-                <Form.Control name="name" type="text" value={newMembership.name} onChange={handleNewMembershipChange}></Form.Control>
+                <Form.Control
+                    name="name"
+                    type="text"
+                    value={newMembership.name}
+                    onChange={handleNewMembershipChange}
+                >
+                </Form.Control>
             <br></br>
             <Form.Label><b>Price:</b></Form.Label>
-                <Form.Control name="price" type="text" value={newMembership.price} onChange={handleNewMembershipChange}></Form.Control>
+                <Form.Control
+                    name="price"
+                    type="text"
+                    value={newMembership.price}
+                    onChange={handleNewMembershipChange}
+                >
+                </Form.Control>
             <br></br>
             <Form.Label><b>Type:</b></Form.Label>
-                <Form.Control name="type" type="text" value={newMembership.type} onChange={handleNewMembershipChange}></Form.Control>
+                <Form.Control
+                    name="type"
+                    type="text"
+                    value={newMembership.type}
+                    onChange={handleNewMembershipChange}
+                >
+                </Form.Control>
                 <Form.Text>Examples: "Guest", "Punch Card", "Member", etc...</Form.Text>
             <br></br>
             <Form.Label><b>Subtype:</b></Form.Label>
-                <Form.Control name="subtype" type="text" value={newMembership.subtype} onChange={handleNewMembershipChange}></Form.Control>
+                <Form.Control
+                    name="subtype"
+                    type="text"
+                    value={newMembership.subtype}
+                    onChange={handleNewMembershipChange}
+                >
+                </Form.Control>
                 <Form.Text>Examples: "Guest", "Monthly", "Prepaid", "Punch Card", etc...</Form.Text>
             <br></br>
             <Form.Label><b>Description:</b></Form.Label>
-                <Form.Control name="description" type="text" value={newMembership.description} onChange={handleNewMembershipChange}></Form.Control>
+                <Form.Control
+                    name="description"
+                    type="text"
+                    value={newMembership.description}
+                    onChange={handleNewMembershipChange}
+                >
+                </Form.Control>
             <br></br>
-            <Button type="submit" style={{marginRight:'1.5rem', width:'12.5rem'}}>Create Membership</Button>
-            <Button onClick={handleDiscardMembership} style={{marginLeft:'1.5rem', width:'12.5rem', background:'grey'}}>Discard Membership</Button>
+            <Button className={styles.submitCreateMembershipButton} type="submit">Create Membership</Button>
+            <Button className={styles.discardMembershipButton} onClick={handleDiscardMembership}>Discard Membership</Button>
             <br></br><br></br>
         </Form>
     )

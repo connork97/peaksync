@@ -1,3 +1,5 @@
+import styles from './NavBar.module.css'
+
 import { Link } from "react-router-dom"
 import { useContext } from 'react'
 import { LoggedInUserContext } from "./App"
@@ -9,17 +11,17 @@ const NavBar = () => {
     const { currentUser } = useContext(LoggedInUserContext)
       
     return (
-        <div id="navBarDiv" style={{display:"flex", justifyContent:"space-evenly", textDecoration:"none"}}>
+        <div className={styles.navBarDiv}>
             <Link to="/" exact="true" className="navBarLink">Home</Link>
             <Link to="/calendar" exact="true" className="navBarLink">Calendar</Link>
             <Dropdown className="navBarLink">
-                <Dropdown.Toggle style={{background:"white", color:'black', border:'none', textDecoration:'underline', fontSize:'1.9rem'}}>Rates and Offerings</Dropdown.Toggle>
-                <Dropdown.Menu style={{color:'black', width:'100%', textAlign:'right'}}>
-                    <Dropdown.Item style={{color:'black'}}>
-                        <Link to='/offerings/memberships' exact="true" className='navBarDropdownLink' style={{color:'black', textDecoration:'none'}}>Memberships</Link>
+                <Dropdown.Toggle className={styles.dropdownToggle}>Rates and Offerings</Dropdown.Toggle>
+                <Dropdown.Menu className={styles.dropdownMenu}>
+                    <Dropdown.Item>
+                        <Link to='/offerings/memberships' exact="true" className={styles.dropdownLink}>Memberships</Link>
                     </Dropdown.Item>
                     <Dropdown.Item>
-                        <Link to='/offerings/classes' exact="true" className='navBarDropdownLink' style={{color:'black', textDecoration:'none'}}>Classes</Link>
+                        <Link to='/offerings/classes' exact="true" className={styles.dropdownLink}>Classes</Link>
                     </Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>

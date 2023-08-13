@@ -1,0 +1,9 @@
+.modal {
+    position: relative;
+    scale: 1.75;
+    top: -70vh;
+}
+
+.spacesRemainingSpan {
+    margin-right: auto;
+}

@@ -1,3 +1,5 @@
+import styles from './UserProfile.module.css'
+
 import { useState, useContext } from 'react'
 import { useHistory } from 'react-router-dom'
 
@@ -81,9 +83,9 @@ const UserBookings = ({ selectedUser }) => {
             const formattedDateTime = datetime.toLocaleString('en-US', options)
             console.log(signup)
             return (
-                <ListGroup.Item className='listGroupItemWithEndButtons' style={{display:"flex", width:'100%'}}>
-                    {signup.session.event.name} - {formattedDateTime} - {signup.session.event.free_for_members === true && selectedUser.membership.type === 'Member' ? "Paid" : <Button style={{color:"white", backgroundColor:"red", borderRadius:"15px"}}>Payment Owed</Button>}
-                    {(currentUser.admin || datetime > new Date()) ? <Button onClick={() => history.push({pathname:'/edit/signup', state:signup})} style={{marginLeft:"auto"}}>Edit Booking</Button> : <span style={{marginLeft:'auto', opacity:'0.5'}}>Event start date already passed.</span>}
+                <ListGroup.Item className={styles.userBookingListGroupItem}>
+                    {signup.session.event.name} - {formattedDateTime} - {signup.session.event.free_for_members === true && selectedUser.membership.type === 'Member' ? "Paid" : <Button className={styles.paymentOwedButton}>Payment Owed</Button>}
+                    {(currentUser.admin || datetime > new Date()) ? <Button className={styles.editSignupButton} onClick={() => history.push({pathname:'/edit/signup', state:signup})}>Edit Booking</Button> : <span className={styles.startDatePassedSpan}>Event start date already passed.</span>}
                 </ListGroup.Item>
             )
         })
@@ -92,7 +94,7 @@ const UserBookings = ({ selectedUser }) => {
     return (
         <>
             <h1>{selectedUser.first_name} {selectedUser.last_name}'s Booking History</h1>
-            <ListGroup style={{margin:'auto', marginTop:'2rem', marginBottom:'3rem', width:'75%'}}>
+            <ListGroup className={styles.listGroup}>
                 {/* {Object.keys(currentUser)?.length > 0 ? renderBookings() : null} */}
                 {/* {renderBookings()} */}
                 {renderSignups}

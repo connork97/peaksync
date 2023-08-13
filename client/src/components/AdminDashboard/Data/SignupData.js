@@ -1,5 +1,6 @@
-import { useHistory } from 'react-router-dom'
+import styles from './SignupData.module.css'
 
+import { useHistory } from 'react-router-dom'
 
 import ListGroup from 'react-bootstrap/ListGroup'
 import Button from 'react-bootstrap/Button'
@@ -9,11 +10,11 @@ const SignupData = ({ signup }) => {
     const history = useHistory()
 
     const handleEditSignup = (signup) => {
-        history.push({pathname:"https://peaksync-back-end.onrender.com/edit/signup", state:signup})
+        history.push({pathname:"/edit/signup", state:signup})
     }
 
     return (
-        <ListGroup.Item className='inlineListGroupItemWithEndButtons' style={{alignItems:'center', marginBottom:'1rem', borderTop:'1px solid rgba(0, 0, 0, 0.1)'}}>
+        <ListGroup.Item className={styles.listGroupItem}>
             <span><b>Event: </b>{signup.session ? signup.session.event.name + " " : null}<b>Customer: </b>{signup.user.last_name}, {signup.user.first_name} <b>Date/Time: </b>{signup.session.date}, {signup.session.time}
                 <strong> Created At: </strong> {signup.created_at} 
             </span>

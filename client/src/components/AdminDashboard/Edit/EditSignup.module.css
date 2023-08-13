@@ -1,0 +1,21 @@
+.proceedButton {
+    background: grey;
+}
+
+.editSignupDiv {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.editSignupDivH2 {
+    margin-top: 2rem;
+}
+
+.signupDetailsP {
+    margin-top: 1rem;
+    align-content: center;
+}
+
+.cancelBookingButton {
+    background: red;
+}

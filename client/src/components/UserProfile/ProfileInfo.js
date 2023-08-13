@@ -1,8 +1,8 @@
+import styles from './UserProfile.module.css'
+
 import { useState, useContext, useEffect } from 'react'
 import { AllUsersContext, LoggedInUserContext, AllMembershipsContext } from '../App'
 
-import Card from 'react-bootstrap/Card'
-import ListGroup from 'react-bootstrap/ListGroup'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Dropdown from 'react-bootstrap/Dropdown'
@@ -119,12 +119,12 @@ const ProfileInfo = ({ selectedUser }) => {
 
     return (
         <>
-        {currentUser.admin && <h2 style={{textAlign:'center', marginTop:'2rem'}}>Use caution whenever editing user profile information.  There is no "undo" button once you save them!</h2>}
-        <h1 style={{marginTop:'2rem'}}>{selectedUser.first_name} {selectedUser.last_name}'s Profile</h1>
-        <div id="userProfileInfoDiv" style={{display:"flex", marginLeft:"0", marginBottom:'3rem', textAlign:"left", justifyContent:'center', marginTop:'2rem'}}>
-            <div style={{position:"absolute", maxWidth:'90vw', marginBottom:'3rem', display:"flex", justifyContent:"start", marginLeft:"0", textAlign:"left", border: '1px solid rgba(0, 0, 0, 0.5)', borderRadius:'25px'}}>
+        {currentUser.admin && <h2 className={styles.warningH2}>Use caution whenever editing user profile information.  There is no "undo" button once you save them!</h2>}
+        <h1 className={styles.profileNameH1}>{selectedUser.first_name} {selectedUser.last_name}'s Profile</h1>
+        <div className={styles.outerProfileInfoDiv}>
+            <div className={styles.middleProfileInfoDiv}>
                 {/* <Card.Img src={myImage} style={{width:"250px", display:"flex", justifyContent:"center"}}></Card.Img> */}
-                <div style={{fontSize:"1.25rem", margin:'4rem', width:'100%'}}>
+                <div className={styles.innerProfileInfoDiv}>
 
                     <h4><b>First Name:</b> {editProfile ? <input name="first_name" value={userProfileInfo.first_name} onChange={handleProfileInfoChange}></input> : userProfileInfo.first_name}
                     <br></br>
@@ -132,7 +132,7 @@ const ProfileInfo = ({ selectedUser }) => {
                     <br></br>
                     <h3><b>Contact Information:</b></h3>
                     <br></br>
-                    <span style={{maxWidth:'100%'}}><b>Email:</b> {editProfile ? <input name="email" value={userProfileInfo.email} onChange={handleProfileInfoChange} style={{marginRight:'1.5rem'}}></input> : userProfileInfo.email}</span>
+                    <span><b>Email:</b> {editProfile ? <input name="email" value={userProfileInfo.email} onChange={handleProfileInfoChange}></input> : userProfileInfo.email}</span>
                     <br></br>
                     <b>Phone Number:</b> {editProfile ? <input name="phone_number" value={userProfileInfo.phone_number} onChange={handleProfileInfoChange}></input> : userProfileInfo.phone_number}
                     <br></br>
@@ -157,13 +157,15 @@ const ProfileInfo = ({ selectedUser }) => {
                     <b>Most Recent Change to Customer:</b> {selectedUser.updated_at ? selectedUser.updated_at : "N/A"}
                     <br></br>
                     {currentUser.admin && editProfile ?
-                    <div style={{display:'flex'}}>
-                        <Dropdown style={{marginRight:'2rem'}}>
+                    <div className={styles.editMembershipDiv}>
+                        <span><b>Membership: </b>
+                        <Dropdown className={styles.editMembershipDropdown}>
                             <Dropdown.Toggle>{membershipName}</Dropdown.Toggle>
                             <Dropdown.Menu>
                                 {allMembershipNames}
                             </Dropdown.Menu>
                         </Dropdown>
+                        </span>
                         <br></br><br></br><br></br>
                     </div>
                     : <span><b>Membership:</b> {membershipName}</span>}
@@ -175,8 +177,8 @@ const ProfileInfo = ({ selectedUser }) => {
                     {currentUser.admin && <Form.Label>Admin?</Form.Label>}
                     {currentUser.admin && <Form.Check value={isAdmin} checked={userProfileInfo.admin} onClick={setAdminStatus}></Form.Check>}
                     <br></br>
-                    {editProfile && <Button onClick={handleProfileEdit} style={{marginRight:'1rem'}}>Save Changes</Button>}
-                    {editProfile && <Button onClick={handleDiscardChanges} style={{background:'grey', marginLeft:'1rem'}}>Discard Changes</Button>}
+                    {editProfile && <Button className={styles.saveChangesButton} onClick={handleProfileEdit}>Save Changes</Button>}
+                    {editProfile && <Button className={styles.discardChangesButton} onClick={handleDiscardChanges}>Discard Changes</Button>}
                     {!editProfile ? <Button onClick={() => setEditProfile(true)}>Edit Profile</Button> : null}
                 </div>
             </div>

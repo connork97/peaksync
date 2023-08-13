@@ -1,0 +1,8 @@
+.listGroupItem {
+    margin-bottom: 2rem;
+}
+
+.deleteEventButton {
+    margin-left: 0.5rem;
+    background: red;
+}

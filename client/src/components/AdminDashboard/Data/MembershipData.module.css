@@ -1,0 +1,19 @@
+.listGroupItem {
+    margin-bottom: 2rem;
+}
+
+.listGroupInput {
+    width: 75%;
+    margin-bottom: .5rem;
+}
+
+
+.discardMembershipChangeButton {
+    margin-left: 1rem;
+    background: grey;
+}
+
+.deleteMembershipButton {
+    margin-left: 1rem;
+    background: red;
+}

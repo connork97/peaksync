@@ -1,3 +1,5 @@
+import styles from './CreateSession.module.css'
+
 import { useState, useContext } from 'react'
 import { AllSessionsContext, AllEventsContext, SessionsToggleContext } from '../../App'
 
@@ -104,28 +106,38 @@ const CreateSession = () => {
                 </Dropdown.Menu>
             </Dropdown>
             <br></br>
-            <div style={{width:'50%', margin:'auto'}}>
-                <Form.Label style={{marginBottom:'1rem'}}><b>Start Date:</b></Form.Label>
-                    <Form.Control name="date" value={newSession.date} onChange={handleNewSessionChange}></Form.Control>
+            <div className={styles.formDiv}>
+                <Form.Label className={styles.formLabel}><b>Start Date:</b></Form.Label>
+                    <Form.Control
+                        name="date"
+                        value={newSession.date}
+                        onChange={handleNewSessionChange}
+                    >
+                    </Form.Control>
                     <Form.Text>Date must be in format of YYYY-MM-DD</Form.Text>
                 <br></br><br></br><br></br>
                 <Form.Label><b>Start Time:</b></Form.Label>
-                    <Form.Control name="time" value={newSession.time} onChange={handleNewSessionChange}></Form.Control>
+                    <Form.Control
+                        name="time"
+                        value={newSession.time}
+                        onChange={handleNewSessionChange}
+                    >
+                    </Form.Control>
                     <Form.Text>Time must be in the format of HH:MM</Form.Text>
                 <br></br><br></br><br></br>
                 <Form.Label><b>Frequency:</b></Form.Label>
             </div>
                 <Dropdown>
                     <br></br>
-                    <Dropdown.Toggle style={{width:'10rem'}}>{selectedFrequency}</Dropdown.Toggle>
-                    <Dropdown.Menu style={{textAlign:'center'}}>
+                    <Dropdown.Toggle className={styles.dropdownToggle}>{selectedFrequency}</Dropdown.Toggle>
+                    <Dropdown.Menu className={styles.dropdownMenu}>
                         <Dropdown.Item name="Classes and Events" onClick={handleSelectFrequency}></Dropdown.Item>
                         {renderFrequencyDropdownItems}
                     </Dropdown.Menu>
                 </Dropdown>
             <br></br><br></br><br></br>
-            <Button type="submit" style={{marginRight:'1.5rem', width:'15rem'}}>Create New Calendar Item</Button>
-            <Button onClick={handleDiscardSession} style={{marginLeft:'1.5rem', background:'grey', width:'15rem'}}>Discard Calendar Item</Button>
+            <Button className={styles.submitSessionButton} type="submit">Create New Calendar Item</Button>
+            <Button className={styles.discardSessionButton} onClick={handleDiscardSession}>Discard Calendar Item</Button>
             <br></br><br></br>
         </Form>
     )

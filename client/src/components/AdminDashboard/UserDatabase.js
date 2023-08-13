@@ -1,6 +1,8 @@
-import { useState, useContext } from "react";
-import { useHistory } from 'react-router-dom';
-import { AllUsersContext } from "../App.js";
+import styles from './UserDatabase.module.css'
+
+import { useState, useContext } from "react"
+import { useHistory } from 'react-router-dom'
+import { AllUsersContext } from "../App.js"
 
 import Table from 'react-bootstrap/Table'
 import Dropdown from "react-bootstrap/Dropdown"
@@ -85,16 +87,20 @@ const UserDatabase = () => {
 
     return (
         <div>
-            <h1 style={{marginTop:'2rem', marginBottom:'1.5rem'}}>User Database</h1>
-            <div id="adminSearchDiv" style={{display: "flex", justifyContent:"center", alignItems:"center"}}>
-            <Form onSubmit={handleFetchUsers} style={{display:'flex'}}>
-                <Form.Control type="text" value={searchParams} onChange={(event) => setSearchParams(event.target.value)} 
-                    style={{marginRight:"10px", width:'25vw', paddingLeft:'10px', paddingRight:'10px', border:'1px solid rgba(0, 0, 0, 0.1)', borderRadius:'10px'}}>
+            <h1 className={styles.userDatabaseH1}>User Database</h1>
+            <div className={styles.searchDiv}>
+            <Form className={styles.searchForm} onSubmit={handleFetchUsers}>
+                <Form.Control
+                    className={styles.searchFormControl}
+                    type="text"
+                    value={searchParams}
+                    onChange={(event) => setSearchParams(event.target.value)}
+                >
                 </Form.Control>
                 <Button type="submit">Search</Button>
             </Form>
-            <Dropdown style={{marginLeft:'2rem'}}>
-                <span style={{marginRight:'0.75rem'}}><b>Filter By:</b></span>
+            <Dropdown className={styles.filterDropdown}>
+                <span className={styles.filterSpan}><b>Filter By:</b></span>
                 <Dropdown.Toggle>
                     {searchCategory}
                 </Dropdown.Toggle>
@@ -103,8 +109,8 @@ const UserDatabase = () => {
                 </Dropdown.Menu>
             </Dropdown>
             </div>
-            <div style={{width:'90vw', margin:'auto', marginTop:'2rem', marginBottom:'2.5rem', border:'1px solid rgba(0, 0, 0, 0.5)', borderRadius:'25px'}}>
-            <Table id="adminDashboardTable" style={{width:'95%', marginTop:'1rem', margin:'auto'}}>
+            <div className={styles.userResultsDiv}>
+            <Table className={styles.userResultsTable}>
                 <thead>
                     <tr>
                         {renderColumnLabels}

@@ -1,3 +1,5 @@
+import styles from './MembershipData.module.css'
+
 import { useState, useContext } from 'react'
 import { AllMembershipsContext } from '../../App'
 
@@ -94,26 +96,25 @@ const MembershipData = ({ membership }) => {
     }
 
     return (
-        <ListGroup.Item className="listGroupItemWithEndButtons" style={{marginBottom:'2rem'}}>
-            Name: {editMembershipToggle ? <input name="name" value={editedMembership.name} onChange={handleMembershipDetailChange}></input> : <span>{editedMembership.name}</span>} 
+        <ListGroup.Item className={styles.listGroupItem}>
+            <b>Name:</b> {editMembershipToggle ? <input name="name" value={editedMembership.name} onChange={handleMembershipDetailChange}></input> : <span>{editedMembership.name}</span>} 
             <br></br>
-            Price: ${editMembershipToggle ? <input name="price" value={editedMembership.price} onChange={handleMembershipDetailChange}></input> : <span>{editedMembership.price}</span>} 
+            <b>Price:</b> ${editMembershipToggle ? <input name="price" value={editedMembership.price} onChange={handleMembershipDetailChange}></input> : <span>{editedMembership.price}</span>} 
             <br></br>
-            Type: {editMembershipToggle ? <input name="type" value={editedMembership.type} onChange={handleMembershipDetailChange}></input> : <span>{editedMembership.type}</span>} 
+            <b>Type:</b> {editMembershipToggle ? <input name="type" value={editedMembership.type} onChange={handleMembershipDetailChange}></input> : <span>{editedMembership.type}</span>} 
             <br></br>
-            Subtype: {editMembershipToggle ? <input name="subtype" value={editedMembership.subtype} onChange={handleMembershipDetailChange}></input> : <span>{editedMembership.subtype}</span>} 
+            <b>Subtype:</b> {editMembershipToggle ? <input name="subtype" value={editedMembership.subtype} onChange={handleMembershipDetailChange}></input> : <span>{editedMembership.subtype}</span>} 
             <br></br>
-            Description: {editMembershipToggle ? <input name="description" value={editedMembership.description} style={{width:"75%"}} onChange={handleMembershipDetailChange}></input> : <span>{editedMembership.description}</span>}
+            <b>Description:</b> {editMembershipToggle ? <input className={styles.listGroupInput} name="description" value={editedMembership.description} onChange={handleMembershipDetailChange}></input> : <span>{editedMembership.description}</span>}
             <br></br>
             {editMembershipToggle ? null : <><br></br><Button onClick={() => setEditMembershipToggle(!editMembershipToggle)}>Edit Membership</Button></>}
             {editMembershipToggle ?
-            <Button className='listGroupEndButton' onClick={() => handleMembershipChangeSubmit(membership.id)}>Save Changes</Button>
+            <Button onClick={() => handleMembershipChangeSubmit(membership.id)}>Save Changes</Button>
             : null}
             {editMembershipToggle ?
-            <Button className='listGroupEndButton' onClick={handleDiscardMembershipChanges}>Discard Changes</Button>
+            <Button className={styles.discardMembershipChangeButton} onClick={handleDiscardMembershipChanges}>Discard Changes</Button>
             : null}
-            <Button className='listGroupEndButton' onClick={() => handleMembershipDelete(membership.id)} style={{background:"red", marginLeft:'1rem'}}>Delete Membership</Button>
-
+            {!editMembershipToggle && <Button className={styles.deleteMembershipButton} onClick={() => handleMembershipDelete(membership.id)}>Delete Membership</Button>}
         </ListGroup.Item>
     )
 }

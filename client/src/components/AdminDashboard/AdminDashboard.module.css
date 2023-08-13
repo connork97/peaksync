@@ -1,0 +1,51 @@
+.adminDashboardH1 {
+    margin: 2rem auto 2rem auto;
+}
+
+.dashboardTab {
+    margin: 2.5rem auto auto auto;
+    width: 75vw;
+}
+
+.dashboardTabCentered {
+    text-align: center;
+}
+
+.topAccordionItem {
+    margin-bottom: 2rem;
+}
+
+.accordionItem {
+    margin-bottom: 2rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
+}
+
+.signupTabDiv {
+    margin: 2rem auto 2rem auto;
+}
+
+.signupSearchForm {
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+.signupSearchFormControl {
+    margin-right: 1.5rem;
+    width: 50%;
+}
+
+.signupSearchDropdown {
+    margin-left: 1.5rem;
+}
+
+.userDatabaseH2 {
+    margin: 10rem auto 3rem auto;
+}
+
+.userDatabaseRedirectButton {
+    margin-top: 3rem;
+    width: 17.5rem;
+    height: 3.5rem;
+}

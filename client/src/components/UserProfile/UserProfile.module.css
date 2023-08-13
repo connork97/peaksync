@@ -1,0 +1,74 @@
+.warningH2 {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.profileNameH1 {
+    margin-top: 2rem;
+}
+
+.outerProfileInfoDiv {
+    margin: 2rem auto 3rem 0;
+    display: flex;
+    justify-content: center;
+    text-align: left;
+}
+
+.middleProfileInfoDiv {
+    margin: auto auto 3rem 0;
+    position: absolute;
+    display: flex;
+    justify-content: start;
+    max-width: 90vw;
+    text-align: left;
+    border: 1px solid rgba(0, 0, 0, 0.5) !important;
+    border-radius: 25px;
+}
+
+.innerProfileInfoDiv {
+    margin: 4rem;
+    font-size: 1.25rem;
+}
+
+.editMembershipDiv {
+    display: flex;
+}
+
+.editMembershipDropdown {
+    margin-right: 2rem;
+}
+
+.saveChangesButton {
+    margin-right: 1rem;
+}
+
+.discardChangesButton {
+    margin-left: 1rem;
+    background: grey;
+}
+
+.listGroup {
+    margin: 2rem auto 3rem auto;
+    width: 75%;
+}
+
+.userBookingListGroupItem {
+    display: flex;
+    width: 100%;
+}
+
+.paymentOwedButton {
+    margin-left: 1rem;
+    color: white;
+    background: red;
+    border-radius: 15px;
+}
+
+.editSignupButton {
+    margin-left: auto;
+}
+
+.startDatePassedSpan {
+    margin-left: auto;
+    opacity: 0.5;
+}

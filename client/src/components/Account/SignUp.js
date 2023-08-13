@@ -1,3 +1,5 @@
+import styles from './SignUp.module.css'
+
 import { useState, useContext } from "react"
 import { useHistory } from 'react-router-dom'
 import { LoggedInUserContext } from "../App"
@@ -67,15 +69,13 @@ const SignUp = () => {
 
     return (
         <>
-        <h1 style={{marginTop:'2rem'}}>Sign Up Page</h1>
-        <div id="signupHeaderDiv" style={{marginTop:'2rem', marginBottom:'3rem', textAlign:'center'}}>
+        <h1 className={styles.signUpPageH1}>Sign Up Page</h1>
+        <div className={styles.signupHeaderDiv}>
             <h4>If you already have an account, go back to the login page.</h4>
             <h4>Otherwise, create your account here to sign up for classes, memberships, and access your profile information!</h4>
         </div>
-            <div id="signUpDiv"
-            style={{width:'50vw', height:'100%', margin:'auto', marginBottom:'3rem', border: '1px solid rgba(0, 0, 0, 0.5)', borderRadius:'25px'}}
-            >
-                <Form id="signUpForm" onSubmit={handleCreateAccount} style={{width:'95%', margin:'auto', marginTop:'1rem', marginBottom:'1rem'}}>
+            <div className={styles.signupFormDiv}>
+                <Form className={styles.signupForm} onSubmit={handleCreateAccount}>
                     <Form.Label>First Name:</Form.Label>
                     <Form.Control type="text" name="firstName" value={newUser.firstName} placeholder="John" required onChange={handleSignUpInputChange}></Form.Control>
                     <br></br>
@@ -107,9 +107,16 @@ const SignUp = () => {
                     <Form.Label>Emergency Contact Phone Number:</Form.Label>
                     <Form.Control type="number" name="emergencyContactPhoneNumber" value={newUser.emergencyContactPhoneNumber} required placeholder="1234567890" onChange={handleSignUpInputChange}></Form.Control>
                     <br></br><br></br>
-                    <span style={{display:'flex'}}>
-                    <Form.Label style={{marginRight:'1rem'}}>Click to Acknowledge Release of Liability:</Form.Label>
-                    <Form.Check type="checkbox" name="waiver" value={newUser.waiver} required onChange={handleSignUpInputChange} style={{scale:'1.5'}}></Form.Check>
+                    <span className={styles.waiverSpan}>
+                    <Form.Label className={styles.formLabel}>Click to Acknowledge Release of Liability:</Form.Label>
+                    <Form.Check
+                        className={styles.formCheck}
+                        type="checkbox"
+                        name="waiver"
+                        value={newUser.waiver}
+                        required
+                        onChange={handleSignUpInputChange}>
+                    </Form.Check>
                     </span>
                     <br></br><br></br>
                     <Button type="submit">Create Account!</Button>

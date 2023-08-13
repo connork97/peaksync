@@ -1,0 +1,36 @@
+.createEventHeaderDiv {
+    margin: 2rem auto 2rem auto;
+}
+
+.headerDivH4 {
+    margin-bottom: 1rem;
+}
+
+.formControl {
+    margin: auto;
+    width: 75%;
+}
+
+.freeForMembersSpan {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.freeSpan {
+    margin-right: -22.5rem;
+    width: 2rem;
+}
+
+.notFreeSpan {
+    margin-left: -22.5rem;
+    width: 2rem;
+}
+
+.submitEventButton {
+    margin-right: 1.5rem;
+}
+
+.discardEventButton {
+    margin-left: 1.5rem;
+    background: grey;
+}

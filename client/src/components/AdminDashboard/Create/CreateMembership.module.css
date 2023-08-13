@@ -1,0 +1,15 @@
+.createMembershipForm {
+    margin: 2rem auto auto auto;
+    width: 50%;
+}
+
+.submitCreateMembershipButton {
+    margin-right: 1.5rem;
+    width: 12.5rem;
+}
+
+.discardMembershipButton {
+    margin-left: 1.5rem;
+    width: 12.5rem;
+    background: grey;
+}

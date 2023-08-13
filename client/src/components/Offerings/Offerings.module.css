@@ -1,0 +1,29 @@
+.calendarRedirectButton {
+    margin: 20px 25px;
+}
+
+.accordion {
+    margin: auto;
+    width: 75vw;
+    text-align: left;
+}
+
+.accordionItem {
+    margin-top: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
+}
+
+.offeringsH1 {
+    margin-top: 2rem;
+}
+
+.classOfferingsDiv {
+    display: flex;
+    margin: 2rem auto 10rem auto;
+    text-align: center;
+    width: 75vw;
+}
+
+.membershipOfferingsDiv {
+    margin: 2rem auto 10rem auto;
+}

@@ -1,0 +1,33 @@
+.signUpPageH1 {
+    margin-top: 2rem;
+}
+
+.signupHeaderDiv {
+    margin: 2rem auto 3rem auto;
+    text-align: center;
+}
+
+.signupFormDiv {
+    margin: auto auto 3rem auto;
+    width: 50vw;
+    height: 100%;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 25px;
+}
+
+.signupForm {
+    margin: 1rem auto 1rem auto;
+    width: 95%;
+}
+
+.waiverSpan {
+    display: flex;
+}
+
+.formLabel {
+    margin-right: 1rem;
+}
+
+.formCheck {
+    scale: 1.5;
+}

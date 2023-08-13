@@ -1,3 +1,5 @@
+import styles from './EventDetailsModal.module.css'
+
 import { useContext } from 'react'
 import { LoggedInUserContext, SessionsToggleContext, SignupsToggleContext } from '../App';
 
@@ -21,9 +23,9 @@ const EventDetailsModal = ({ clickedSession, setClickedSession, showGuestModal, 
         if (currentDate > clickedSession.start) {
             return <span>This event's start date has already passed.  Please sign up for a future {clickedSession.values.name}.</span>
         } else if (currentDate <= clickedSession.start && clickedSession.values.spaces > 0) {
-            return <span style={{marginRight:'auto'}}>{clickedSession.values.spaces} spaces remaining.</span>
+            return <span className={styles.spacesRemainingSpan}>{clickedSession.values.spaces} spaces remaining.</span>
         } else {
-            return <span style={{marginRight:'auto'}}>No spaces remaining.</span>
+            return <span className={styles.spacesRemainingSpan}>No spaces remaining.</span>
         }
     }
 
@@ -76,7 +78,7 @@ const EventDetailsModal = ({ clickedSession, setClickedSession, showGuestModal, 
 
     return (
         <>
-            <Modal show={showGuestModal} onHide={handleCloseGuestModal} style={{position:'relative', scale:'1.75', top:'-70vh'}}>
+            <Modal className={styles.modal} show={showGuestModal} onHide={handleCloseGuestModal}>
                 <Modal.Header closeButton>
                     <Modal.Title>{clickedSession.values.name}</Modal.Title>
                 </Modal.Header>

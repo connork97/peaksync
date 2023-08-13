@@ -1,3 +1,5 @@
+import styles from './Offerings.module.css'
+
 import { useContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import { AllMembershipsContext, LoggedInUserContext } from '../App'
@@ -14,7 +16,7 @@ const MembershipOfferings = () => {
 
     const renderAllMemberships = allMemberships.map((membership) => {
         return (
-            <Accordion.Item eventKey={membership.id} key={membership.id} style={{marginTop:'20px', borderTop:'1px solid rgba(0, 0, 0, 0.1)'}}>
+            <Accordion.Item className={styles.accordionItem} eventKey={membership.id} key={membership.id}>
                 <Accordion.Header>{membership.name}</Accordion.Header>
                 <Accordion.Body>
                     Price: ${membership.price}
@@ -31,14 +33,16 @@ const MembershipOfferings = () => {
         )
     })
     return (
-        <div id="membershipOfferingsPage" style={{marginTop:'2rem', marginBottom:'10rem'}}>
-            <h1 style={{marginBottom:'2rem'}}>Memberships and More!</h1>
+        <>
+        <h1 className={styles.offeringsH1}>Memberships and More!</h1>
+        <div className={styles.membershipOfferingsDiv}>
             <div className="offeringsDiv">
-                <Accordion style={{margin:'auto', textAlign:'left', width:'75vw'}}>
+                <Accordion className={styles.accordion}>
                     {renderAllMemberships}
                 </Accordion>
             </div>
         </div>
+        </>
     )
 }
 
