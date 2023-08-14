@@ -631,11 +631,11 @@ def filter_signups():
             elif column_to_search == 'most_recent':
                 signup_query = Signup.query.order_by(Signup.created_at.desc()).limit(50)
             else:
-                user_query = {"error": "Invalid column_to_search value"}
-                return make_response(user_query, 400)
+                signup_query = {"error": "Invalid column_to_search value"}
+                return make_response(signup_query, 400)
 
             if signup_query is not None:
-                results = [user.to_dict() for user in user_query.all()]
+                results = [signup.to_dict() for signup in signup_query.all()]
                 response = make_response(results, 200)
         except Exception as e:
             response = make_response({"error": f"404: could not complete query for users. {str(e)}"}, 404)
