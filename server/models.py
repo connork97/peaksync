@@ -17,6 +17,8 @@ class User(db.Model, SerializerMixin):
         '-signups.user.membership',
         '-signups.user.signups',
         '-signups.user.payments',
+        '-signups.user.first_name',
+        '-signups.user.last_name',
         '-payments.user',
         # '-payments.signups',
         '-membership.users'

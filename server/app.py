@@ -618,16 +618,32 @@ def filter_signups():
             column_to_search = form_data['column_to_search']
 
             if column_to_search == 'event':
-                signup_query = Signup.query.filter(Signup.session.event.name.ilike(f"%{search_term}%"))
+                # signup_query = Signup.query.join(Signup.session).join(Session.event).join(Event.name.ilike(f"%{search_term}%"))
+                signup_query = Signup.query.join(Signup.session).join(Session.event).filter(Event.name.ilike(f"%{search_term}%")).limit(50)
             elif column_to_search == 'customer':
-                signup_query = Signup.query.filter(
-                    or_(
-                        Signup.user.first_name.ilike(f"%{search_term}%"),
-                        Signup.user.last_name.ilike(f"%{search_term}%")
+                signup_query = (
+                    Signup.query
+                    .join(Signup.user)
+                    .filter(
+                        or_(
+                            User.first_name.ilike(f"%{search_term}%"),
+                            User.last_name.ilike(f"%{search_term}%")
+                        )
                     )
+                    .limit(50)
                 )
+                
+                # signup_query = Signup.query.join(Signup.user).filter(User.first_name.ilike(f"%{search_term}%")).all()
+                # signup_query = Signup.query.filter(
+                #     or_(
+                #         Signup.user.first_name.ilike(f"%{search_term}%"),
+                #         Signup.user.last_name.ilike(f"%{search_term}%")
+                #     )
+                # )
             elif column_to_search == 'date':
-                signup_query = Signup.query.order_by(Signup.session.date.desc())
+                # signup_query = Signup.query.order_by(Signup.session.date.desc())
+                signup_query = Signup.query.join(Signup.session).order_by(Session.date.desc())
+
             elif column_to_search == 'most_recent':
                 signup_query = Signup.query.order_by(Signup.created_at.desc()).limit(50)
             else:
@@ -638,7 +654,7 @@ def filter_signups():
                 results = [signup.to_dict() for signup in signup_query.all()]
                 response = make_response(results, 200)
         except Exception as e:
-            response = make_response({"error": f"404: could not complete query for users. {str(e)}"}, 404)
+            response = make_response({"error": f"404: could not complete query for signups. {str(e)}"}, 404)
         return response
 
 @app.route('/signups/<int:id>', methods=['GET', 'PATCH', 'DELETE'])

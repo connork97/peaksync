@@ -33,7 +33,7 @@ const Login = () => {
         // .then((sessionData) => fetchUserBySessionData(sessionData))
         const userId = localStorage.getItem("user_id")
         if (userId) {
-            fetch(`https://peaksync-back-end.onrender.com/${userId}`)
+            fetch(`https://peaksync-back-end.onrender.com/users/${userId}`)
             .then((response) => response.json())
             .then((loggedInUserData) => setCurrentUser(loggedInUserData))
         }

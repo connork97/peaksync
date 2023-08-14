@@ -104,7 +104,7 @@ const AdminDashboard = () => {
         .then((response) => response.json())
         .then((signupData) => {
             setSignups(signupData)
-            console.log(signupData)
+            console.log("Signup Data: ", signupData)
         })
     }
     // const handleFetchUsers = (event) => {
@@ -210,7 +210,7 @@ const AdminDashboard = () => {
                         </Form>
                     </div>
                         <ListGroup>
-                            {signups.length > 0 && renderSignups}
+                            {signups.length > 0 ? renderSignups : <span>Searching for Signups</span>}
                         </ListGroup>
                 </Tab>
                 <Tab className={`${styles.dashboardTab} ${styles.dashboardTabCentered}`} eventKey="create" title="Create">
