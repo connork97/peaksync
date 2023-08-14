@@ -25,41 +25,42 @@ const AdminDashboard = () => {
     const { allMemberships } = useContext(AllMembershipsContext)
     // const { allSignups, setAllSignups } = useContext(AllSignupsContext)
 
-    const [signups, setSignups] = useState([])
-
+    
     const history = useHistory()
-
+    
     // useEffect(() => {
-    //     fetch('https://peaksync-back-end.onrender.com/signups')
-    //     .then((response) => response.json())
-    //     .then((signupData) => setAllSignups(signupData))
-    //   }, [])
-
+        //     fetch('https://peaksync-back-end.onrender.com/signups')
+        //     .then((response) => response.json())
+        //     .then((signupData) => setAllSignups(signupData))
+        //   }, [])
+        
     const renderAllMemberships = (type) => allMemberships.map((membership) => {
         if (membership.type === type) {
             return (
                 <MembershipData membership={membership} key={membership.id} />
-            )
-        }
+                )
+            }
     })
-    
+            
     const renderEvents = (category) => allEvents.map((event) => {
         if (event.category === (category)) {
             return (
                 <EventData event={event} key={event.id} />
-            )
-        }
+                )
+            }
     })
-
+    
+    const [signups, setSignups] = useState([])
     const [signupSearch, setSignupSearch] = useState("")
     const signupFilterCategories = ['Event', 'Customer', 'Date', 'Most Recent']
     const [signupFilter, setSignupFilter] = useState("Event")
+    const [shouldRenderSignups, setShouldRenderSignups] = useState(false)
 
     const renderSignupDropdownMenu = signupFilterCategories.map((category) => {
         return <Dropdown.Item key={category} onClick={() => setSignupFilter(category)}>{category}</Dropdown.Item>
     })
 
-    const renderSignupsByCategory = signups.map((signup) => {
+    const renderSignups = signups.map((signup) => {
         // console.log(signup)
         // if (signupFilter === 'All' || signupFilter === 'Filter By') {
         return <SignupData signup={signup} key={signup.id} />
@@ -89,6 +90,7 @@ const AdminDashboard = () => {
     const handleSignupSearch = (event) => {
         event.preventDefault()
         const convertedSignupFilter = signupFilter.split(" ").join("_").toLowerCase()
+        console.log(convertedSignupFilter)
         fetch('https://peaksync-back-end.onrender.com/signups/filter', {
             method: 'POST',
             headers: {
@@ -207,9 +209,9 @@ const AdminDashboard = () => {
                             </Dropdown>
                         </Form>
                     </div>
-                            <ListGroup>
-                                {renderSignupsByCategory}
-                            </ListGroup>
+                        <ListGroup>
+                            {signups.length > 0 && renderSignups}
+                        </ListGroup>
                 </Tab>
                 <Tab className={`${styles.dashboardTab} ${styles.dashboardTabCentered}`} eventKey="create" title="Create">
                     <Create />

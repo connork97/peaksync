@@ -627,7 +627,7 @@ def filter_signups():
                     )
                 )
             elif column_to_search == 'date':
-                signup_query = Signup.query.order_by(Signup.session.date.desc(), Signup.session.time.desc())
+                signup_query = Signup.query.order_by(Signup.session.date.desc())
             elif column_to_search == 'most_recent':
                 signup_query = Signup.query.order_by(Signup.created_at.desc()).limit(50)
             else:

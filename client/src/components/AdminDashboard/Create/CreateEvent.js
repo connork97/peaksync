@@ -60,7 +60,6 @@ const CreateEvent = () => {
             free_for_members: false
         }))
     }
-    console.log(newEvent.price)
 
     const handleEventSubmit = (event) => {
         event.preventDefault()
