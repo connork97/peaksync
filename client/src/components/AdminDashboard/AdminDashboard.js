@@ -23,15 +23,17 @@ const AdminDashboard = () => {
     const { currentUser } = useContext(LoggedInUserContext)
     const { allEvents } = useContext(AllEventsContext)
     const { allMemberships } = useContext(AllMembershipsContext)
-    const { allSignups, setAllSignups } = useContext(AllSignupsContext)
+    // const { allSignups, setAllSignups } = useContext(AllSignupsContext)
+
+    const [signups, setSignups] = useState([])
 
     const history = useHistory()
 
-    useEffect(() => {
-        fetch('https://peaksync-back-end.onrender.com/signups')
-        .then((response) => response.json())
-        .then((signupData) => setAllSignups(signupData))
-      }, [])
+    // useEffect(() => {
+    //     fetch('https://peaksync-back-end.onrender.com/signups')
+    //     .then((response) => response.json())
+    //     .then((signupData) => setAllSignups(signupData))
+    //   }, [])
 
     const renderAllMemberships = (type) => allMemberships.map((membership) => {
         if (membership.type === type) {
@@ -50,40 +52,77 @@ const AdminDashboard = () => {
     })
 
     const [signupSearch, setSignupSearch] = useState("")
-    const signupFilterCategories = ['All', 'Event', 'Customer', 'Date', 'Time', 'Created At']
-    const [signupFilter, setSignupFilter] = useState("Filter By")
+    const signupFilterCategories = ['Event', 'Customer', 'Date', 'Most Recent']
+    const [signupFilter, setSignupFilter] = useState("Event")
 
     const renderSignupDropdownMenu = signupFilterCategories.map((category) => {
         return <Dropdown.Item key={category} onClick={() => setSignupFilter(category)}>{category}</Dropdown.Item>
     })
 
-    const renderSignupsByCategory = allSignups.map((signup) => {
+    const renderSignupsByCategory = signups.map((signup) => {
         // console.log(signup)
-        if (signupFilter === 'All' || signupFilter === 'Filter By') {
-            return <SignupData signup={signup} key={signup.id} />
-        } else if (signupFilter === 'Event') {
-            if (signup.session.event.name.toLowerCase().includes(signupSearch.toLowerCase())) {
-                return <SignupData signup={signup} key={signup.id} />
-            }
-        } else if (signupFilter === 'Customer') {
-            if (signup.user.first_name.toLowerCase().includes(signupSearch.toLowerCase()) || signup.user.last_name.toLowerCase().includes(signupSearch.toLowerCase())) {
-                return <SignupData signup={signup} key={signup.id} />
-            }
-        } else if (signupFilter === 'Date') {
-            if (signup.session.date.includes(signupSearch)) {
-                return <SignupData signup={signup} key={signup.id} />
-            }
-        } else if (signupFilter === 'Time') {
-            if (signup.session.time.includes(signupSearch)) {
-                return <SignupData signup={signup} key={signup.id} />
-            }
-        } else if (signupFilter === 'Created At') {
-            if (signup.created_at.includes(signupSearch)) {
-                return <SignupData signup={signup} key={signup.id} />
-            }
-        }
+        // if (signupFilter === 'All' || signupFilter === 'Filter By') {
+        return <SignupData signup={signup} key={signup.id} />
+        // } else if (signupFilter === 'Event') {
+        //     if (signup.session.event.name.toLowerCase().includes(signupSearch.toLowerCase())) {
+        //         return <SignupData signup={signup} key={signup.id} />
+        //     }
+        // } else if (signupFilter === 'Customer') {
+        //     if (signup.user.first_name.toLowerCase().includes(signupSearch.toLowerCase()) || signup.user.last_name.toLowerCase().includes(signupSearch.toLowerCase())) {
+        //         return <SignupData signup={signup} key={signup.id} />
+        //     }
+        // } else if (signupFilter === 'Date') {
+        //     if (signup.session.date.includes(signupSearch)) {
+        //         return <SignupData signup={signup} key={signup.id} />
+        //     }
+        // } else if (signupFilter === 'Time') {
+        //     if (signup.session.time.includes(signupSearch)) {
+        //         return <SignupData signup={signup} key={signup.id} />
+        //     }
+        // } else if (signupFilter === 'Created At') {
+        //     if (signup.created_at.includes(signupSearch)) {
+        //         return <SignupData signup={signup} key={signup.id} />
+        //     }
+        // }
     })
 
+    const handleSignupSearch = (event) => {
+        event.preventDefault()
+        const convertedSignupFilter = signupFilter.split(" ").join("_").toLowerCase()
+        fetch('https://peaksync-back-end.onrender.com/signups/filter', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                "search_term": signupSearch,
+                "column_to_search": convertedSignupFilter
+            })
+        })
+        .then((response) => response.json())
+        .then((signupData) => {
+            setSignups(signupData)
+            console.log(signupData)
+        })
+    }
+    // const handleFetchUsers = (event) => {
+    //     event.preventDefault()
+    //     fetch('https://peaksync-back-end.onrender.com/users/filter', {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify({
+    //             "search_term": searchParams,
+    //             "column_to_search": convertedSearchCategory
+    //         })
+    //     })
+    //     .then((response) => response.json())
+    //     .then((userData) => {
+    //         setAllUsers(userData)
+    //         console.log(userData)
+    //     })
+    // }
     return (
         <>
             <h1 className={styles.adminDashboardH1}>Admin Dashboard</h1>
@@ -160,10 +199,10 @@ const AdminDashboard = () => {
                 </Tab>
                 <Tab className={styles.dashboardTab} eventKey="signups" title="Signups">
                     <div className={styles.signupTabDiv}>
-                        <Form className={styles.signupSearchForm} onSubmit={(event => event.preventDefault())}>
+                        <Form className={styles.signupSearchForm} onSubmit={handleSignupSearch}>
                             <Form.Control className={styles.signupSearchFormControl} value={signupSearch} onChange={(event) => setSignupSearch(event.target.value)}></Form.Control>
                             <Dropdown className={styles.signupSearchDropdown}>
-                                <Dropdown.Toggle>{signupFilter}</Dropdown.Toggle>
+                                <b>Filter By: </b><Dropdown.Toggle>{signupFilter}</Dropdown.Toggle>
                                 <Dropdown.Menu>{renderSignupDropdownMenu}</Dropdown.Menu>
                             </Dropdown>
                         </Form>

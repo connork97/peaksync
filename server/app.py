@@ -609,6 +609,38 @@ def signups():
 
     return response
 
+@app.route('/signups/filter', methods=['POST'])
+def filter_signups():
+    if request.method == 'POST':
+        try:
+            form_data = request.get_json()
+            search_term = form_data['search_term']
+            column_to_search = form_data['column_to_search']
+
+            if column_to_search == 'event':
+                signup_query = Signup.query.filter(Signup.session.event.name.ilike(f"%{search_term}%"))
+            elif column_to_search == 'customer':
+                signup_query = Signup.query.filter(
+                    or_(
+                        Signup.user.first_name.ilike(f"%{search_term}%"),
+                        Signup.user.last_name.ilike(f"%{search_term}%")
+                    )
+                )
+            elif column_to_search == 'date':
+                signup_query = Signup.query.order_by(Signup.session.date.desc(), Signup.session.time.desc())
+            elif column_to_search == 'most_recent':
+                signup_query = Signup.query.order_by(Signup.created_at.desc()).limit(50)
+            else:
+                user_query = {"error": "Invalid column_to_search value"}
+                return make_response(user_query, 400)
+
+            if signup_query is not None:
+                results = [user.to_dict() for user in user_query.all()]
+                response = make_response(results, 200)
+        except Exception as e:
+            response = make_response({"error": f"404: could not complete query for users. {str(e)}"}, 404)
+        return response
+
 @app.route('/signups/<int:id>', methods=['GET', 'PATCH', 'DELETE'])
 def signup_by_id(id):
 
