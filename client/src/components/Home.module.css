@@ -1,16 +1,18 @@
 .welcomeH1 {
-    font-size: 5rem;
-    margin-top: 3rem;
-    margin-bottom: 10rem;
+    font-size: 4rem;
+    margin-top: 1rem;
+    margin-bottom: 5rem;
 }
 
 .loadingH2 {
-    font-size: 4rem;
+    font-size: 3rem;
+    margin-top: 4rem;
     animation: loadingFade linear 3s infinite;
 }
 
 .loadedH2 {
-    font-size: 4rem;
+    font-size: 3rem;
+    margin-bottom: 1rem;
 }
 
 @keyframes loadingFade {
