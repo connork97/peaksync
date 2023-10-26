@@ -61,30 +61,7 @@ const AdminDashboard = () => {
     })
 
     const renderSignups = signups.map((signup) => {
-        // console.log(signup)
-        // if (signupFilter === 'All' || signupFilter === 'Filter By') {
         return <SignupData signup={signup} key={signup.id} />
-        // } else if (signupFilter === 'Event') {
-        //     if (signup.session.event.name.toLowerCase().includes(signupSearch.toLowerCase())) {
-        //         return <SignupData signup={signup} key={signup.id} />
-        //     }
-        // } else if (signupFilter === 'Customer') {
-        //     if (signup.user.first_name.toLowerCase().includes(signupSearch.toLowerCase()) || signup.user.last_name.toLowerCase().includes(signupSearch.toLowerCase())) {
-        //         return <SignupData signup={signup} key={signup.id} />
-        //     }
-        // } else if (signupFilter === 'Date') {
-        //     if (signup.session.date.includes(signupSearch)) {
-        //         return <SignupData signup={signup} key={signup.id} />
-        //     }
-        // } else if (signupFilter === 'Time') {
-        //     if (signup.session.time.includes(signupSearch)) {
-        //         return <SignupData signup={signup} key={signup.id} />
-        //     }
-        // } else if (signupFilter === 'Created At') {
-        //     if (signup.created_at.includes(signupSearch)) {
-        //         return <SignupData signup={signup} key={signup.id} />
-        //     }
-        // }
     })
 
     const handleSignupSearch = (event) => {
@@ -107,24 +84,7 @@ const AdminDashboard = () => {
             console.log("Signup Data: ", signupData)
         })
     }
-    // const handleFetchUsers = (event) => {
-    //     event.preventDefault()
-    //     fetch('https://peaksync-back-end.onrender.com/users/filter', {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify({
-    //             "search_term": searchParams,
-    //             "column_to_search": convertedSearchCategory
-    //         })
-    //     })
-    //     .then((response) => response.json())
-    //     .then((userData) => {
-    //         setAllUsers(userData)
-    //         console.log(userData)
-    //     })
-    // }
+
     return (
         <>
             <h1 className={styles.adminDashboardH1}>Admin Dashboard</h1>
@@ -204,13 +164,14 @@ const AdminDashboard = () => {
                         <Form className={styles.signupSearchForm} onSubmit={handleSignupSearch}>
                             <Form.Control className={styles.signupSearchFormControl} value={signupSearch} onChange={(event) => setSignupSearch(event.target.value)}></Form.Control>
                             <Dropdown className={styles.signupSearchDropdown}>
-                                <b>Filter By: </b><Dropdown.Toggle>{signupFilter}</Dropdown.Toggle>
+                                <span className={styles.filterSignupsSpan}><b>Filter By:</b></span><Dropdown.Toggle className={styles.signupFilterDropdownToggle}>{signupFilter}</Dropdown.Toggle>
                                 <Dropdown.Menu>{renderSignupDropdownMenu}</Dropdown.Menu>
                             </Dropdown>
+                            <Button className={styles.signupSearchButton}>Search!</Button>
                         </Form>
                     </div>
                         <ListGroup>
-                            {signups.length > 0 ? renderSignups : <span>Searching for Signups</span>}
+                            {signups.length > 0 ? renderSignups : <span className={styles.noSignupsSpan}>No signups to display.</span>}
                         </ListGroup>
                 </Tab>
                 <Tab className={`${styles.dashboardTab} ${styles.dashboardTabCentered}`} eventKey="create" title="Create">

@@ -1,0 +1,20 @@
+.welcomeH1 {
+    font-size: 5rem;
+    margin-top: 3rem;
+    margin-bottom: 10rem;
+}
+
+.loadingH2 {
+    font-size: 4rem;
+    animation: loadingFade linear 3s infinite;
+}
+
+.loadedH2 {
+    font-size: 4rem;
+}
+
+@keyframes loadingFade {
+    0% {opacity: 100%}
+    50% {opacity: 0%}
+    100% {opacity: 100%}
+}

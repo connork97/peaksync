@@ -32,12 +32,28 @@
 }
 
 .signupSearchFormControl {
-    margin-right: 1.5rem;
     width: 50%;
+}
+
+.filterSignupsSpan {
+    margin-right: 1rem;
 }
 
 .signupSearchDropdown {
     margin-left: 1.5rem;
+}
+
+.signupFilterDropdownToggle {
+    background: grey;
+}
+
+.signupSearchButton {
+    margin-left: 1rem;
+    width: 7.5rem;
+}
+
+.noSignupsSpan {
+    text-align: center;
 }
 
 .userDatabaseH2 {
